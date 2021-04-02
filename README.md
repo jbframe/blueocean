@@ -12,23 +12,28 @@ npm start
 
 
 ## Backend Api Documentation
+
 For each endpoint list the information per the example below!
 
 **Example End Point Name**
+
 List Questions
 
 **Example Request Type, Route and Description**
+
 GET /qa/questions
 
 Retrieves a list of questions for a particular product. This list does not include any reported questions.
 
 **Example Parameters**
+
 Parameter	Type	Description
 product_id	integer	Specifies the product for which to retrieve questions.
 page	integer	Selects the page of results to return. Default 1.
 count	integer	Specifies how many results per page to return. Default 5.
 
 **Example Response Status and Data**
+
 Status: 200 OK
 
 {

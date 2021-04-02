@@ -15,7 +15,7 @@ npm start
 
 For each endpoint list the information per the example below!
 
-**Example End Point Name**
+## Example End Point Name
 
 List Questions
 

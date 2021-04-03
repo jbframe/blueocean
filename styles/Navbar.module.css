@@ -1,0 +1,43 @@
+.navbar {
+  display: flex;
+  background-color: grey;
+  padding: 15px 20px;
+  height: auto;
+  align-items: center;
+  /* justify-content: start; */
+}
+
+.nav_cluster_left {
+  display: flex;
+  align-items: center;
+}
+
+.nav_cluster_right {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.logo {
+  font-size: 50px !important;
+}
+
+.search {
+  width: 300px !important;
+  margin-left: 25px !important;
+}
+
+.create {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.events {
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+.account {
+  font-size: 50px !important;
+  margin-left: 15px !important;
+}

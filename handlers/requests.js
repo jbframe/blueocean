@@ -6,7 +6,7 @@ const requests = {
   // Fetch User Events
   fetchUserEvents(user, cb) {
     axios
-      .get(`${server}/ENDPOINT GOES HERE`)
+      .get(`${server}/`)
       .then((response) => {
         cb(response.data);
       })
@@ -16,18 +16,18 @@ const requests = {
       });
   },
 
-  // Fetch All Events
-  fetchAllEvents(cb) {
-    axios.
-      .get(`${server}/ENDPOINT GOES HERE`)
-      .then((response) => {
-        cb(response.data);
-      })
-      .catch((err) => {
-        res.sendStatus(500);
-        console.log(err);
-      })
-  },
+  // // Fetch All Events
+  // fetchAllEvents(cb) {
+  //   axios.
+  //     .get(`${server}/ENDPOINT GOES HERE`)
+  //     .then((response) => {
+  //       cb(response.data);
+  //     })
+  //     .catch((err) => {
+  //       res.sendStatus(500);
+  //       console.log(err);
+  //     })
+  // },
 
 };
 

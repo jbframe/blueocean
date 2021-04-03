@@ -10,19 +10,23 @@ client.connect()
 .then(()=> console.log('Database Connected!'))
 .catch(e => console.log(e));
 
-// inputs (user < {firstName, lastName, email, title, aboutMe, location, linkedinUrl}, cb (err, results) => {})
+/*=================================================================
+======================                  ===========================
+=====================   INSERT QUERIES   ==========================
+======================                  ===========================
+===================================================================
+*/
+// inputs (user < {{ name, email, title, aboutMe, location, linkedinUrl }, cb (err, results) => {})
 const insertUser = (user, cb) => {
-    let { firstName, lastName, email, title, aboutMe, location, linkedinUrl } = user;
-    client.query(`INSERT INTO users (first_name, last_name, email, host_status, title, about_me, location, linkedin_url) VALUES 
+    let { name, email, title, aboutMe, location, linkedinUrl } = user;
+    client.query(`INSERT INTO users (name, email, title, about_me, location, linkedin_url) VALUES 
     (
-        '${firstName}',
-        '${lastName}',
+        '${name}',
         '${email}',
-        ${false},
         '${title}',
         '${aboutMe}',
         '${location}',
-        'linkedin.com'
+        '${linkedinUrl}'
     )`, (err, results) => {
         if (err) {
             cb(err, null);
@@ -82,7 +86,6 @@ const insertAssessment = (eventId, questions, cb) => {
                     console.log(err);
                     cb(err, null);
                   } else {
-                      console.log('INSERTING QUESTIONS WOOOOOOOOO!')
                     let valueString = ''
                     results.rows.forEach((question, i) => {
                         let questionId = question.question_id;
@@ -97,8 +100,6 @@ const insertAssessment = (eventId, questions, cb) => {
                             if (err) {
                                 console.log(err);
                                 cb(err, null);
-                            } else  {
-                                console.log('ANSWER INSERTED! YEEHAWW')
                             }
                         });
                     }
@@ -110,9 +111,110 @@ const insertAssessment = (eventId, questions, cb) => {
     })
 }
 
+/*=================================================================
+======================                  ===========================
+=====================   SELECT QUERIES   ==========================
+======================                  ===========================
+===================================================================
+*/
+
+const getAllUpcomingEvents = (cb) => {
+  client.query(`SELECT * FROM events WHERE date > NOW() GROUP BY event_id ORDER BY date ASC`, (err, results) => {
+    if (err) {
+        cb(err, null);
+      } else {
+        cb(null, results.rows);
+      }
+  })
+}
+
+const getEventsByAttendee = (userId, cb) => {
+    client.query(`SELECT 
+    * 
+    FROM events 
+    LEFT OUTER JOIN attendees ON events.event_id = attendees.event_id
+    WHERE date > NOW() 
+    AND user_id = ${userId}`, 
+    (err, results) => {
+        if (err) {
+            cb(err, null);
+          } else {
+            cb(null, results.rows);
+          }
+    })
+}
+
+const getEventsByHost = (userId, cb) => {
+    client.query(`
+    SELECT * 
+    FROM events 
+    LEFT OUTER JOIN users ON events.host_id = users.id
+    WHERE date > NOW() 
+    AND id = ${userId}`, 
+    (err, results) => {
+        if (err) {
+          cb(err, null);
+        } else {
+          cb(null, results.rows);
+        }
+    })
+}
+
+const getAllUsers = (cb) => {
+    client.query(`SELECT * FROM users`, (err, results) => {
+        if (err) {
+          cb(err, null);
+        } else {
+          cb(null, results.rows);
+        }
+    })
+}
+
+const getAttendeesByEvent = (eventId, cb) => {
+    client.query(`
+    SELECT * 
+    FROM users
+    LEFT OUTER JOIN attendees ON users.id = attendees.user_id
+    WHERE event_id = ${eventId}`,
+    (err, results) => {
+        if (err) {
+            cb(err, null);
+          } else {
+            cb(null, results.rows);
+          }
+    })
+}
+
+// const getAssessmentByEvent = (eventId, cb) => {
+//     client.query(`
+//     SELECT 
+//     assessments.assessment_id,
+//     assessments.event_id,
+//     jsonb_agg(jsonb_build_object(
+//         'question', questions.question_text,
+//         'answers', jsonb_agg(
+//             jsonb_build_object(
+//                 'text', answers.answer_text,
+//                 'correct', answers.correct
+//             )
+//         )
+//     ))
+//     FROM assessments
+//     LEFT OUTER JOIN questions ON assessments.assessment_id = questions.assessment_id
+//     LEFT OUTER JOIN answers ON questions.question_id = answers.question_id
+//     WHERE assessments.event_id = 51
+//     GROUP BY assessments.event_id
+//     `)
+// }
+
 module.exports = {
     insertUser,
     insertEvent,
     makeUserAnAttendee,
-    insertAssessment
+    insertAssessment,
+    getAllUpcomingEvents,
+    getEventsByAttendee,
+    getEventsByHost,
+    getAllUsers,
+    getAttendeesByEvent
 }

@@ -5,6 +5,7 @@ import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import styles from "../styles/Navbar.module.css";
+import Authentication from "../components/Authentication";
 
 const Navbar = () => {
   return (
@@ -23,6 +24,7 @@ const Navbar = () => {
         <div className={styles.events}>My Events</div>
         <AccountCircleIcon className={styles.account} />
       </div>
+      <Authentication />
     </div>
   );
 };

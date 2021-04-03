@@ -8,6 +8,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styles from '../styles/Navbar.module.css';
+import Authentication from '../components/Authentication';
 
 const StyledMenu = withStyles({
   paper: {
@@ -40,6 +41,8 @@ const Navbar = () => {
     setAnchorEl(null);
   }
 
+
+
   return (
     <div className={styles.navbar}>
       <div className={styles.nav_cluster_left}>
@@ -62,6 +65,7 @@ const Navbar = () => {
           <MenuItem onClick={handleClose}>Sign Out</MenuItem>
         </StyledMenu>
       </div>
+      <Authentication />
     </div>
   );
 };

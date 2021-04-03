@@ -12,21 +12,18 @@ export default function Home() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 
-  // COMMENTING OUT WHILE SETTING UP NAV AND LAYOUT
-  /*
-  useEffect(() => {
-    // Preform fetch request for Events Data
-    // update events to pass into both eventsLists
+  // useEffect(() => {
+  //   // Preform fetch request for Events Data
+  //   // update events to pass into both eventsLists
 
-    requests.fetchUserEvents(USERNAME GOES HERE, (data) => {
-      console.log(data);
-    })
+  //   requests.fetchUserEvents(USERNAME GOES HERE, (data) => {
+  //     console.log(data);
+  //   })
 
-    requests.fetchAllEvents((data) => {
-      console.log(data);
-    })
-  });
-  */
+  //   requests.fetchAllEvents((data) => {
+  //     console.log(data);
+  //   })
+  // });
 
   return (
     // Wrap every page component in <Layout> tags (and import up top)

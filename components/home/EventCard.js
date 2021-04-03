@@ -13,3 +13,5 @@ const EventCard = ({ image, name, location, date }) => (
     <div className="event-card-date">{date}</div>
   </div>
 );
+
+export default EventCard;

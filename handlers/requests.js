@@ -18,7 +18,7 @@ const requests = {
 
   // Fetch All Events
   fetchAllEvents(cb) {
-    axios.
+    axios
       .get(`${server}/ENDPOINT GOES HERE`)
       .then((response) => {
         cb(response.data);

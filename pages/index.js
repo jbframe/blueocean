@@ -17,13 +17,13 @@ export default function Home() {
     // update events to pass into both eventsLists
 
     requests.fetchUserEvents(userName, (data) => {
-      console.log(data);
+      setUserEvents(data);
     });
 
     requests.fetchAllEvents((data) => {
-      console.log(data);
+      setAllEvents(data);
     });
-  });
+  }, []);
 
   return (
     <div className={styles.container}>

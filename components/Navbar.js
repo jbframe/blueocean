@@ -3,17 +3,23 @@ import Link from 'next/link';
 import TextField from '@material-ui/core/TextField';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import styles from '../styles/Navbar.module.css';
 
 const Navbar = () => {
 
   return (
     <div className={styles.navbar}>
-      <EventAvailableIcon style={{ fontSize: 50 }} />
-      <TextField id="search-events-bar" className="search-events-bar" label="Search Events" variant="outlined" />
-      <span className={styles.create}>Create Event</span>
-      <span className={styles.my_events}>My Events</span>
-      <AccountCircleIcon style={{ fontSize: 50 }} />
+      <div clasName={styles.nav_cluster_left}>
+        <EventAvailableIcon className={styles.logo} />
+        <TextField className={styles.search} label="Search Events" variant="outlined" />
+      </div>
+      <div className={styles.nav_cluster_right}>
+        <div className={styles.create}>Create Event</div>
+        <AddCircleIcon className={styles.add_icon}/>
+        <div className={styles.events}>My Events</div>
+        <AccountCircleIcon className={styles.account} />
+      </div>
     </div>
   );
 };

@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model answers {
+  answer_id   BigInt     @id @default(autoincrement())
+  answer_text String?    @db.VarChar
+  question_id BigInt?
+  correct     Boolean?
+  questions   questions? @relation(fields: [question_id], references: [question_id])
+
+  @@index([question_id], name: "idx_answer_question")
+}
+
+model assessments {
+  assessment_id BigInt      @id @default(autoincrement())
+  event_id      BigInt?
+  events        events?     @relation(fields: [event_id], references: [event_id])
+  questions     questions[]
+
+  @@index([event_id], name: "idx_assessment_event")
+}
+
+model attendees {
+  attendance_id BigInt  @id @default(autoincrement())
+  user_id       BigInt?
+  event_id      BigInt?
+  events        events? @relation(fields: [event_id], references: [event_id])
+  users         User?   @relation(fields: [user_id], references: [user_id])
+
+  @@index([event_id], name: "idx_attendee_event")
+  @@index([user_id], name: "idx_attendee_user")
+}
+
+model event_photos {
+  photo_id BigInt  @id @default(autoincrement())
+  image    String? @db.VarChar
+  event_id BigInt?
+  events   events? @relation(fields: [event_id], references: [event_id])
+
+  @@index([event_id], name: "idx_photo_event")
+}
+
+model events {
+  event_id     BigInt         @id @default(autoincrement())
+  event_name   String         @default("NULL") @db.VarChar
+  location     String?        @db.VarChar
+  date         DateTime?      @db.Timestamptz(6)
+  host_id      BigInt?
+  meeting_url  String?        @db.VarChar
+  summary      String?        @db.VarChar
+  attendee_max Int?
+  users        User?          @relation(fields: [host_id], references: [user_id])
+  assessments  assessments[]
+  attendees    attendees[]
+  event_photos event_photos[]
+
+  @@index([host_id], name: "idx_event_host")
+}
+
+model questions {
+  question_id   BigInt       @id @default(autoincrement())
+  assessment_id BigInt?
+  question_text String?      @db.VarChar
+  assessments   assessments? @relation(fields: [assessment_id], references: [assessment_id])
+  answers       answers[]
+
+  @@index([assessment_id], name: "idx_question_assessment")
+}
+
+model User {
+  user_id       BigInt      @id @default(autoincrement())
+  first_name    String?     @db.VarChar
+  last_name     String?     @db.VarChar
+  email         String      @unique
+  emailVerified DateTime?   @map(name: "email_verified")
+  host_status   Boolean?    @default(false)
+  title         String?     @db.VarChar
+  about_me      String?     @db.VarChar
+  location      String?     @db.VarChar
+  profile_photo String?     @db.VarChar
+  linkedin_url  String?     @db.VarChar
+  createdAt     DateTime    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime    @default(now()) @map(name: "updated_at")
+  attendees     attendees[]
+  events        events[]
+
+  @@map("users")
+}
+
+model Account {
+  id                 Int       @id @default(autoincrement())
+  compoundId         String    @unique @map(name: "compound_id")
+  userId             Int       @map(name: "user_id")
+  providerType       String    @map(name: "provider_type")
+  providerId         String    @map(name: "provider_id")
+  providerAccountId  String    @map(name: "provider_account_id")
+  refreshToken       String?   @map(name: "refresh_token")
+  accessToken        String?   @map(name: "access_token")
+  accessTokenExpires DateTime? @map(name: "access_token_expires")
+  createdAt          DateTime  @default(now()) @map(name: "created_at")
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+
+
+  @@index([providerAccountId], name: "providerAccountId")
+  @@index([providerId], name: "providerId")
+  @@index([userId], name: "userId")
+  @@map(name: "accounts")
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @map(name: "user_id")
+  expires      DateTime
+  sessionToken String   @unique @map(name: "session_token")
+  accessToken  String   @unique @map(name: "access_token")
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "sessions")
+}
+
+model VerificationRequest {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "verification_requests")
+}

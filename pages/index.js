@@ -8,21 +8,22 @@ import EventsList from "../components/home/EventsList";
 const requests = require("../handlers/requests");
 
 export default function Home() {
+  const [userName, setUserName] = useState("testUserOne");
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 
-  // useEffect(() => {
-  //   // Preform fetch request for Events Data
-  //   // update events to pass into both eventsLists
+  useEffect(() => {
+    // Preform fetch request for Events Data
+    // update events to pass into both eventsLists
 
-  //   requests.fetchUserEvents(USERNAME GOES HERE, (data) => {
-  //     console.log(data);
-  //   })
+    requests.fetchUserEvents(userName, (data) => {
+      setUserEvents(data);
+    });
 
-  //   requests.fetchAllEvents((data) => {
-  //     console.log(data);
-  //   })
-  // });
+    requests.fetchAllEvents((data) => {
+      setAllEvents(data);
+    });
+  }, []);
 
   return (
     <div className={styles.container}>

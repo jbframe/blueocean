@@ -11,9 +11,11 @@ const port = 4000;
 
 // ROUTE IMPORTS
 const userRouter = require("./routes/userEvents");
+const eventsRouter = require("./routes/allEvents");
 
 // ROUTES
 app.use("/user", userRouter);
+app.use("/events", eventsRouter);
 
 // DATABASE AND SERVER CONNECTION
 app.listen(port, () => {

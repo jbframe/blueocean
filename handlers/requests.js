@@ -23,17 +23,16 @@ const requests = {
 
   // Fetch All Events
 
-  // fetchAllEvents(cb) {
-  //   axios.
-  //     .get(`${server}/events`)
-  //     .then((response) => {
-  //       cb(response.data);
-  //     })
-  //     .catch((err) => {
-  //       res.sendStatus(500);
-  //       console.log(err);
-  //     })
-  // },
+  fetchAllEvents(cb) {
+    axios
+      .get(`${server}/events`)
+      .then((response) => {
+        cb(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 
 module.exports = requests;

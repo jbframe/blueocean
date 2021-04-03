@@ -8,7 +8,7 @@ userRouter.get("/:user", (req, res) => {
 
   // DATABASE QUERY GOES HERE
 
-  res.send("DATABASE QUERY RESULTS");
+  res.send(`DATABASE QUERY RESULTS FOR ${userName}`);
 });
 
 module.exports = userRouter;

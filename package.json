@@ -10,11 +10,15 @@
     "server": "nodemon ./server/index.js localhost 4000"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@prisma/client": "^2.20.1",
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "next": "10.1.2",
     "next-auth": "^3.13.3",
+    "pg": "^8.5.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },

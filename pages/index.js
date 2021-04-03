@@ -5,6 +5,8 @@ import styles from "../styles/Home.module.css";
 
 import EventsList from "../components/home/EventsList";
 
+const requests = require("../handlers/requests");
+
 export default function Home() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
@@ -12,6 +14,14 @@ export default function Home() {
   useEffect(() => {
     // Preform fetch request for Events Data
     // update events to pass into both eventsLists
+
+    requests.fetchUserEvents(USERNAME GOES HERE, (data) => {
+      console.log(data);
+    })
+
+    requests.fetchAllEvents((data) => {
+      console.log(data);
+    })
   });
 
   return (

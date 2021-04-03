@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-import Layout from '../components/Layout';
+import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 
-// const requests = require("../handlers/requests");
+const requests = require("../handlers/requests");
 
 export default function Home() {
   const [userName, setUserName] = useState("testUserOne");
@@ -14,11 +14,8 @@ export default function Home() {
   const [allEvents, setAllEvents] = useState([]);
 
   // put useEffect to sleep so front end could load in dev -Jim
-  /*
-  useEffect(() => {
-    // Preform fetch request for Events Data
-    // update events to pass into both eventsLists
 
+  useEffect(() => {
     requests.fetchUserEvents(userName, (data) => {
       setUserEvents(data);
     });
@@ -27,7 +24,6 @@ export default function Home() {
       setAllEvents(data);
     });
   }, []);
-  */
 
   return (
     // Wrap every page component in <Layout> tags (and import up top)

@@ -8,7 +8,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // we will define `options` up next
-const authHandler = (req, res) => NextAuth(req, res, options);
 
 const options = {
   providers: [
@@ -33,4 +32,5 @@ const options = {
 };
 
 
-export default authHandler;
+
+export default (req, res) => NextAuth(req, res, options);

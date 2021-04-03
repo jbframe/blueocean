@@ -4,12 +4,14 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
 import EventsList from "../components/home/EventsList";
-
+import { signIn, signOut, useSession } from 'next-auth/client';
 const requests = require("../handlers/requests");
 
 export default function Home() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
+
+  const [session, loading] = useSession();
 
   // useEffect(() => {
   //   // Preform fetch request for Events Data
@@ -24,13 +26,35 @@ export default function Home() {
   //   })
   // });
 
+  const userStatus = (status) => {
+    if (status) {
+      return (
+        <div>
+          Hello { session.user.name } ({ session.user.email }) <br />
+          <button onClick={() => signOut()}> Sign Out </button>
+        </div>
+      )
+    }
+    return (
+      <div>
+          Hello! Please sign in. <br />
+          <button onClick={() => signIn()}> Sign In </button>
+        </div>
+    )
+  }
+
+  if (loading) return (<div>Loading...</div>);
+
+
   return (
     <div className={styles.container}>
       <Head>
         <title>My Dashboard</title>
-      </Head>
-
-      <main className={styles.main}>
+        </Head>
+        <main className={styles.main}>
+        {
+          session ? userStatus(true) : userStatus(false)
+        }
         <div>
           <h5>My Events</h5>
           <EventsList events={userEvents} />
@@ -40,8 +64,6 @@ export default function Home() {
           <EventsList events={allEvents} />
         </div>
       </main>
-
-      <footer className={styles.footer}></footer>
     </div>
-  );
-}
+  )
+};

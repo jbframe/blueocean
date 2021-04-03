@@ -8,6 +8,7 @@ import EventsList from "../components/home/EventsList";
 const requests = require("../handlers/requests");
 
 export default function Home() {
+  const [userName, setUserName] = useState("testUserOne");
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 
@@ -15,13 +16,13 @@ export default function Home() {
     // Preform fetch request for Events Data
     // update events to pass into both eventsLists
 
-    requests.fetchUserEvents(USERNAME GOES HERE, (data) => {
+    requests.fetchUserEvents(userName, (data) => {
       console.log(data);
-    })
+    });
 
-    requests.fetchAllEvents((data) => {
-      console.log(data);
-    })
+    // requests.fetchAllEvents((data) => {
+    //   console.log(data);
+    // })
   });
 
   return (

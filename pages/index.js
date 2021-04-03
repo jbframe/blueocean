@@ -15,7 +15,7 @@ export default function Home() {
     // Preform fetch request for Events Data
     // update events to pass into both eventsLists
 
-    requests.fetchUserEvents(USERNAME GOES HERE, (data) => {
+    requests.fetchUserEvents('USERNAME GOES HERE', (data) => {
       console.log(data);
     })
 

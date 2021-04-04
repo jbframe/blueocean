@@ -13,7 +13,6 @@ export default function Home() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 
-
   /*
   useEffect(() => {
     // Preform fetch request for Events Data
@@ -29,6 +28,7 @@ export default function Home() {
     });
   }, []);
   */
+
     // Wrap every page component in <Layout> tags (and import up top)
     // to have the nav bar up top
   return (

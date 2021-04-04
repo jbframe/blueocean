@@ -8,7 +8,8 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styles from '../styles/Navbar.module.css';
-import Authentication from '../components/Authentication';
+// import Authentication from '../components/Authentication';
+import { signIn, signOut, useSession } from 'next-auth/client';
 
 const StyledMenu = withStyles({
   paper: {
@@ -32,6 +33,7 @@ const StyledMenu = withStyles({
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [session, loading] = useSession();
 
   const handleClick = e => {
     setAnchorEl(e.currentTarget);
@@ -40,8 +42,6 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   }
-
-
 
   return (
     <div className={styles.navbar}>
@@ -61,11 +61,12 @@ const Navbar = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
+          {/* <MenuItem>{ session.user.name }</MenuItem> */}
           <MenuItem onClick={handleClose}>My Profile</MenuItem>
           <MenuItem onClick={handleClose}>Sign Out</MenuItem>
         </StyledMenu>
       </div>
-      <Authentication />
+      {/* <Authentication /> */}
     </div>
   );
 };

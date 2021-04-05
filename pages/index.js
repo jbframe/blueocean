@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/client";
 
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
@@ -9,12 +10,38 @@ import EventsList from "../components/home/EventsList";
 const requests = require("../handlers/requests");
 
 export default function Home() {
-  const [userName, setUserName] = useState("testUserOne");
-  const [host, setHost] = useState(true);
+  // User Hooks
+  const [userName, setUserName] = useState(39);
+  const [host, setHost] = useState(false);
+  const [session, loading] = useSession();
+
+  // console.log(session);
+
+  // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 
   useEffect(() => {
+    // async function getData() {
+    //   if (session) {
+    //     await setUserName(session.user.name).then(() => {
+    //       requests.fetchUserEvents(userName, (data) => {
+    //         setUserEvents(data);
+    //       });
+
+    //       requests.fetchAllEvents((data) => {
+    //         setAllEvents(data);
+    //       });
+    //     });
+    //   }
+    // }
+    // getData();
+
+    if (session) {
+      console.log(session.user.name);
+      // setUserName(session.user.name);
+    }
+
     requests.fetchUserEvents(userName, (data) => {
       setUserEvents(data);
     });
@@ -22,7 +49,7 @@ export default function Home() {
     requests.fetchAllEvents((data) => {
       setAllEvents(data);
     });
-  }, []);
+  }, [session]);
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top

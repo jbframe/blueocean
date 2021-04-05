@@ -13,13 +13,6 @@ export default function Home() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 
-
-
-  useEffect(() => {
-    // Preform fetch request for Events Data
-    // update events to pass into both eventsLists
-    // put useEffect to sleep so front end could load in dev -Jim
-
   useEffect(() => {
     requests.fetchUserEvents(userName, (data) => {
       setUserEvents(data);
@@ -30,8 +23,8 @@ export default function Home() {
     });
   }, []);
 
-    // Wrap every page component in <Layout> tags (and import up top)
-    // to have the nav bar up top
+  // Wrap every page component in <Layout> tags (and import up top)
+  // to have the nav bar up top
   return (
     <Layout>
       <div className={styles.container}>

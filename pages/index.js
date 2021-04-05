@@ -25,7 +25,6 @@ export default function Home() {
   useEffect(() => {
     async function getData() {
       if (session) {
-        console.log(session.user);
         await setUserName(session.user.name);
 
         await requests.fetchUserEvents(userId, (data) => {
@@ -52,11 +51,11 @@ export default function Home() {
         <main className={styles.main}>
           <div>
             <h5>My Events</h5>
-            <EventsList events={userEvents} />
+            <EventsList events={userEvents} userId={userId} />
           </div>
           <div>
             <h5>All Events</h5>
-            <EventsList events={allEvents} />
+            <EventsList events={allEvents} userid={userId} />
           </div>
           <div>
             <SignUp />

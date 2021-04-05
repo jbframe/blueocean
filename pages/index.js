@@ -14,10 +14,7 @@ export default function Home() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 
-<<<<<<< HEAD
   /*
-=======
->>>>>>> 914b7c6346ede9420e2242c1b25db9d381912e48
   useEffect(() => {
     requests.fetchUserEvents(userName, (data) => {
       setUserEvents(data);
@@ -27,16 +24,10 @@ export default function Home() {
       setAllEvents(data);
     });
   }, []);
-<<<<<<< HEAD
   */
 
     // Wrap every page component in <Layout> tags (and import up top)
     // to have the nav bar up top
-=======
-
-  // Wrap every page component in <Layout> tags (and import up top)
-  // to have the nav bar up top
->>>>>>> 914b7c6346ede9420e2242c1b25db9d381912e48
   return (
     <Layout>
       <div className={styles.container}>

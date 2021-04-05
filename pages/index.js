@@ -25,6 +25,7 @@ export default function Home() {
   useEffect(() => {
     async function getData() {
       if (session) {
+        console.log(session.user);
         await setUserName(session.user.name);
 
         await requests.fetchUserEvents(userId, (data) => {

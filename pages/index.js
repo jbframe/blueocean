@@ -10,6 +10,7 @@ const requests = require("../handlers/requests");
 
 export default function Home() {
   const [userName, setUserName] = useState("testUserOne");
+  const [host, setHost] = useState(true);
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 

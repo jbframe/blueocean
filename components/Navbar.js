@@ -47,11 +47,15 @@ const Navbar = () => {
     <div className={styles.navbar}>
       <div className={styles.nav_cluster_left}>
         <EventAvailableIcon className={styles.logo} />
-        <TextField className={styles.search} label="Search Events" variant="outlined" />
+        <TextField
+          className={styles.search}
+          label="Search Events"
+          variant="outlined"
+        />
       </div>
       <div className={styles.nav_cluster_right}>
         <div className={styles.create}>Create Event</div>
-        <AddCircleIcon className={styles.add_icon}/>
+        <AddCircleIcon className={styles.add_icon} />
         <div className={styles.events}>My Events</div>
         <AccountCircleIcon className={styles.account} onClick={handleClick} />
         <StyledMenu

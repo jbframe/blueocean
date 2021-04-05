@@ -4,7 +4,9 @@
   padding: 15px 20px;
   height: auto;
   align-items: center;
-  /* justify-content: start; */
+  position: fixed;
+  width: 100%;
+  top: 0;
 }
 
 .nav_cluster_left {

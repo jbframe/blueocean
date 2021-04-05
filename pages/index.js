@@ -37,14 +37,6 @@ export default function Home() {
       }
     }
     getData();
-
-    // requests.fetchUserEvents(userName, (data) => {
-    //   setUserEvents(data);
-    // });
-
-    // requests.fetchAllEvents((data) => {
-    //   setAllEvents(data);
-    // });
   }, [session]);
 
   // Wrap every page component in <Layout> tags (and import up top)

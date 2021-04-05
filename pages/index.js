@@ -11,7 +11,8 @@ const requests = require("../handlers/requests");
 
 export default function Home() {
   // User Hooks
-  const [userName, setUserName] = useState(39);
+  const [userName, setUserName] = useState("");
+  const [userId, setuserId] = useState(39);
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
 
@@ -22,33 +23,28 @@ export default function Home() {
   const [allEvents, setAllEvents] = useState([]);
 
   useEffect(() => {
-    // async function getData() {
-    //   if (session) {
-    //     await setUserName(session.user.name).then(() => {
-    //       requests.fetchUserEvents(userName, (data) => {
-    //         setUserEvents(data);
-    //       });
+    async function getData() {
+      if (session) {
+        await setUserName(session.user.name);
 
-    //       requests.fetchAllEvents((data) => {
-    //         setAllEvents(data);
-    //       });
-    //     });
-    //   }
-    // }
-    // getData();
+        await requests.fetchUserEvents(userId, (data) => {
+          setUserEvents(data);
+        });
 
-    if (session) {
-      console.log(session.user.name);
-      // setUserName(session.user.name);
+        await requests.fetchAllEvents((data) => {
+          setAllEvents(data);
+        });
+      }
     }
+    getData();
 
-    requests.fetchUserEvents(userName, (data) => {
-      setUserEvents(data);
-    });
+    // requests.fetchUserEvents(userName, (data) => {
+    //   setUserEvents(data);
+    // });
 
-    requests.fetchAllEvents((data) => {
-      setAllEvents(data);
-    });
+    // requests.fetchAllEvents((data) => {
+    //   setAllEvents(data);
+    // });
   }, [session]);
 
   // Wrap every page component in <Layout> tags (and import up top)

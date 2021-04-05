@@ -2,24 +2,19 @@ import React, { useState, useEffect } from "react";
 
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import SignUp from '../components/signup/signup.js';
-import Layout from '../components/Layout';
+import SignUp from "../components/signup/signup.js";
+import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 
-// const requests = require("../handlers/requests");
+const requests = require("../handlers/requests");
 
 export default function Home() {
   const [userName, setUserName] = useState("testUserOne");
+  const [host, setHost] = useState(true);
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 
-
-  /*
   useEffect(() => {
-    // Preform fetch request for Events Data
-    // update events to pass into both eventsLists
-    // put useEffect to sleep so front end could load in dev -Jim
-
     requests.fetchUserEvents(userName, (data) => {
       setUserEvents(data);
     });
@@ -28,9 +23,9 @@ export default function Home() {
       setAllEvents(data);
     });
   }, []);
-  */
-    // Wrap every page component in <Layout> tags (and import up top)
-    // to have the nav bar up top
+
+  // Wrap every page component in <Layout> tags (and import up top)
+  // to have the nav bar up top
   return (
     <Layout>
       <div className={styles.container}>

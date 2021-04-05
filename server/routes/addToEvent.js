@@ -7,7 +7,7 @@ signUpRouter.put("/", (req, res) => {
   const user_id = req.body.user_id;
   const event_id = req.body.event_id;
 
-  // DATABASE UPDATE GOES HERE
+  // DATABASE Query UPDATE GOES HERE
 
   res.sendStatus(200);
 });

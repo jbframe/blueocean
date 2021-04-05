@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+<<<<<<< HEAD
 
 import Layout from "../components/Layout";
+=======
+import SignUp from '../components/signup/signup.js';
+import Layout from '../components/Layout';
+>>>>>>> 29fdb2f082d013c0334652116704f5bff6b6a824
 import EventsList from "../components/home/EventsList";
 
 const requests = require("../handlers/requests");
@@ -41,6 +46,9 @@ export default function Home() {
           <div>
             <h5>All Events</h5>
             <EventsList events={allEvents} />
+          </div>
+          <div>
+            <SignUp />
           </div>
         </main>
 

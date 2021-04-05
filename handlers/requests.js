@@ -1,12 +1,12 @@
 const axios = require("axios");
 
-const server = "SERVER GOES HERE";
+const server = "http://localhost:4000";
 
 const requests = {
   // Fetch User Events
   fetchUserEvents(user, cb) {
     axios
-      .get(`${server}/ENDPOINT GOES HERE`)
+      .get(`${server}/user/${user}`)
       .then((response) => {
         cb(response.data);
       })
@@ -16,17 +16,17 @@ const requests = {
   },
 
   // Fetch All Events
+
   fetchAllEvents(cb) {
     axios
-      .get(`${server}/ENDPOINT GOES HERE`)
+      .get(`${server}/events`)
       .then((response) => {
         cb(response.data);
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   },
-
 };
 
 module.exports = requests;

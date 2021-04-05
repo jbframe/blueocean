@@ -18,11 +18,12 @@ client.connect()
 */
 // inputs (user < {{ name, email, title, aboutMe, location, linkedinUrl }, cb (err, results) => {})
 const insertUser = (user, cb) => {
-    let { name, email, title, aboutMe, location, linkedinUrl } = user;
-    client.query(`INSERT INTO users (name, email, title, about_me, location, linkedin_url) VALUES 
+    let { name, email, password, title, aboutMe, location, linkedinUrl } = user;
+    client.query(`INSERT INTO users (name, email, password, title, about_me, location, linkedin_url) VALUES 
     (
         '${name}',
         '${email}',
+        '${password}',
         '${title}',
         '${aboutMe}',
         '${location}',
@@ -35,6 +36,7 @@ const insertUser = (user, cb) => {
           }
     })
 }
+
 // inputs (event < {name, location, date, hostId, meetingUrl, summary, max} >, cb (err, results) => {} )
 const insertEvent = (event, cb) => {
     let { name, location, date, hostId, meetingUrl, summary, max } = event;

@@ -6,6 +6,7 @@ const EventsList = ({ events }) => {
     <>
       {events.map((event, index) => (
         <EventCard
+          key={index}
           image={event.image}
           name={event.name}
           location={event.location}

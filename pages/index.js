@@ -1,35 +1,45 @@
 import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/client";
 
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Layout from '../components/Layout';
 import EventsList from "../components/home/EventsList";
 
-// const requests = require("../handlers/requests");
+const requests = require("../handlers/requests");
 
 export default function Home() {
-  const [userName, setUserName] = useState("testUserOne");
+  // User Hooks
+  const [userName, setUserName] = useState("");
+  const [userId, setuserId] = useState(39);
+  const [host, setHost] = useState(false);
+  const [session, loading] = useSession();
+
+  // console.log(session);
+
+  // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
 
-
-  /*
   useEffect(() => {
-    // Preform fetch request for Events Data
-    // update events to pass into both eventsLists
-    // put useEffect to sleep so front end could load in dev -Jim
+    async function getData() {
+      if (session) {
+        await setUserName(session.user.name);
 
-    requests.fetchUserEvents(userName, (data) => {
-      setUserEvents(data);
-    });
+        await requests.fetchUserEvents(userId, (data) => {
+          setUserEvents(data);
+        });
 
-    requests.fetchAllEvents((data) => {
-      setAllEvents(data);
-    });
-  }, []);
-  */
-    // Wrap every page component in <Layout> tags (and import up top)
-    // to have the nav bar up top
+        await requests.fetchAllEvents((data) => {
+          setAllEvents(data);
+        });
+      }
+    }
+    getData();
+  }, [session]);
+
+  // Wrap every page component in <Layout> tags (and import up top)
+  // to have the nav bar up top
   return (
     <Layout>
       <div className={styles.container}>

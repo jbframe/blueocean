@@ -185,27 +185,44 @@ const getAttendeesByEvent = (eventId, cb) => {
     })
 }
 
-// const getAssessmentByEvent = (eventId, cb) => {
-//     client.query(`
-//     SELECT 
-//     assessments.assessment_id,
-//     assessments.event_id,
-//     jsonb_agg(jsonb_build_object(
-//         'question', questions.question_text,
-//         'answers', jsonb_agg(
-//             jsonb_build_object(
-//                 'text', answers.answer_text,
-//                 'correct', answers.correct
-//             )
-//         )
-//     ))
-//     FROM assessments
-//     LEFT OUTER JOIN questions ON assessments.assessment_id = questions.assessment_id
-//     LEFT OUTER JOIN answers ON questions.question_id = answers.question_id
-//     WHERE assessments.event_id = 51
-//     GROUP BY assessments.event_id
-//     `)
-// }
+const getAssessmentQuestionsByEvent = (eventId, cb) => {
+    client.query(`
+    SELECT 
+    assessments.assessment_id,
+    assessments.event_id,
+    jsonb_agg(jsonb_build_object(
+        'id', questions.question_id,
+        'question', questions.question_text
+    )) AS questions
+    FROM assessments
+    LEFT OUTER JOIN questions ON assessments.assessment_id = questions.assessment_id
+    WHERE assessments.event_id = ${eventId}
+    GROUP BY assessments.assessment_id
+    `,
+    (err, results) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        cb(null, results.rows)
+      }
+    })
+}
+
+const getAnswersByQuestion = (questionId, cb) => {
+  client.query(`
+  SELECT *
+  FROM answers
+  WHERE answers.question_id = ${questionId}
+  `, 
+  (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, results.rows)
+    }
+  })
+}
+
 
 module.exports = {
     insertUser,
@@ -216,5 +233,7 @@ module.exports = {
     getEventsByAttendee,
     getEventsByHost,
     getAllUsers,
-    getAttendeesByEvent
+    getAttendeesByEvent,
+    getAssessmentQuestionsByEvent,
+    getAnswersByQuestion
 }

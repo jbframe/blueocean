@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-
+import SignUp from '../components/signup/signup.js';
 import Layout from '../components/Layout';
 import EventsList from "../components/home/EventsList";
 
@@ -46,6 +46,9 @@ export default function Home() {
           <div>
             <h5>All Events</h5>
             <EventsList events={allEvents} />
+          </div>
+          <div>
+            <SignUp />
           </div>
         </main>
 

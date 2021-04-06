@@ -38,6 +38,12 @@ export default function Home() {
     // }
     // getData();
 
+    requests.getUserProfile("email@email.com", (data) => {
+      setUserName(data[0].name);
+      // setuserId(data[0].id);
+      setHost(data[0].host_status);
+    });
+
     requests.fetchUserEvents(userId, (data) => {
       setUserEvents(data);
     });

@@ -18,17 +18,11 @@ client.connect()
 */
 // inputs (user < {{ name, email, title, aboutMe, location, linkedinUrl }, cb (err, results) => {})
 const insertUser = (user, cb) => {
-<<<<<<< Updated upstream
-    let { name, email, password, title, aboutMe, location, linkedinUrl } = user;
-    client.query(`INSERT INTO users (name, email, password, title, about_me, location, linkedin_url) VALUES 
-=======
     let { name, email, title, aboutMe, location, linkedinUrl, password } = user;
     client.query(`INSERT INTO users (name, email, title, about_me, location, linkedin_url, password) VALUES
->>>>>>> Stashed changes
     (
         '${name}',
         '${email}',
-        '${password}',
         '${title}',
         '${aboutMe}',
         '${location}',
@@ -193,10 +187,9 @@ const getAttendeesByEvent = (eventId, cb) => {
     })
 }
 
-<<<<<<< Updated upstream
 const getAssessmentQuestionsByEvent = (eventId, cb) => {
     client.query(`
-    SELECT 
+    SELECT
     assessments.assessment_id,
     assessments.event_id,
     jsonb_agg(jsonb_build_object(
@@ -222,7 +215,7 @@ const getAnswersByQuestion = (questionId, cb) => {
   SELECT *
   FROM answers
   WHERE answers.question_id = ${questionId}
-  `, 
+  `,
   (err, results) => {
     if (err) {
       cb(err, null);
@@ -272,7 +265,7 @@ const updateUserProfile = (updateInfo, cb) => {
   SET ${updateString}
   WHERE id = ${updateInfo.id}
   RETURNING *
-  `, 
+  `,
   (err, results) => {
     if (err) {
       cb(err, null);
@@ -283,29 +276,6 @@ const updateUserProfile = (updateInfo, cb) => {
 }
 
 
-=======
-// const getAssessmentByEvent = (eventId, cb) => {
-//     client.query(`
-//     SELECT
-//     assessments.assessment_id,
-//     assessments.event_id,
-//     jsonb_agg(jsonb_build_object(
-//         'question', questions.question_text,
-//         'answers', jsonb_agg(
-//             jsonb_build_object(
-//                 'text', answers.answer_text,
-//                 'correct', answers.correct
-//             )
-//         )
-//     ))
-//     FROM assessments
-//     LEFT OUTER JOIN questions ON assessments.assessment_id = questions.assessment_id
-//     LEFT OUTER JOIN answers ON questions.question_id = answers.question_id
-//     WHERE assessments.event_id = 51
-//     GROUP BY assessments.event_id
-//     `)
-// }
->>>>>>> Stashed changes
 
 module.exports = {
     insertUser,

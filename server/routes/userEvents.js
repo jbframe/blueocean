@@ -1,6 +1,8 @@
 const express = require("express");
 const userRouter = express.Router();
 const queries = require("../../database/queries");
+const db = require('../../database/queries')
+const bcrypt = require('bcrypt');
 
 userRouter.use(express.json());
 userRouter.use(express.urlencoded({ extended: true }));

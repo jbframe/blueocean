@@ -52,6 +52,7 @@ export default function Home() {
 
         <main className={styles.main}>
           <div>
+            { session ? session.user.name : ''}
             <h5>My Events</h5>
             <EventsList events={userEvents} />
           </div>

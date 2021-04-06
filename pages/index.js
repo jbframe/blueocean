@@ -1,28 +1,45 @@
 import React, { useState, useEffect } from "react";
-
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import SignUp from "../components/signup/signup.js";
-import Layout from "../components/Layout";
+import CreateEvent from "./CreateEvent";
+import { useSession } from "next-auth/client";
+import Layout from '../components/Layout';
 import EventsList from "../components/home/EventsList";
+import { Button, Modal } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const requests = require("../handlers/requests");
 
 export default function Home() {
-  const [userName, setUserName] = useState("testUserOne");
-  const [host, setHost] = useState(true);
+  // User Hooks
+  const [userName, setUserName] = useState("");
+  const [userId, setuserId] = useState(39);
+  const [host, setHost] = useState(false);
+  const [session, loading] = useSession();
+
+  // console.log(session);
+
+  // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
+  const [modalShow, setModalShow] = React.useState(false);
 
   useEffect(() => {
-    requests.fetchUserEvents(userName, (data) => {
-      setUserEvents(data);
-    });
+    async function getData() {
+      if (session) {
+        await setUserName(session.user.name);
 
-    requests.fetchAllEvents((data) => {
-      setAllEvents(data);
-    });
-  }, []);
+        await requests.fetchUserEvents(userId, (data) => {
+          setUserEvents(data);
+        });
+
+        await requests.fetchAllEvents((data) => {
+          setAllEvents(data);
+        });
+      }
+    }
+    getData();
+  }, [session]);
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
@@ -42,11 +59,15 @@ export default function Home() {
             <h5>All Events</h5>
             <EventsList events={allEvents} />
           </div>
-          <div>
-            <SignUp />
-          </div>
-        </main>
-
+        <div>
+          <Button variant="primary" onClick={() => setModalShow(true)}>
+            Create Event
+          </Button>
+          <CreateEvent
+            show={modalShow}
+            onHide={() => setModalShow(false)}/>
+        </div>
+      </main>
         <footer className={styles.footer}></footer>
       </div>
     </Layout>

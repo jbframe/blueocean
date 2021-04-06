@@ -3,7 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import CreateEvent from "./CreateEvent";
 import { useSession } from "next-auth/client";
-import Layout from '../components/Layout';
+import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,8 +16,6 @@ export default function Home() {
   const [userId, setuserId] = useState(39);
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
-
-  // console.log(session);
 
   // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
@@ -59,15 +57,13 @@ export default function Home() {
             <h5>All Events</h5>
             <EventsList events={allEvents} userid={userId} />
           </div>
-        <div>
-          <Button variant="primary" onClick={() => setModalShow(true)}>
-            Create Event
-          </Button>
-          <CreateEvent
-            show={modalShow}
-            onHide={() => setModalShow(false)}/>
-        </div>
-      </main>
+          <div>
+            <Button variant="primary" onClick={() => setModalShow(true)}>
+              Create Event
+            </Button>
+            <CreateEvent show={modalShow} onHide={() => setModalShow(false)} />
+          </div>
+        </main>
         <footer className={styles.footer}></footer>
       </div>
     </Layout>

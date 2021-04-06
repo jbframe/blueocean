@@ -23,6 +23,7 @@ export default function Home() {
   const [modalShow, setModalShow] = React.useState(false);
 
   useEffect(() => {
+    // ----TO BE USED WITH NEXT.AUTH----
     // async function getData() {
     //   if (session) {
     //     await setUserName(session.user.name);

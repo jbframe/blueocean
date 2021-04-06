@@ -3,7 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import CreateEvent from "./createEvent";
 import { useSession } from "next-auth/client";
-import Layout from '../components/Layout';
+import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -17,28 +17,34 @@ export default function Home() {
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
 
-  // console.log(session);
-
   // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
 
   useEffect(() => {
-    async function getData() {
-      if (session) {
-        await setUserName(session.user.name);
+    // async function getData() {
+    //   if (session) {
+    //     await setUserName(session.user.name);
 
-        await requests.fetchUserEvents(userId, (data) => {
-          setUserEvents(data);
-        });
+    //     await requests.fetchUserEvents(userId, (data) => {
+    //       setUserEvents(data);
+    //     });
 
-        await requests.fetchAllEvents((data) => {
-          setAllEvents(data);
-        });
-      }
-    }
-    getData();
+    //     await requests.fetchAllEvents((data) => {
+    //       setAllEvents(data);
+    //     });
+    //   }
+    // }
+    // getData();
+
+    requests.fetchUserEvents(userId, (data) => {
+      setUserEvents(data);
+    });
+
+    requests.fetchAllEvents((data) => {
+      setAllEvents(data);
+    });
   }, [session]);
 
   // Wrap every page component in <Layout> tags (and import up top)
@@ -52,23 +58,25 @@ export default function Home() {
 
         <main className={styles.main}>
           <div>
-            { session ? session.user.name : ''}
+            {session ? session.user.name : ""}
             <h5>My Events</h5>
-            <EventsList events={userEvents} />
+            <div className="event-list">
+              <EventsList events={userEvents} userId={userId} />
+            </div>
           </div>
           <div>
             <h5>All Events</h5>
-            <EventsList events={allEvents} />
+            <div className="event-list">
+              <EventsList events={allEvents} userid={userId} />
+            </div>
           </div>
-        <div>
-          <Button variant="primary" onClick={() => setModalShow(true)}>
-            Create Event
-          </Button>
-          <CreateEvent
-            show={modalShow}
-            onHide={() => setModalShow(false)}/>
-        </div>
-      </main>
+          <div>
+            <Button variant="primary" onClick={() => setModalShow(true)}>
+              Create Event
+            </Button>
+            <CreateEvent show={modalShow} onHide={() => setModalShow(false)} />
+          </div>
+        </main>
         <footer className={styles.footer}></footer>
       </div>
     </Layout>

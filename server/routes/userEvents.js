@@ -20,6 +20,19 @@ userRouter.get("/:user", (req, res) => {
   });
 });
 
+// req.body.profile = { title, aboutMe, location, linkedinUrl, password }  ALL FIELDS OPTIONAL
+userRouter.put("/:id", (req, res) => {
+  let updateInfo = req.body.profile;
+  updateInfo.id = req.params.id;
+  queries.updateUserProfile(updateInfo, (err, results) => {
+    if (err) {
+      res.sendStatus(500);
+      console.log(err);
+    } else {
+      res.send(results);
+    }
+  })
+})
 
 userRouter.post('/register', (req, res) => {
   const { fullName, email, password, confirmPassword } = req.body;

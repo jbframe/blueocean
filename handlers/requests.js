@@ -40,6 +40,18 @@ const requests = {
       });
   },
 
+
+  getUserProfile(email, cb) {
+    axios
+      .get(`${server}/profile/${email}`)
+      .then((response) => {
+        cb(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
   addEvent(postObj) {
     axios
       .post(`${server}/events/create`, postObj)
@@ -49,7 +61,7 @@ const requests = {
       .catch((err) => {
         console.log(err);
       });
-  }
+  },
 };
 
 module.exports = requests;

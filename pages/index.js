@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import CreateEvent from "./CreateEvent";
+import CreateEvent from "./createEvent";
 import { useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
@@ -49,7 +49,8 @@ export default function Home() {
         </Head>
 
         <main className={styles.main}>
-          <div className="event-list">
+          <div>
+            {session ? session.user.name : ""}
             <h5>My Events</h5>
             <EventsList events={userEvents} userId={userId} />
           </div>

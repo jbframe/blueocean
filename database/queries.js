@@ -310,6 +310,20 @@ const updateUserProfile = (updateInfo, cb) => {
   })
 }
 
+const getUserProfileByEmail = (email, cb) => {
+  client.query(`
+  SELECT *
+  FROM users
+  WHERE email = '${email}'`, 
+  (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, results.rows)
+    }
+  })
+}
+
 
 
 module.exports = {
@@ -326,5 +340,6 @@ module.exports = {
     getAssessmentQuestionsByEvent,
     getAnswersByQuestion,
     getEventPhotos,
+    getUserProfileByEmail,
     updateUserProfile
 }

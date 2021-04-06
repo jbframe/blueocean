@@ -40,7 +40,7 @@ export default function Home() {
 
     requests.getUserProfile("email@email.com", (data) => {
       setUserName(data[0].name);
-      setuserId(data[0].id);
+      // setuserId(data[0].id);
       setHost(data[0].host_status);
     });
 

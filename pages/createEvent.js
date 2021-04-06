@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Image } from "react-bootstrap";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import requests from "../handlers/requests";
 
 function CreateEvent(props) {
   const [eventName, setEventName] = useState("");
@@ -16,13 +16,21 @@ function CreateEvent(props) {
     setEventDescription("");
     setEventLocation("");
     setMaxAttendees(0);
-    setPhotos("");
+    setPhotos(null);
   };
 
   const handleSubmit = () => {
     event.preventDefault();
     console.log("SUBMITTED");
     clearFields();
+    const submitObj = {
+      name: eventName,
+      description: eventDescription,
+      location: eventLocation,
+      maxAttendees: maxAttendees,
+      photos: photos
+    }
+    requests.addEvent(submitObj);
   };
 
   const configurePhoto = () => {

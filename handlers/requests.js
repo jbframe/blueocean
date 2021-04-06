@@ -39,6 +39,17 @@ const requests = {
         console.log(err);
       });
   },
+
+  addEvent(postObj) {
+    axios
+      .post(`${server}/events/create`, postObj)
+      .then((response) => {
+        console.log('Added new event!');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
 
 module.exports = requests;

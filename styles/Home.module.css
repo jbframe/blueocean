@@ -114,6 +114,13 @@
   height: 1em;
 }
 
+.event-list {
+  background-color: red;
+  max-height: 100px;
+  width: auto;
+  overflow-y: scroll;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

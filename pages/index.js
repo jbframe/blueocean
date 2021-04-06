@@ -60,11 +60,15 @@ export default function Home() {
           <div>
             {session ? session.user.name : ""}
             <h5>My Events</h5>
-            <EventsList events={userEvents} userId={userId} />
+            <div className="event-list">
+              <EventsList events={userEvents} userId={userId} />
+            </div>
           </div>
-          <div className="event-list">
+          <div>
             <h5>All Events</h5>
-            <EventsList events={allEvents} userid={userId} />
+            <div className="event-list">
+              <EventsList events={allEvents} userid={userId} />
+            </div>
           </div>
           <div>
             <Button variant="primary" onClick={() => setModalShow(true)}>

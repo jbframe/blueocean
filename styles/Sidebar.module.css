@@ -1,0 +1,11 @@
+.sidebar {
+  background-color: lightgrey;
+  height: 100%;
+  width: 20%;
+  z-index: 1;
+  top: 1;
+  left: 0;
+  position: absolute;
+  margin-top: 85px;
+  padding: 20px 20px;
+}

@@ -18,8 +18,13 @@ client.connect()
 */
 // inputs (user < {{ name, email, title, aboutMe, location, linkedinUrl }, cb (err, results) => {})
 const insertUser = (user, cb) => {
+<<<<<<< Updated upstream
     let { name, email, password, title, aboutMe, location, linkedinUrl } = user;
     client.query(`INSERT INTO users (name, email, password, title, about_me, location, linkedin_url) VALUES 
+=======
+    let { name, email, title, aboutMe, location, linkedinUrl, password } = user;
+    client.query(`INSERT INTO users (name, email, title, about_me, location, linkedin_url, password) VALUES
+>>>>>>> Stashed changes
     (
         '${name}',
         '${email}',
@@ -27,7 +32,8 @@ const insertUser = (user, cb) => {
         '${title}',
         '${aboutMe}',
         '${location}',
-        '${linkedinUrl}'
+        '${linkedinUrl}',
+        '${password}'
     )`, (err, results) => {
         if (err) {
             cb(err, null);
@@ -40,7 +46,7 @@ const insertUser = (user, cb) => {
 // inputs (event < {name, location, date, hostId, meetingUrl, summary, max} >, cb (err, results) => {} )
 const insertEvent = (event, cb) => {
     let { name, location, date, hostId, meetingUrl, summary, max } = event;
-    client.query(`INSERT INTO events (event_name, location, date, host_id, meeting_url, summary, attendee_max) VALUES 
+    client.query(`INSERT INTO events (event_name, location, date, host_id, meeting_url, summary, attendee_max) VALUES
     (
         '${name}',
         '${location}',
@@ -131,12 +137,12 @@ const getAllUpcomingEvents = (cb) => {
 }
 
 const getEventsByAttendee = (userId, cb) => {
-    client.query(`SELECT 
-    * 
-    FROM events 
+    client.query(`SELECT
+    *
+    FROM events
     LEFT OUTER JOIN attendees ON events.event_id = attendees.event_id
-    WHERE date > NOW() 
-    AND user_id = ${userId}`, 
+    WHERE date > NOW()
+    AND user_id = ${userId}`,
     (err, results) => {
         if (err) {
             cb(err, null);
@@ -148,11 +154,11 @@ const getEventsByAttendee = (userId, cb) => {
 
 const getEventsByHost = (userId, cb) => {
     client.query(`
-    SELECT * 
-    FROM events 
+    SELECT *
+    FROM events
     LEFT OUTER JOIN users ON events.host_id = users.id
-    WHERE date > NOW() 
-    AND id = ${userId}`, 
+    WHERE date > NOW()
+    AND id = ${userId}`,
     (err, results) => {
         if (err) {
           cb(err, null);
@@ -174,7 +180,7 @@ const getAllUsers = (cb) => {
 
 const getAttendeesByEvent = (eventId, cb) => {
     client.query(`
-    SELECT * 
+    SELECT *
     FROM users
     LEFT OUTER JOIN attendees ON users.id = attendees.user_id
     WHERE event_id = ${eventId}`,
@@ -187,6 +193,7 @@ const getAttendeesByEvent = (eventId, cb) => {
     })
 }
 
+<<<<<<< Updated upstream
 const getAssessmentQuestionsByEvent = (eventId, cb) => {
     client.query(`
     SELECT 
@@ -276,6 +283,29 @@ const updateUserProfile = (updateInfo, cb) => {
 }
 
 
+=======
+// const getAssessmentByEvent = (eventId, cb) => {
+//     client.query(`
+//     SELECT
+//     assessments.assessment_id,
+//     assessments.event_id,
+//     jsonb_agg(jsonb_build_object(
+//         'question', questions.question_text,
+//         'answers', jsonb_agg(
+//             jsonb_build_object(
+//                 'text', answers.answer_text,
+//                 'correct', answers.correct
+//             )
+//         )
+//     ))
+//     FROM assessments
+//     LEFT OUTER JOIN questions ON assessments.assessment_id = questions.assessment_id
+//     LEFT OUTER JOIN answers ON questions.question_id = answers.question_id
+//     WHERE assessments.event_id = 51
+//     GROUP BY assessments.event_id
+//     `)
+// }
+>>>>>>> Stashed changes
 
 module.exports = {
     insertUser,

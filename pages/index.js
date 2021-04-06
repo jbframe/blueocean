@@ -23,20 +23,28 @@ export default function Home() {
   const [modalShow, setModalShow] = React.useState(false);
 
   useEffect(() => {
-    async function getData() {
-      if (session) {
-        await setUserName(session.user.name);
+    // async function getData() {
+    //   if (session) {
+    //     await setUserName(session.user.name);
 
-        await requests.fetchUserEvents(userId, (data) => {
-          setUserEvents(data);
-        });
+    //     await requests.fetchUserEvents(userId, (data) => {
+    //       setUserEvents(data);
+    //     });
 
-        await requests.fetchAllEvents((data) => {
-          setAllEvents(data);
-        });
-      }
-    }
-    getData();
+    //     await requests.fetchAllEvents((data) => {
+    //       setAllEvents(data);
+    //     });
+    //   }
+    // }
+    // getData();
+
+    requests.fetchUserEvents(userId, (data) => {
+      setUserEvents(data);
+    });
+
+    requests.fetchAllEvents((data) => {
+      setAllEvents(data);
+    });
   }, [session]);
 
   // Wrap every page component in <Layout> tags (and import up top)

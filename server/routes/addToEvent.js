@@ -15,8 +15,6 @@ signUpRouter.put("/", (req, res) => {
       res.send(results);
     }
   })
-
-  res.sendStatus(200);
 });
 
 module.exports = signUpRouter;

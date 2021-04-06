@@ -14,19 +14,21 @@ eventsRouter.get("/", (req, res) => {
   });
 });
 
-// req.body.event = { name, location, date, hostId, meetingUrl, summary, max }
+// req.body = { name, location, date, hostId, meetingUrl, summary, max }
 eventsRouter.post("/create", (req, res) => {
-  let event = req.body.event
+  let event = req.body
+  console.log(event);
   queries.insertEvent(event, (err, results) => {
     if (err) {
-      res.sendStatus(400);
+      console.log(err)
+      res.sendStatus(401);
     } else {
       res.send(results);
     }
   })
 })
 
-// req.body.questions = [
+// req.body = [
 //   {
 //     text: "Question text here?",
 //     answers: [
@@ -39,8 +41,8 @@ eventsRouter.post("/create", (req, res) => {
 //   },
 //   {}, {}...
 // ]
-eventsRouter.Router.post("/assessment/:id", (req, res) => {
-  queries.insertAssessment(req.params.id, req.body.questions, (err, results) => {
+eventsRouter.post("/assessment/:id", (req, res) => {
+  queries.insertAssessment(req.params.id, req.body, (err, results) => {
     if (err) {
       res.sendStatus(400);
     } else {

@@ -1,5 +1,6 @@
 .event_card {
   margin-bottom: 15px;
+  cursor: pointer;
 }
 
 .name {

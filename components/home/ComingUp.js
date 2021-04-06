@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import EventCard from './EventCard';
+import SidebarEventCard from './SidebarEventCard';
 
 const ComingUp = () => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
@@ -29,7 +29,7 @@ const ComingUp = () => {
   return (
     <div>
       {upcomingEvents ? upcomingEvents.map((event, i) => (
-        <EventCard
+        <SidebarEventCard
           key={i}
           name={event.event_name}
           location={event.location}

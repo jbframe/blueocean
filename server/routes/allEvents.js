@@ -28,26 +28,5 @@ eventsRouter.post("/create", (req, res) => {
   })
 })
 
-// req.body = [
-//   {
-//     text: "Question text here?",
-//     answers: [
-//       {
-//         text: "answer text here.",
-//         correct: Boolean
-//       },
-//       {}, {}...
-//     ]
-//   },
-//   {}, {}...
-// ]
-eventsRouter.post("/assessment/:id", (req, res) => {
-  queries.insertAssessment(req.params.id, req.body, (err, results) => {
-    if (err) {
-      res.sendStatus(400);
-    } else {
-      res.send(results);
-    }
-  })
-})
+
 module.exports = eventsRouter;

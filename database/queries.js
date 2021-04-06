@@ -18,8 +18,11 @@ client.connect()
 */
 // inputs (user < {{ name, email, title, aboutMe, location, linkedinUrl }, cb (err, results) => {})
 const insertUser = (user, cb) => {
-    let { name, email, title, aboutMe, location, linkedinUrl, password } = user;
-    client.query(`INSERT INTO users (name, email, title, about_me, location, linkedin_url, password) VALUES
+    let { name, email, title, aboutMe, location, linkedinUrl, password, token } = user;
+    client.query(`
+    INSERT INTO users 
+    (name, email, title, about_me, location, linkedin_url, password, token) 
+    VALUES
     (
         '${name}',
         '${email}',
@@ -28,11 +31,13 @@ const insertUser = (user, cb) => {
         '${location}',
         '${linkedinUrl}',
         '${password}'
-    )`, (err, results) => {
+        '${token}'
+    )
+    RETURNING *`, (err, results) => {
         if (err) {
             cb(err, null);
           } else {
-            cb(null, results);
+            cb(null, results.rows);
           }
     })
 }

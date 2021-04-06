@@ -18,15 +18,16 @@ client.connect()
 */
 // inputs (user < {{ name, email, title, aboutMe, location, linkedinUrl }, cb (err, results) => {})
 const insertUser = (user, cb) => {
-    let { name, email, title, aboutMe, location, linkedinUrl } = user;
-    client.query(`INSERT INTO users (name, email, title, about_me, location, linkedin_url) VALUES 
+    let { name, email, title, aboutMe, location, linkedinUrl, password } = user;
+    client.query(`INSERT INTO users (name, email, title, about_me, location, linkedin_url, password) VALUES
     (
         '${name}',
         '${email}',
         '${title}',
         '${aboutMe}',
         '${location}',
-        '${linkedinUrl}'
+        '${linkedinUrl}',
+        '${password}'
     )`, (err, results) => {
         if (err) {
             cb(err, null);
@@ -35,10 +36,11 @@ const insertUser = (user, cb) => {
           }
     })
 }
+
 // inputs (event < {name, location, date, hostId, meetingUrl, summary, max} >, cb (err, results) => {} )
 const insertEvent = (event, cb) => {
     let { name, location, date, hostId, meetingUrl, summary, max } = event;
-    client.query(`INSERT INTO events (event_name, location, date, host_id, meeting_url, summary, attendee_max) VALUES 
+    client.query(`INSERT INTO events (event_name, location, date, host_id, meeting_url, summary, attendee_max) VALUES
     (
         '${name}',
         '${location}',
@@ -129,12 +131,12 @@ const getAllUpcomingEvents = (cb) => {
 }
 
 const getEventsByAttendee = (userId, cb) => {
-    client.query(`SELECT 
-    * 
-    FROM events 
+    client.query(`SELECT
+    *
+    FROM events
     LEFT OUTER JOIN attendees ON events.event_id = attendees.event_id
-    WHERE date > NOW() 
-    AND user_id = ${userId}`, 
+    WHERE date > NOW()
+    AND user_id = ${userId}`,
     (err, results) => {
         if (err) {
             cb(err, null);
@@ -146,11 +148,11 @@ const getEventsByAttendee = (userId, cb) => {
 
 const getEventsByHost = (userId, cb) => {
     client.query(`
-    SELECT * 
-    FROM events 
+    SELECT *
+    FROM events
     LEFT OUTER JOIN users ON events.host_id = users.id
-    WHERE date > NOW() 
-    AND id = ${userId}`, 
+    WHERE date > NOW()
+    AND id = ${userId}`,
     (err, results) => {
         if (err) {
           cb(err, null);
@@ -172,7 +174,7 @@ const getAllUsers = (cb) => {
 
 const getAttendeesByEvent = (eventId, cb) => {
     client.query(`
-    SELECT * 
+    SELECT *
     FROM users
     LEFT OUTER JOIN attendees ON users.id = attendees.user_id
     WHERE event_id = ${eventId}`,
@@ -185,27 +187,95 @@ const getAttendeesByEvent = (eventId, cb) => {
     })
 }
 
-// const getAssessmentByEvent = (eventId, cb) => {
-//     client.query(`
-//     SELECT 
-//     assessments.assessment_id,
-//     assessments.event_id,
-//     jsonb_agg(jsonb_build_object(
-//         'question', questions.question_text,
-//         'answers', jsonb_agg(
-//             jsonb_build_object(
-//                 'text', answers.answer_text,
-//                 'correct', answers.correct
-//             )
-//         )
-//     ))
-//     FROM assessments
-//     LEFT OUTER JOIN questions ON assessments.assessment_id = questions.assessment_id
-//     LEFT OUTER JOIN answers ON questions.question_id = answers.question_id
-//     WHERE assessments.event_id = 51
-//     GROUP BY assessments.event_id
-//     `)
-// }
+const getAssessmentQuestionsByEvent = (eventId, cb) => {
+    client.query(`
+    SELECT
+    assessments.assessment_id,
+    assessments.event_id,
+    jsonb_agg(jsonb_build_object(
+        'id', questions.question_id,
+        'question', questions.question_text
+    )) AS questions
+    FROM assessments
+    LEFT OUTER JOIN questions ON assessments.assessment_id = questions.assessment_id
+    WHERE assessments.event_id = ${eventId}
+    GROUP BY assessments.assessment_id
+    `,
+    (err, results) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        cb(null, results.rows)
+      }
+    })
+}
+
+const getAnswersByQuestion = (questionId, cb) => {
+  client.query(`
+  SELECT *
+  FROM answers
+  WHERE answers.question_id = ${questionId}
+  `,
+  (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, results.rows)
+    }
+  })
+}
+
+/*=================================================================
+======================                  ===========================
+===================   UserProfileQueries   ========================
+======================                  ===========================
+===================================================================
+*/
+
+// First param must be an object with an 'id' key corresponding to user.
+// optional keys include title, aboutMe, location, linkedinUrl, image, password
+// any keys present in updateInfo will be changed, any excluded will remain the same
+
+const updateUserProfile = (updateInfo, cb) => {
+  let updateString = '';
+  if (updateInfo.title) {
+    updateString += ` title = '${updateInfo.title}', `
+  }
+  if (updateInfo.aboutMe) {
+    updateString += ` about_me = '${updateInfo.aboutMe}', `
+  }
+  if (updateInfo.location) {
+    updateString += ` location = '${updateInfo.location}', `
+  }
+  if (updateInfo.linkedinUrl) {
+    updateString += ` linkedin_url = '${updateInfo.linkedinUrl}', `
+  }
+  if (updateInfo.password) {
+    updateString += ` password = '${updateInfo.password}', `
+  }
+  if (updateInfo.image) {
+    updateString += ` image = '${updateInfo.image}', `
+  }
+  updateString = updateString.slice(0, -2);
+
+  console.log(updateString);
+
+  client.query(`
+  UPDATE users
+  SET ${updateString}
+  WHERE id = ${updateInfo.id}
+  RETURNING *
+  `,
+  (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, results)
+    }
+  })
+}
+
+
 
 module.exports = {
     insertUser,
@@ -216,5 +286,8 @@ module.exports = {
     getEventsByAttendee,
     getEventsByHost,
     getAllUsers,
-    getAttendeesByEvent
+    getAttendeesByEvent,
+    getAssessmentQuestionsByEvent,
+    getAnswersByQuestion,
+    updateUserProfile
 }

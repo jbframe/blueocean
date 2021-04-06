@@ -73,7 +73,7 @@ export default function Home() {
           <div>
             <h5>All Events</h5>
             <div className="event-list">
-              <EventsList events={allEvents} userid={userId} />
+              <EventsList events={allEvents} userId={userId} />
             </div>
           </div>
           <div>

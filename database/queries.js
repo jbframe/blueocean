@@ -18,16 +18,16 @@ client.connect()
 */
 // inputs (user < {{ name, email, title, aboutMe, location, linkedinUrl }, cb (err, results) => {})
 const insertUser = (user, cb) => {
-    let { name, email, password, title, aboutMe, location, linkedinUrl } = user;
-    client.query(`INSERT INTO users (name, email, password, title, about_me, location, linkedin_url) VALUES
+    let { name, email, title, aboutMe, location, linkedinUrl, password } = user;
+    client.query(`INSERT INTO users (name, email, title, about_me, location, linkedin_url, password) VALUES
     (
         '${name}',
         '${email}',
-        '${password}',
         '${title}',
         '${aboutMe}',
         '${location}',
-        '${linkedinUrl}'
+        '${linkedinUrl}',
+        '${password}'
     )`, (err, results) => {
         if (err) {
             cb(err, null);
@@ -225,6 +225,57 @@ const getAnswersByQuestion = (questionId, cb) => {
   })
 }
 
+/*=================================================================
+======================                  ===========================
+===================   UserProfileQueries   ========================
+======================                  ===========================
+===================================================================
+*/
+
+// First param must be an object with an 'id' key corresponding to user.
+// optional keys include title, aboutMe, location, linkedinUrl, image, password
+// any keys present in updateInfo will be changed, any excluded will remain the same
+
+const updateUserProfile = (updateInfo, cb) => {
+  let updateString = '';
+  if (updateInfo.title) {
+    updateString += ` title = '${updateInfo.title}', `
+  }
+  if (updateInfo.aboutMe) {
+    updateString += ` about_me = '${updateInfo.aboutMe}', `
+  }
+  if (updateInfo.location) {
+    updateString += ` location = '${updateInfo.location}', `
+  }
+  if (updateInfo.linkedinUrl) {
+    updateString += ` linkedin_url = '${updateInfo.linkedinUrl}', `
+  }
+  if (updateInfo.password) {
+    updateString += ` password = '${updateInfo.password}', `
+  }
+  if (updateInfo.image) {
+    updateString += ` image = '${updateInfo.image}', `
+  }
+  updateString = updateString.slice(0, -2);
+
+  console.log(updateString);
+
+  client.query(`
+  UPDATE users
+  SET ${updateString}
+  WHERE id = ${updateInfo.id}
+  RETURNING *
+  `,
+  (err, results) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, results)
+    }
+  })
+}
+
+
 
 module.exports = {
     insertUser,
@@ -237,5 +288,6 @@ module.exports = {
     getAllUsers,
     getAttendeesByEvent,
     getAssessmentQuestionsByEvent,
-    getAnswersByQuestion
+    getAnswersByQuestion,
+    updateUserProfile
 }

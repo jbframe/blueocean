@@ -1,0 +1,15 @@
+.event_card {
+  margin-bottom: 15px;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.location {
+  font-size: 14px;
+}
+
+.date {
+  font-size: 14px;
+}

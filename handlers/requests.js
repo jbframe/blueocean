@@ -39,6 +39,18 @@ const requests = {
         console.log(err);
       });
   },
+
+  getUserProfile(email, cb) {
+    axios
+      .get(`${server}/profile/${email}`)
+      .then((response) => {
+        cb(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.sendStatus(500);
+      });
+  },
 };
 
 module.exports = requests;

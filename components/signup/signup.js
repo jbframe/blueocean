@@ -4,35 +4,18 @@ import { InputLabel } from '@material-ui/core';
 import { Input } from '@material-ui/core';
 import { FormHelperText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid} from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Icon } from '@material-ui/core';
 import $ from 'jquery';
 import Link from 'next/link';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   grid: {
     width: '100%',
     margin: '0px'
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    background: theme.palette.success.light
-  },
-  fitImg : {
-    width: '100%',
-    height: '800px'
-  },
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-    border: '2px black solid',
-    width: '50%'
-  },
+  }
 }));
 
 const SignUp = (props) => {
@@ -186,7 +169,7 @@ const SignUp = (props) => {
           <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='text' id='fullName' name='fullName' placeholder="Full Name" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='text' id='email' name='email' placeholder="Email" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
+          <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='email' id='email' name='email' placeholder="Email" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='password' id='password' name='password' placeholder="Password" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>

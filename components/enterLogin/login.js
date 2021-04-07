@@ -4,7 +4,7 @@ import { InputLabel } from '@material-ui/core';
 import { Input } from '@material-ui/core';
 import { FormHelperText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Icon } from '@material-ui/core';
@@ -15,24 +15,7 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     width: '100%',
     margin: '0px'
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    background: theme.palette.success.light
-  },
-  fitImg : {
-    width: '100%',
-    height: '800px'
-  },
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-    border: '2px black solid',
-    width: '50%'
-  },
+  }
 }));
 
 const Login = (props) => {
@@ -124,7 +107,7 @@ const Login = (props) => {
   function handleFocus(e) {
     // console.log(e.target.id);
     $(`#${e.target.id}`).css('outline', 'none');
-    $(`#${e.target.id}`).css('border', '1px blue solid');
+    $(`#${e.target.id}`).css('border', '1px #1E90FF solid');
   }
 
   function handleBlur(e) {
@@ -162,7 +145,7 @@ const Login = (props) => {
           <h1 style={{ fontWeight: '20'}}>Enter Login Information</h1>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='text' id='emailLogin' name='emailLogin' placeholder="Email" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
+          <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='email' id='emailLogin' name='emailLogin' placeholder="Email" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='password' id='passwordLogin' name='passwordLogin' placeholder="Password" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
@@ -174,7 +157,7 @@ const Login = (props) => {
           <a id="forgot" onClick={handleClick} onMouseEnter={ handleMouseOver } onMouseLeave={ handleMouseOut } href="" style={{ fontSize: '10px'}}>Forgot password?</a>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <span style={{ padding: '20px 0 40px 0', fontSize: '12px'}}>Already have an account? <Link href='/signupPage'><a id="signUpLink" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut} href="" style={{ textDecoration: 'underline'}}>Sign up</a></Link></span>
+          <span style={{ padding: '20px 0 40px 0', fontSize: '12px'}}>Dont have an account? <Link href='/signupPage'><a id="signUpLink" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut} href="" style={{ textDecoration: 'underline'}}>Sign up</a></Link></span>
           <br />
         </Grid>
       </Grid>

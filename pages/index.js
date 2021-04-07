@@ -64,13 +64,6 @@ export default function Home() {
 
         <main className={styles.main}>
           <div>
-            {session ? session.user.name : ""}
-            <h5>My Events</h5>
-            <div className="event-list">
-              <EventsList events={userEvents} userId={userId} />
-            </div>
-          </div>
-          <div>
             <h5>All Events</h5>
             <div className="event-list">
               <EventsList events={allEvents} userId={userId} />

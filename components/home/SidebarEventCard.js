@@ -8,11 +8,9 @@ const SidebarEventCard = ({ image, name, location, date, eventId }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
-    console.log('close')
     setShow(false);
   }
   const handleShow = () => {
-    console.log('show')
     setShow(true);
   }
 
@@ -87,6 +85,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId }) => {
       <div className={s.name}>{name}</div>
       <div className={s.location}>{location}</div>
       <div className={s.date}>{displayDate}</div>
+      <div onClick={e => e.stopPropagation()}>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{name}</Modal.Title>
@@ -112,6 +111,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId }) => {
           </Button>
         </Modal.Footer>
       </Modal>
+      </div>
     </div>
   );
 };

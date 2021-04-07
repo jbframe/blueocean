@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from 'next/image';
 import s from '../../styles/EventCard.module.css';
+import { Button, Modal } from "react-bootstrap";
+import requests from "../../handlers/requests";
 
 const SidebarEventCard = ({ image, name, location, date, eventId }) => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+  }
+  const handleShow = () => {
+    setShow(true);
+  }
+
+  const handleSignUp = () => {
+    requests.addUserToEvent(userId, eventId);
+    handleClose();
+  };
 
   const dayObj = {
     Sun: 'Sunday',
@@ -54,16 +69,12 @@ const SidebarEventCard = ({ image, name, location, date, eventId }) => {
   let time = militaryToStandard(dateArray[4]);
   let displayDate = `${day}, ${month} ${calDate}, ${year} at ${time}`
 
-  // using placeholder image
-  // final images will be passed down as props
-  // when mapped over
-
   const handleClick = (eventId) => {
     console.log(eventId, ' was selected!');
   }
 
   return (
-    <div className={s.event_card} onClick={() => handleClick(eventId)}>
+    <div className={s.event_card} onClick={handleShow}>
       <Image
         className="event-card-img"
         src="/event-card-placeholder.jpeg"
@@ -74,6 +85,33 @@ const SidebarEventCard = ({ image, name, location, date, eventId }) => {
       <div className={s.name}>{name}</div>
       <div className={s.location}>{location}</div>
       <div className={s.date}>{displayDate}</div>
+      <div onClick={e => e.stopPropagation()}>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Image
+            className="event-card-img"
+            src="/event-card-placeholder.jpeg"
+            alt="event card cover"
+            width={175}
+            height={100}
+          />
+          <div className="event-card-name">{name}</div>
+          <div className="event-card-location">{location}</div>
+          <div className="event-card-date">{date}</div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSignUp}>
+            Sign Up
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      </div>
     </div>
   );
 };

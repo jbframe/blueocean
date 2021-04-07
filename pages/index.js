@@ -21,6 +21,7 @@ export default function Home() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
+  const [userAttendees, setUserAttendees] = useState([]);
 
   useEffect(() => {
     // ----TO BE USED WITH NEXT.AUTH----
@@ -39,6 +40,8 @@ export default function Home() {
     // }
     // getData();
 
+
+
     requests.getUserProfile("email@email.com", (data) => {
       setUserName(data[0].name);
       // setuserId(data[0].id);
@@ -53,10 +56,13 @@ export default function Home() {
       setAllEvents(data);
     });
 
-    requests.fetchEventAttendees(59, (data) => {
-      console.log(data);
-    });
-
+    let userAttendeesUpdate = {}
+    for (let i = 0; i < userEvents.length; i++) {
+      requests.fetchEventAttendees(userEvents[i].event_id, (data) => {
+        userAttendeesUpdate[userEvents[i].event_id] = data;
+      });
+    }
+    setUserAttendees(userAttendeesUpdate);
   }, [session]);
 
 

@@ -22,6 +22,9 @@ export default function Home() {
   const [modalShow, setModalShow] = React.useState(false);
   const [userAttendees, setUserAttendees] = useState([]);
 
+  // Search Hooks
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     // ----TO BE USED WITH NEXT.AUTH----
     // async function getData() {
@@ -66,16 +69,16 @@ export default function Home() {
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (
-    <Layout userId={userId}>
+    <Layout userId={userId} setSearch={setSearch}>
       <div className={styles.container}>
         <Head>
           <title>My Dashboard</title>
         </Head>
 
-        <main className={styles.main}>
+        <div className={styles.main}>
           <div>
             <h5>All Events</h5>
-            <div className="event-list">
+            <div className={styles.list}>
               <EventsList
                 events={allEvents}
                 userId={userId}
@@ -83,7 +86,7 @@ export default function Home() {
               />
             </div>
           </div>
-        </main>
+        </div>
         <footer className={styles.footer}></footer>
       </div>
     </Layout>

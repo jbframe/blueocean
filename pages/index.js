@@ -5,6 +5,7 @@ import CreateEvent from "./createEvent";
 import { useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
+import Filter from "../components/filter/Filter";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -54,6 +55,14 @@ export default function Home() {
     });
   }, [session]);
 
+  // FILTER FUNCTIONS
+
+  const filterBy = (e) => {
+    const filterValue = e.target.value;
+
+    
+  };
+
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (
@@ -72,6 +81,7 @@ export default function Home() {
             </div>
           </div>
           <div>
+            <Filter filterBy={filterBy} />
             <h5>All Events</h5>
             <div className="event-list">
               <EventsList events={allEvents} userId={userId} />

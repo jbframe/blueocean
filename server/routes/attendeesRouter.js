@@ -9,7 +9,6 @@ eventsRouter.use(express.urlencoded({ extended: true }));
 // req.body = { name, location, date, hostId, meetingUrl, summary, max }
 eventsRouter.get("/event/:id", (req, res) => {
   let eventId = req.params.id;
-  console.log(eventId)
   queries.getAttendeesByEvent(eventId, (err, results) => {
     if (err) {
       res.sendStatus(401);

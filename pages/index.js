@@ -56,6 +56,7 @@ export default function Home() {
       setAllEvents(data);
     });
 
+    // Currently reviewing other option for how attendees are stored in state.
     let userAttendeesUpdate = {}
     for (let i = 0; i < userEvents.length; i++) {
       requests.fetchEventAttendees(userEvents[i].event_id, (data) => {
@@ -81,13 +82,13 @@ export default function Home() {
             {session ? session.user.name : ""}
             <h5>My Events</h5>
             <div className="event-list">
-              <EventsList events={userEvents} userId={userId} />
+              <EventsList events={userEvents} userId={userId} attendees={userAttendees === undefined ? [] : userAttendees} />
             </div>
           </div>
           <div>
             <h5>All Events</h5>
             <div className="event-list">
-              <EventsList events={allEvents} userId={userId} />
+              <EventsList events={allEvents} userId={userId} attendees={userAttendees === undefined ? [] : userAttendees}/>
             </div>
           </div>
           <div>

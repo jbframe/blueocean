@@ -136,7 +136,7 @@ const Login = (props) => {
     }
   }
   return (
-    <form style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: 'auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
+    <form style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: '20vh auto 0 auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
       <div style={{backgroundColor: 'white', textAlign: 'left'}}>
         <CloseIcon id="closeLogin" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut} onClick={handleClick}/>
       </div>

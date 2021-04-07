@@ -4,11 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styles from '../styles/Navbar.module.css';
-// import Authentication from '../components/Authentication';
 import { signIn, signOut, useSession } from 'next-auth/client';
 
 const StyledMenu = withStyles({
@@ -34,6 +32,11 @@ const StyledMenu = withStyles({
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [session, loading] = useSession();
+  const [search, setSearch] = useState(); // search query is here
+
+  const handleSearch = e => {
+    setSearch(e.target.value);
+  }
 
   const handleClick = e => {
     setAnchorEl(e.currentTarget);
@@ -51,11 +54,13 @@ const Navbar = () => {
           className={styles.search}
           label="Search Events"
           variant="outlined"
+          onChange={handleSearch}
         />
       </div>
       <div className={styles.nav_cluster_right}>
+        {/* link to new page creation here */}
         <div className={styles.create}>Create Event</div>
-        <AddCircleIcon className={styles.add_icon} />
+        {/* link to my events view here */}
         <div className={styles.events}>My Events</div>
         <AccountCircleIcon className={styles.account} onClick={handleClick} />
         <StyledMenu
@@ -65,12 +70,12 @@ const Navbar = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {/* <MenuItem>{ session.user.name }</MenuItem> */}
+          {/* link to profile view here  */}
           <MenuItem onClick={handleClose}>My Profile</MenuItem>
-          <MenuItem onClick={handleClose}>Sign Out</MenuItem>
+          {/* sign out functionality here  */}
+          <MenuItem onClick={() => {handleClose(); signOut();}}>Sign Out</MenuItem>
         </StyledMenu>
       </div>
-      {/* <Authentication /> */}
     </div>
   );
 };

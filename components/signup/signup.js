@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FormControl } from '@material-ui/core';
-import { InputLabel } from '@material-ui/core';
-import { Input } from '@material-ui/core';
-import { FormHelperText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid} from '@material-ui/core';
-import { TextField } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Icon } from '@material-ui/core';
 import $ from 'jquery';
@@ -46,7 +41,6 @@ const SignUp = (props) => {
       $(e.target).css('border', '1px white solid');
       $(e.target).css('boxShadow', '0px 0px white');
     }
-
     if ( e.target.name === 'googleButton' ) {
       $(e.target).css('border', '1px black solid');
       $(e.target).css('boxShadow', '0px 0px white');
@@ -157,7 +151,7 @@ const SignUp = (props) => {
   }
 
   return (
-    <form style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: 'auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
+    <form style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: '20vh auto 0 auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
       <div style={{backgroundColor: 'white', textAlign: 'left'}}>
         <CloseIcon id="closeSignUp" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut} onClick={handleClick}/>
       </div>

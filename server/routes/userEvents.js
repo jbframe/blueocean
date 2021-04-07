@@ -7,8 +7,8 @@ const bcrypt = require('bcrypt');
 userRouter.use(express.json());
 userRouter.use(express.urlencoded({ extended: true }));
 
-userRouter.get("/:user", (req, res) => {
-  const userName = req.params.user;
+userRouter.get("/:user_id", (req, res) => {
+  const userName = req.params.user_id;
 
   queries.getEventsByAttendee(userName, (err, results) => {
     if (err) {
@@ -19,6 +19,17 @@ userRouter.get("/:user", (req, res) => {
     }
   });
 });
+
+userRouter.get("/hosted/:user_id", (req, res) => {
+  queries.getEventsByHost(req.params.user_id, (err, results) => {
+    if (err) {
+      res.sendStatus(500);
+      console.log(err);
+    } else {
+      res.send(results);
+    }
+  })
+})
 
 // req.body.profile = { title, aboutMe, location, linkedinUrl, password }  ALL FIELDS OPTIONAL
 userRouter.put("/:id", (req, res) => {
@@ -34,6 +45,7 @@ userRouter.put("/:id", (req, res) => {
   })
 })
 
+// req.body = { fullName, email, password, confirmPasword }
 userRouter.post('/register', (req, res) => {
   const { fullName, email, password, confirmPassword } = req.body;
   const saltRounds = 12;
@@ -94,6 +106,7 @@ userRouter.post('/register', (req, res) => {
   });
 });
 
+// req.body = { email, password }
 userRouter.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -106,8 +119,7 @@ userRouter.post('/login', (req, res) => {
       res.send({data: { name: user.name, email: user.email, token: user.token }});
     }
   })
-
-
-
 })
+
+
 module.exports = userRouter;

@@ -4,7 +4,7 @@ import s from '../../styles/EventCard.module.css';
 import { Button, Modal } from "react-bootstrap";
 import requests from "../../handlers/requests";
 
-const SidebarEventCard = ({ image, name, location, date, eventId }) => {
+const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -86,31 +86,31 @@ const SidebarEventCard = ({ image, name, location, date, eventId }) => {
       <div className={s.location}>{location}</div>
       <div className={s.date}>{displayDate}</div>
       <div onClick={e => e.stopPropagation()}>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Image
-            className="event-card-img"
-            src="/event-card-placeholder.jpeg"
-            alt="event card cover"
-            width={175}
-            height={100}
-          />
-          <div className="event-card-name">{name}</div>
-          <div className="event-card-location">{location}</div>
-          <div className="event-card-date">{date}</div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSignUp}>
-            Sign Up
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Image
+              className="event-card-img"
+              src="/event-card-placeholder.jpeg"
+              alt="event card cover"
+              width={175}
+              height={100}
+            />
+            <div className="event-card-name">{name}</div>
+            <div className="event-card-location">{location}</div>
+            <div className="event-card-date">{date}</div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleSignUp}>
+              Sign Up
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

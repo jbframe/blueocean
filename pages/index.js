@@ -70,7 +70,7 @@ export default function Home() {
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (
-    <Layout>
+    <Layout userId={userId}>
       <div className={styles.container}>
         <Head>
           <title>My Dashboard</title>

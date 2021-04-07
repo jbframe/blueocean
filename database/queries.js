@@ -2,7 +2,7 @@ const { Client } = require('pg')
 const client = new Client({
   user: 'postgres',
   password: 'attendeaze',
-  database: 'attendeaze',
+  database: 'attendeaze_auth',
   host: '34.212.23.186'
 })
 
@@ -138,10 +138,10 @@ const insertAssessment = (eventId, questions, cb) => {
 
 const getAllUpcomingEvents = (cb) => {
   client.query(`
-  SELECT * 
-  FROM events 
-  WHERE date > NOW() 
-  GROUP BY event_id 
+  SELECT *
+  FROM events
+  WHERE date > NOW()
+  GROUP BY event_id
   ORDER BY date ASC
   `,(err, results) => {
     if (err) {
@@ -249,7 +249,7 @@ const getAnswersByQuestion = (questionId, cb) => {
 
 const getEventPhotos = (eventId, cb) => {
   client.query(`
-  SELECT * 
+  SELECT *
   FROM event_photos
   WHERE event_id = ${eventId}
   `,
@@ -314,7 +314,7 @@ const getUserProfileByEmail = (email, cb) => {
   client.query(`
   SELECT *
   FROM users
-  WHERE email = '${email}'`, 
+  WHERE email = '${email}'`,
   (err, results) => {
     if (err) {
       cb(err, null);

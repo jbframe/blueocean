@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 const Layout = props => (
   <div>
     <Navbar />
-    <Sidebar />
+    <Sidebar userId={props.userId} />
     {props.children}
   </div>
 );

@@ -16,6 +16,8 @@ const eventsRouter = require("./routes/allEvents");
 const signUpRouter = require("./routes/addToEvent");
 const photosRouter = require("./routes/photos");
 const profileRouter = require("./routes/profile");
+const assessmentRouter = require("./routes/assessments")
+const attendeesRouter = require("./routes/attendeesRouter");
 
 // ROUTES
 app.use("/user", userRouter);
@@ -23,6 +25,8 @@ app.use("/events", eventsRouter);
 app.use("/signup", signUpRouter);
 app.use("/photos", photosRouter);
 app.use("/profile", profileRouter);
+app.use("/assessments", assessmentRouter);
+app.use("/attendees", attendeesRouter);
 
 // DATABASE AND SERVER CONNECTION
 app.listen(port, () => {

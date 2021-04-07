@@ -5,7 +5,6 @@ import CreateEvent from "./createEvent";
 import { useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
-import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const requests = require("../handlers/requests");
@@ -79,23 +78,10 @@ export default function Home() {
 
         <main className={styles.main}>
           <div>
-            {session ? session.user.name : ""}
-            <h5>My Events</h5>
-            <div className="event-list">
-              <EventsList events={userEvents} userId={userId} attendees={userAttendees === undefined ? [] : userAttendees} />
-            </div>
-          </div>
-          <div>
             <h5>All Events</h5>
             <div className="event-list">
               <EventsList events={allEvents} userId={userId} attendees={userAttendees === undefined ? [] : userAttendees}/>
             </div>
-          </div>
-          <div>
-            <Button variant="primary" onClick={() => setModalShow(true)}>
-              Create Event
-            </Button>
-            <CreateEvent show={modalShow} onHide={() => setModalShow(false)} />
           </div>
         </main>
         <footer className={styles.footer}></footer>

@@ -3,7 +3,7 @@ import Sidebar from './Sidebar';
 
 const Layout = props => (
   <div>
-    <Navbar />
+    <Navbar setSearch={props.setSearch} />
     <Sidebar userId={props.userId} />
     {props.children}
   </div>

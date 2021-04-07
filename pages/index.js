@@ -52,7 +52,14 @@ export default function Home() {
     requests.fetchAllEvents((data) => {
       setAllEvents(data);
     });
+
+    requests.fetchEventAttendees(59, (data) => {
+      console.log(data);
+    });
+
   }, [session]);
+
+
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top

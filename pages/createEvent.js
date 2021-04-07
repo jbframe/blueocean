@@ -7,9 +7,11 @@ function CreateEvent(props) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [eventLocation, setEventLocation] = useState("");
+  const [questions, setQuestions] = useState([]);
+  // const [questionTwo, setQuestionTwo] = useState("");
   const [maxAttendees, setMaxAttendees] = useState(0);
   const [photos, setPhotos] = useState(null);
-  let photoDisplay = [];
+  let questionContent = [];
 
   const clearFields = () => {
     setEventName("");
@@ -19,17 +21,44 @@ function CreateEvent(props) {
     setPhotos(null);
   };
 
+  const validationCheck = () => {
+    const required = [];
+    if (eventName === '') {
+      required.push('event name');
+    }
+    if (eventDescription === '') {
+      required.push('event description');
+    }
+    if (eventLocation === '') {
+      required.push('event location');
+    }
+    if (required.length) {
+      let result = '\n\n';
+      for (let i = 0; i < required.length; i += 1) {
+        result += `${required[i]}\n`;
+      }
+      return result;
+    }
+    return null;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     clearFields();
-    const submitObj = {
-      name: eventName,
-      description: eventDescription,
-      location: eventLocation,
-      max: maxAttendees,
-      photos: photos
+    if (!validationCheck()) {
+      const submitObj = {
+        name: eventName,
+        description: eventDescription,
+        location: eventLocation,
+        max: maxAttendees,
+        photos: photos
+      } 
+      requests.addEvent(submitObj);
+      props.onHide();
+      alert('Event Created Successfully!')
+    } else {
+      alert(`Please complete the required fields: ${validationCheck()}`);
     }
-    requests.addEvent(submitObj);
   };
 
   const configurePhoto = () => {
@@ -37,6 +66,25 @@ function CreateEvent(props) {
     console.log(URL.createObjectURL(event.target.files[0]));
     console.log(event.target.files[0]);
   };
+
+  const handleLoadMoreQuestions = () => {
+    if (questions.length < 5) {
+      setQuestions([...questions, <input
+        value={questionContent[questions.length]}
+        onChange={(e) => setQuestionValue(e.target.value, questions.length)}
+        placeholder="Add Question"
+      ></input>])
+      console.log(questions);
+      questionContent.push('hmm');
+      console.log(questionContent);
+    }
+  }
+
+  const setQuestionValue = (value, index) => {
+    console.log('questionContent: ', questionContent);
+    questionContent[index] = value;
+    console.log('questionContent: ', questionContent);
+  }
 
   return (
     <Modal
@@ -107,6 +155,25 @@ function CreateEvent(props) {
           <input type="file" onChange={configurePhoto}></input>
           <img src={photos} />
         </label>
+        <button onClick={handleLoadMoreQuestions}>Add More Questions</button>
+        {/* { <button onClick={handleLoadMoreQuestions}>Add More Questions</button> ?
+        <input
+          value={questionOne}
+          onChange={(e) => setQuestionOne(e.target.value)}
+          placeholder="Add Question"
+        ></input> : 
+        <input
+        value={questionOne}
+        onChange={(e) => setQuestionOne(e.target.value)}
+        placeholder="Add Question"
+      ></input>
+        <input
+        value={questionTwo}
+        onChange={(e) => setQuestionTwo(e.target.value)}
+        placeholder="Add Question"
+      ></input>
+        } */}
+        {questions}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onHide}>Close</Button>

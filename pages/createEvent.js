@@ -19,15 +19,14 @@ function CreateEvent(props) {
     setPhotos(null);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("SUBMITTED");
     clearFields();
     const submitObj = {
       name: eventName,
       description: eventDescription,
       location: eventLocation,
-      maxAttendees: maxAttendees,
+      max: maxAttendees,
       photos: photos
     }
     requests.addEvent(submitObj);

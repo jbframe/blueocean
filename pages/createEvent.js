@@ -7,11 +7,13 @@ function CreateEvent(props) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [eventLocation, setEventLocation] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [eventTime, setEventTime] = useState("");
   const [questions, setQuestions] = useState([]);
+  const [questionContent, setQuestionContent] = useState([]);
   // const [questionTwo, setQuestionTwo] = useState("");
   const [maxAttendees, setMaxAttendees] = useState(0);
   const [photos, setPhotos] = useState(null);
-  let questionContent = [];
 
   const clearFields = () => {
     setEventName("");
@@ -45,14 +47,19 @@ function CreateEvent(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     clearFields();
+    let timeStamp = new Date();
+    timeStamp.parse(eventDate);
+    timeStamp.setHours(eventTime);
     if (!validationCheck()) {
       const submitObj = {
         name: eventName,
         description: eventDescription,
         location: eventLocation,
+        date: timeStamp,
         max: maxAttendees,
         photos: photos
       } 
+      console.log('date: ', submitObj.date)
       requests.addEvent(submitObj);
       props.onHide();
       alert('Event Created Successfully!')
@@ -60,6 +67,7 @@ function CreateEvent(props) {
       alert(`Please complete the required fields: ${validationCheck()}`);
     }
   };
+  // 2021-04-12 0004:12:98
 
   const configurePhoto = () => {
     setPhotos(URL.createObjectURL(event.target.files[0]));
@@ -71,18 +79,25 @@ function CreateEvent(props) {
     if (questions.length < 5) {
       setQuestions([...questions, <input
         value={questionContent[questions.length]}
+        key={questions.length}
         onChange={(e) => setQuestionValue(e.target.value, questions.length)}
         placeholder="Add Question"
       ></input>])
-      console.log(questions);
-      questionContent.push('hmm');
+      console.log(questionContent);
+      let questionCopy = questionContent.slice();
+      console.log(questionCopy);
+      questionCopy.push('');
+      console.log(questionCopy);
+      setQuestionContent(questionCopy);
       console.log(questionContent);
     }
   }
 
   const setQuestionValue = (value, index) => {
     console.log('questionContent: ', questionContent);
-    questionContent[index] = value;
+    let questionCopy = questionContent.slice();
+    questionCopy[index] = value;
+    setQuestionContent(questionCopy);
     console.log('questionContent: ', questionContent);
   }
 
@@ -117,6 +132,22 @@ function CreateEvent(props) {
           value={eventLocation}
           onChange={(e) => setEventLocation(e.target.value)}
           placeholder="Add Event Location"
+        ></input>
+        <br></br>
+
+        <input
+          type='date'
+          value={eventDate}
+          onChange={(e) => setEventDate(e.target.value)}
+          placeholder="Add Event Date (YYYY-MM-DD)"
+        ></input>
+        <br></br>
+
+        <input
+          type='time'
+          value={eventTime}
+          onChange={(e) => setEventTime(e.target.value)}
+          placeholder="Add Event Time"
         ></input>
         <br></br>
 

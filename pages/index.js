@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import CreateEvent from "./createEvent";
+import CreateEvent from "../components/createEvent";
 import { useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
@@ -81,7 +81,7 @@ export default function Home() {
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
-
+  console.log('indexUserId: ', userId)
   return (
     <Layout userId={userId} setSearch={setSearch}>
       <div className={styles.container}>

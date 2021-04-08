@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import requests from "../handlers/requests";
 import UploadWidget from "../components/PhotoUpload.js";
+import styles from '../styles/createEvent.module.css';
 
 function CreateEvent(props) {
   const [eventName, setEventName] = useState("");
@@ -14,8 +15,8 @@ function CreateEvent(props) {
   const [questionContent, setQuestionContent] = useState([]);
   const [maxAttendees, setMaxAttendees] = useState(0);
   const [photoURL, setPhotoURL] = useState(null);
-  const [userId, setUserId] = useState();
 
+  console.log('Create Event Props: ', props)
   const clearFields = () => {
     setEventName("");
     setEventDescription("");
@@ -125,18 +126,21 @@ function CreateEvent(props) {
 
   return (
     <Modal
+      dialogClassName="modal-90w public-profile-modal-class"
+      className="special_modal"
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header as='span' closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Enter Event Details...
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <input
+          className='eventName'
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
           placeholder="Event Name"

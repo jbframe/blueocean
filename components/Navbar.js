@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styles from '../styles/Navbar.module.css';
 import { signIn, signOut, useSession } from 'next-auth/client';
-import CreateEvent from '../pages/createEvent';
+import CreateEvent from './createEvent';
 import { Button } from 'react-bootstrap';
 
 const StyledMenu = withStyles({
@@ -31,7 +31,14 @@ const StyledMenu = withStyles({
   />
 ));
 
-const Navbar = ({ setSearch }) => {
+// var finalUserId;
+// var updateUserId = () => {
+//   if (userId) {
+//     finalUserId = userId;
+//   }
+// }
+const Navbar = ({ setSearch, userId }) => {
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [session, loading] = useSession();
   // const [search, setSearch] = useState();

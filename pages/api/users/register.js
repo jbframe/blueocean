@@ -1,7 +1,7 @@
 const { insertUser, getAllUsers } = require('../../../database/queries');
 const bcrypt = require('bcrypt');
 
-export default function (req, res) {
+export default async function (req, res) {
   const { fullName, email, password, confirmPassword } = req.body;
   const saltRounds = 12;
 
@@ -39,7 +39,7 @@ export default function (req, res) {
 
   const isUserExists = await checkUserExists();
 
-  const result;
+  const result = null;
 
   if (!isUserExists) {
     result = await registerUser();

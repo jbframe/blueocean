@@ -19,6 +19,7 @@ export default function Home() {
   // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
+  const [compareEvents, setCompareEvents] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
   const [userAttendees, setUserAttendees] = useState([]);
 
@@ -55,6 +56,7 @@ export default function Home() {
 
     requests.fetchAllEvents((data) => {
       setAllEvents(data);
+      setCompareEvents(data);
     });
 
     // Currently reviewing other option for how attendees are stored in state.
@@ -67,14 +69,13 @@ export default function Home() {
     setUserAttendees(userAttendeesUpdate);
   }, [session]);
 
+  // Search Function
   useEffect(() => {
     if (search.length === 0) {
-      requests.fetchAllEvents((data) => {
-        setAllEvents(data);
-      });
+      setAllEvents(compareEvents);
     }
     let searchResults = [];
-    allEvents.forEach((event) => {
+    compareEvents.forEach((event) => {
       for (let key in event) {
         let property = event[key];
         if (typeof property === "string") {

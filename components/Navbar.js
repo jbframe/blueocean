@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
@@ -52,7 +53,12 @@ const Navbar = ({ setSearch, userId, host }) => {
   return (
     <div className={styles.navbar}>
       <div className={styles.nav_cluster_left}>
-        <EventAvailableIcon className={styles.logo} />
+        <Image
+          src="/dean.jpeg"
+          alt="company logo"
+          height={55}
+          width={55}
+        />
         <TextField
           className={styles.search}
           label="Search Events"
@@ -74,9 +80,7 @@ const Navbar = ({ setSearch, userId, host }) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {/* link to profile view here  */}
-          <MenuItem onClick={handleClose}>My Profile</MenuItem>
-          {/* sign out functionality here  */}
+          <MenuItem>USER NAME HERE</MenuItem>
           <MenuItem onClick={() => {handleClose(); signOut();}}>Sign Out</MenuItem>
         </StyledMenu>
       </div>

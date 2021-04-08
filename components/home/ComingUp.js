@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SidebarEventCard from './SidebarEventCard';
 
-const ComingUp = ({ userId }) => {
+const requests = require("../../handlers/requests");
+
+const ComingUp = ({ userId, host }) => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
 
   const getUpcomingEvents = () => {
@@ -36,6 +38,7 @@ const ComingUp = ({ userId }) => {
           date={event.date}
           eventId={event.event_id}
           userId={userId}
+          host={host}
         />
       )) : null}
 

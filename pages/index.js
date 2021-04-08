@@ -67,16 +67,27 @@ export default function Home() {
   }, [session]);
 
   useEffect(() => {
+    if (search.length === 0) {
+      requests.fetchAllEvents((data) => {
+        setAllEvents(data);
+      });
+    }
     let searchResults = [];
     allEvents.forEach((event) => {
       for (let key in event) {
-        let property = event[key].split(" ");
-        if (property.includes(search) && searchResults.indexOf(event) === -1) {
-          searchResults.push(event);
+        let property = event[key];
+        if (typeof property === "string") {
+          if (
+            property.includes(search) &&
+            searchResults.indexOf(event) === -1
+          ) {
+            searchResults.push(event);
+          }
         }
       }
     });
     setAllEvents(searchResults);
+    console.log("done");
   }, [search]);
 
   // Wrap every page component in <Layout> tags (and import up top)

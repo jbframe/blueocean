@@ -71,7 +71,16 @@ const requests = {
         console.log(err);
       });
   },
-
+  removeAttendee(userId, eventId) {
+    axios
+      .post(`${server}/attendees/event/${eventId}`, {"userId": userId})
+      .then((response) => {
+        console.log('Removed from the event!');
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  }
 };
 
 module.exports = requests;

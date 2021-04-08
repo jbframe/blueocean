@@ -85,6 +85,7 @@ export default function Home() {
             <h5>All Events</h5>
             <div className="event-list">
               <EventsList events={allEvents} userId={userId} host={host}/>
+              <CreateEvent userId= {userId} host={host}/>
             </div>
           </div>
         </div>

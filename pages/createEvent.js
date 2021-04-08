@@ -1,34 +1,125 @@
 import React, { useState } from "react";
-import { Image } from "react-bootstrap";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import requests from "../handlers/requests";
+import UploadWidget from "../components/PhotoUpload.js";
 
 function CreateEvent(props) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [eventLocation, setEventLocation] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [eventURL, setEventURL] = useState("");
+  const [questions, setQuestions] = useState([]);
+  const [questionContent, setQuestionContent] = useState([]);
   const [maxAttendees, setMaxAttendees] = useState(0);
-  const [photos, setPhotos] = useState(null);
-  let photoDisplay = [];
+  const [photoURL, setPhotoURL] = useState(null);
 
   const clearFields = () => {
     setEventName("");
     setEventDescription("");
     setEventLocation("");
+    setEventDate("");
+    setEventURL("");
     setMaxAttendees(0);
-    setPhotos("");
+    setPhotoURL(null);
   };
 
-  const handleSubmit = () => {
+  const validationCheck = () => {
+    const required = [];
+    if (eventName === "") {
+      required.push("event name");
+    }
+    if (eventDescription === "") {
+      required.push("event description");
+    }
+    if (eventLocation === "") {
+      required.push("event location");
+    }
+    if (eventDate === "") {
+      required.push("event date");
+    }
+    if (required.length) {
+      let result = "\n\n";
+      for (let i = 0; i < required.length; i += 1) {
+        result += `${required[i]}\n`;
+      }
+      return result;
+    }
+    return null;
+  };
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("SUBMITTED");
     clearFields();
+    let timeStamp = new Date(eventDate);
+    if (!validationCheck()) {
+      const submitObj = {
+        hostId: 5,
+        meetingUrl: eventURL,
+        name: eventName,
+        summary: eventDescription,
+        location: eventLocation,
+        date: timeStamp,
+        max: maxAttendees,
+        photos: photoURL,
+      };
+      console.log("submitObj:", submitObj);
+      requests.addEvent(submitObj);
+      props.onHide();
+      alert("Event Created Successfully!");
+    } else {
+      alert(`Please complete the required fields: ${validationCheck()}`);
+    }
   };
 
   const configurePhoto = () => {
     setPhotos(URL.createObjectURL(event.target.files[0]));
     console.log(URL.createObjectURL(event.target.files[0]));
     console.log(event.target.files[0]);
+  };
+
+  const handleLoadMoreQuestions = () => {
+    if (questions.length < 5) {
+      setQuestions([
+        ...questions,
+        <input
+          value={questionContent[questions.length]}
+          onChange={(e) => setQuestionValue(e.target.value, questions.length)}
+          placeholder="Add Question"
+        ></input>,
+      ]);
+      console.log(questions);
+      let questionCopy = questionContent;
+      console.log(
+        "questionCopy before push when adding question:",
+        questionCopy
+      );
+      questionCopy.push("");
+      console.log(
+        "questionCopy after push when adding question:",
+        questionCopy
+      );
+      setQuestionContent(questionCopy);
+      console.log(
+        "questionContent after setting to copy when adding question:",
+        questionContent
+      );
+    }
+  };
+
+  const setQuestionValue = (value, index) => {
+    console.log(
+      "questionContent before anything setting value: ",
+      questionContent
+    );
+    let questionCopy = questionContent;
+    questionCopy[index] = value;
+    setQuestionContent(questionCopy);
+    console.log(
+      "questionContent at the end of setting value: ",
+      questionContent
+    );
   };
 
   return (
@@ -65,6 +156,20 @@ function CreateEvent(props) {
         ></input>
         <br></br>
 
+        <input
+          value={eventURL}
+          onChange={(e) => setEventURL(e.target.value)}
+          placeholder="Add Event URL (if online)"
+        ></input>
+        <br></br>
+
+        <input
+          type="datetime-local"
+          value={eventDate}
+          onChange={(e) => setEventDate(e.target.value)}
+        ></input>
+        <br></br>
+
         <label>
           Max Attendees
           <select
@@ -95,14 +200,15 @@ function CreateEvent(props) {
         </label>
         <br></br>
 
-        <label>
-          Photos
-          <input type="file" onChange={configurePhoto}></input>
-          <img src={photos} />
-        </label>
+        <UploadWidget photoURL={photoURL} setPhotoURL={setPhotoURL} />
+        <br></br>
+        <button onClick={handleLoadMoreQuestions}>Add More Questions</button>
+        {questions}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.onHide}>Close</Button>
+        <Button variant="secondary" onClick={props.onHide}>
+          Close
+        </Button>
         <Button onClick={handleSubmit}>Submit</Button>
       </Modal.Footer>
     </Modal>

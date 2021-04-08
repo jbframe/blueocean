@@ -1,5 +1,5 @@
 export default function Register () {
   return (
-    <div></div>
+    <div>I am stubbed out</div>
   )
 }

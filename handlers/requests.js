@@ -61,6 +61,17 @@ const requests = {
         console.log('err with event posting: ', err);
       });
   },
+  fetchEventAttendees(eventID, cb) {
+    axios
+      .get(`${server}/attendees/event/${eventID}`)
+      .then((response) => {
+        cb(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
 };
 
 module.exports = requests;

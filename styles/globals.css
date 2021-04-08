@@ -14,9 +14,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-.event-list {
-  max-height: 400px;
-  width: auto;
-  overflow-y: scroll;
-}

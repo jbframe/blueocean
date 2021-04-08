@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from 'next/image';
 import { Button, Modal } from "react-bootstrap";
 import requests from "../../handlers/requests";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,10 +26,12 @@ const EventCard = ({ image, name, location, date, userId, eventId }) => {
           <Modal.Title>{name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <img
+          <Image
             className="event-card-img"
-            src="../../public/event-card-placeholder.png"
+            src="/event-card-placeholder.jpeg"
             alt="event card cover"
+            width={175}
+            height={100}
           />
           <div className="event-card-name">{name}</div>
           <div className="event-card-location">{location}</div>

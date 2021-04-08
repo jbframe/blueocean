@@ -74,7 +74,7 @@ export default function Home() {
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (
-    <Layout userId={userId} setSearch={setSearch}>
+    <Layout userId={userId} setSearch={setSearch} host={host}>
       <div className={styles.container}>
         <Head>
           <title>My Dashboard</title>
@@ -84,7 +84,7 @@ export default function Home() {
           <div>
             <h5>All Events</h5>
             <div className="event-list">
-              <EventsList events={allEvents} userId={userId} />
+              <EventsList events={allEvents} userId={userId} host={host}/>
             </div>
           </div>
         </div>

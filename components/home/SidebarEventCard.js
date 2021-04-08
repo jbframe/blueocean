@@ -5,7 +5,7 @@ import { Button, Modal } from "react-bootstrap";
 import requests from "../../handlers/requests";
 import AttendeeDisplay from "./AttendeeDisplay";
 
-const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
+const SidebarEventCard = ({ image, name, location, date, eventId, userId, host }) => {
   const [show, setShow] = useState(false);
   const [eventAttendees, setEventAttendees] = useState([]);
 
@@ -28,8 +28,10 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
   }
 
   useEffect(()=> {
-    getAttendees(eventId);
-  }, [eventId])
+    if (host) {
+      getAttendees(eventId);
+    }
+  }, [eventId, host])
 
   const dayObj = {
     Sun: 'Sunday',
@@ -112,11 +114,16 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
             <div className="event-card-name">{name}</div>
             <div className="event-card-location">{location}</div>
             <div className="event-card-date">{date}</div>
-            <div className="event-card-attendee-heading" style={{'fontWeight':'bold'}}>Attendees</div>
+            {host === true
+              ? <div className="event-card-attendee-heading" style={{'fontWeight':'bold'}}>Attendees</div>
+              : <React.Fragment></React.Fragment>
+            }
             {eventAttendees.length !== 0
               ? eventAttendees.map((attendee, index) => (
                 <AttendeeDisplay key={index} attendee={attendee} />))
-              : <div className="event-card-attendee">None</div>
+              : host === true
+                ? <div className="event-card-attendee">None</div>
+                : <React.Fragment></React.Fragment>
             }
           </Modal.Body>
           <Modal.Footer>

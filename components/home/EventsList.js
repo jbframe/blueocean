@@ -3,7 +3,7 @@ import EventCard from "./EventCard";
 import SidebarEventCard from './SidebarEventCard';
 import s from '../../styles/EventCard.module.css';
 
-const EventsList = ({ events, userId }) => {
+const EventsList = ({ events, userId, host }) => {
   return (
     <div className={s.list_container}>
       {events.map((event, index) => (
@@ -15,6 +15,7 @@ const EventsList = ({ events, userId }) => {
           name={event.event_name}
           location={event.location}
           date={event.date}
+          host={host}
         />
       ))}
     </div>

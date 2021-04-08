@@ -76,11 +76,11 @@ const insertEvent = (event, cb) => {
 const insertEventPhoto = (eventId, url, cb) => {
   pool.query(
     `
-  INSERT INTO events_photos
+  INSERT INTO event_photos
   (event_id, image)
   VALUES
   (${eventId},
-  '${url}
+  '${url}'
   )`,
     (err, results) => {
       if (err) {
@@ -104,6 +104,19 @@ const makeUserAnAttendee = (userId, eventId, cb) => {
     }
   );
 };
+
+const removeAttendee = (userId, eventId, cb) => {
+  client.query(
+    `DELETE FROM attendees WHERE event_id = ${eventId} AND user_id = ${userId}`,
+    (err, results) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        cb(null, results);
+      }
+    }
+  )
+}
 
 // inputs (eventId <number>, questions <[{text: "question text here?", answers: [{text: "answer text here.", correct: true/false }, {}] }]>, cb (err, results) =>{})
 const insertAssessment = (eventId, questions, cb) => {
@@ -178,8 +191,9 @@ const getAllUpcomingEvents = (cb) => {
     `
   SELECT *
   FROM events
+  LEFT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
   WHERE date > NOW()
-  GROUP BY event_id
+  GROUP BY events.event_id, event_photos.photo_id
   ORDER BY date ASC
   `,
     (err, results) => {
@@ -198,6 +212,7 @@ const getEventsByAttendee = (userId, cb) => {
     *
     FROM events
     LEFT OUTER JOIN attendees ON events.event_id = attendees.event_id
+    RIGHT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
     WHERE date > NOW()
     AND user_id = ${userId}`,
     (err, results) => {
@@ -216,6 +231,7 @@ const getEventsByHost = (userId, cb) => {
     SELECT *
     FROM events
     LEFT OUTER JOIN users ON events.host_id = users.id
+    RIGHT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
     WHERE date > NOW()
     AND id = ${userId}`,
     (err, results) => {
@@ -396,4 +412,5 @@ module.exports = {
   getEventPhotos,
   getUserProfileByEmail,
   updateUserProfile,
+  removeAttendee
 };

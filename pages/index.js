@@ -12,7 +12,7 @@ const requests = require("../handlers/requests");
 export default function Home() {
   // User Hooks
   const [userName, setUserName] = useState("");
-  const [userId, setuserId] = useState(39);
+  const [userId, setUserId] = useState();
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
 
@@ -27,33 +27,19 @@ export default function Home() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    // ----TO BE USED WITH NEXT.AUTH----
 
-    // async function getData() {
-    //   if (session) {
-    //     await setUserName(session.user.name);
-
-    //     await requests.fetchUserEvents(userId, (data) => {
-    //       setUserEvents(data);
-    //     });
-
-    //     await requests.fetchAllEvents((data) => {
-    //       setAllEvents(data);
-    //     });
-    //   }
-    // }
-    // getData();
-
-    requests.getUserProfile("email@email.com", (data) => {
-      setUserName(data[0].name);
-      // setuserId(data[0].id);
-      setHost(data[0].host_status);
-    });
-
-    requests.fetchUserEvents(userId, (data) => {
-      setUserEvents(data);
-    });
-
+    if (session) {
+      requests.getUserProfile(session.user.email, (data) => {
+        setUserName(data[0].name);
+        setUserId(data[0].id);
+        setHost(data[0].host_status);
+      });
+      
+      requests.fetchUserEvents(userId, (data) => {
+        setUserEvents(data);
+      });
+      
+    }
     requests.fetchAllEvents((data) => {
       setAllEvents(data);
       setCompareEvents(data);

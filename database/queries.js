@@ -185,9 +185,9 @@ const getAllUpcomingEvents = (cb) => {
     `
   SELECT *
   FROM events
+  LEFT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
   WHERE date > NOW()
-  RIGHT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
-  GROUP BY event_id
+  GROUP BY events.event_id, event_photos.photo_id
   ORDER BY date ASC
   `,
     (err, results) => {

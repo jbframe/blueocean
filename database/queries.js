@@ -83,11 +83,11 @@ const insertEvent = (event, cb) => {
 const insertEventPhoto = (eventId, url, cb) => {
   client.query(
     `
-  INSERT INTO events_photos
+  INSERT INTO event_photos
   (event_id, image)
   VALUES
   (${eventId},
-  '${url}
+  '${url}'
   )`,
     (err, results) => {
       if (err) {

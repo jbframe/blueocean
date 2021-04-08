@@ -12,18 +12,21 @@ const ComingUp = ({ userId }) => {
       url: `http://localhost:4000/user/${userId}`,
       method: 'get'
     };
-    axios(options)
-    .then((results) => {
-      setUpcomingEvents(results.data)
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+
+    if (userId) {
+      axios(options)
+      .then((results) => {
+        setUpcomingEvents(results.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
   };
 
   useEffect(() => {
     getUpcomingEvents();
-  }, [])
+  }, [userId])
 
   return (
     <div>

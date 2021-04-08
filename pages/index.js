@@ -23,9 +23,9 @@ export default function Home() {
 
   // Search Hooks
   const [search, setSearch] = useState("");
+  const [compareEvents, setCompareEvents] = useState([]);
 
   useEffect(() => {
-
     if (session) {
       requests.getUserProfile(session.user.email, (data) => {
         setUserName(data[0].name);
@@ -41,33 +41,34 @@ export default function Home() {
 
       requests.fetchAllEvents((data) => {
         setAllEvents(data);
+        setCompareEvents(data);
       });
-
     }
   }, [session]);
 
+  // Search Function
   useEffect(() => {
     if (search.length === 0) {
-      requests.fetchAllEvents((data) => {
-        setAllEvents(data);
-      });
-    }
-    let searchResults = [];
-    allEvents.forEach((event) => {
-      for (let key in event) {
-        let property = event[key];
-        if (typeof property === "string") {
-          if (
-            property.includes(search) &&
-            searchResults.indexOf(event) === -1
-          ) {
-            searchResults.push(event);
+      setAllEvents(compareEvents);
+    } else {
+      let searchTerm = search.toLowerCase();
+      let searchResults = [];
+      compareEvents.forEach((event) => {
+        for (let key in event) {
+          let property = event[key];
+          if (typeof property === "string") {
+            property = property.toLowerCase();
+            if (
+              property.includes(searchTerm) &&
+              searchResults.indexOf(event) === -1
+            ) {
+              searchResults.push(event);
+            }
           }
         }
-      }
-    });
-    setAllEvents(searchResults);
-    console.log("done");
+      });
+      setAllEvents(searchResults);
+    }
   }, [search]);
 
   // Wrap every page component in <Layout> tags (and import up top)

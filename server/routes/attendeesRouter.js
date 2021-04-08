@@ -18,4 +18,16 @@ eventsRouter.get("/event/:id", (req, res) => {
   })
 })
 
+eventsRouter.post("/event/:id", (req, res) => {
+  let userId = req.body.userId;
+  let eventId= req.params.id;
+  queries.removeAttendee(userId, eventId, (err, results) => {
+    if (err) {
+      res.sendStatus(401);
+    } else {
+      res.send(results);
+    }
+  })
+})
+
 module.exports = eventsRouter;

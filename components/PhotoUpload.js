@@ -1,31 +1,33 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 // userOrEvent = 'user' or 'event'
-const UploadWidget = ({userOrEvent, id }) => {
+const UploadWidget = ({photoURL, setPhotoURL}) => {
 
-  const storePhoto = (photoUrl, id) => {
-      axios.post(`localhost:4000/photos/${userOrEvent}/${id}`, photoUrl)
-      .then((response) => {
-          console.log(response);
-      }, (error) => {
-          console.log(error);
-      })
-  }
+  // const [photoURL, setPhotoUrL] = useState('');
+
+  // const storePhoto = (photoUrl, id) => {
+  //     axios.post(`localhost:4000/photos/${userOrEvent}/${id}`, photoUrl)
+  //     .then((response) => {
+  //         console.log(response);
+  //     }, (error) => {
+  //         console.log(error);
+  //     })
+  // }
 
   return (
     <>
-      <WidgetLoader /> 
+      <WidgetLoader />
       <Widget
         resourceType={'image'}
         cloudName={'attendeaze'}
-        uploadPreset={'preset1'} 
-        buttonText={'Upload Image'} 
+        uploadPreset={'preset1'}
+        buttonText={'Upload Image'}
         id='cloudinary-upload-button'
-        folder={'attendeaze'} 
-        onSuccess={(results) => storePhoto(results, id)}
-        onFailure={(err) => console.log(err)}   
+        folder={'attendeaze'}
+        onSuccess={(results) => setPhotoURL(results.info.url)}
+        onFailure={(err) => console.log(err)}
         logging={false}
         />
     </>

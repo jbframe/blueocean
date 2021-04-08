@@ -68,7 +68,8 @@ const insertEvent = (event, cb) => {
         '${meetingUrl}',
         '${summary}',
         ${max}
-    )`,
+    )
+    RETURNING *`,
     (err, results) => {
       if (err) {
         cb(err, null);

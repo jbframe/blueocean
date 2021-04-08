@@ -1,29 +1,46 @@
-import React, { useState, useEffect} from 'react';
-import { FormControl } from '@material-ui/core';
-import { InputLabel } from '@material-ui/core';
-import { Input } from '@material-ui/core';
-import { FormHelperText } from '@material-ui/core';
+import { getCsrfToken, providers, signIn } from 'next-auth/client';
+import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
-import { TextField } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { Icon } from '@material-ui/core';
-import $ from 'jquery';
+import { Grid, Paper } from '@material-ui/core';
 import Link from 'next/link'
+import $ from 'jquery';
+
+
 
 const useStyles = makeStyles((theme) => ({
   grid: {
     width: '100%',
     margin: '0px'
-  }
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    background: theme.palette.success.light
+  },
+  fitImg : {
+    width: '100%',
+    height: '800px'
+  },
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+    border: '2px black solid',
+    width: '50%'
+  },
 }));
 
-const Login = (props) => {
+export default function SignIn({ providers, csrfToken }) {
   const [emailLogin, setEmail] = useState('');
   const [passwordLogin, setPassword] = useState('');
   const [buttonColor, setButtonColor] = useState('green');
   const classes = useStyles();
-  const fullNameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+  const { google } = providers;
+
+
+  // const fullNameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/; // Testing193!
 
@@ -79,21 +96,21 @@ const Login = (props) => {
       // console.log(e.target.innerHTML);
       // console.log("Email:" + emailLogin + " Password: " + passwordLogin);
       if ( emailRegex.test(emailLogin) && passwordRegex.test(passwordLogin)) {
-          console.log('Save user information');
-          // Make an axios request to post the information
-          /*
-          axios.post(url, {
-            emailLogin: emailLogin,
-            passwordLogin: passwordLogin
-          }).then((res) => {
+        console.log('Save user information');
+        // Make an axios request to post the information
+        /*
+        axios.post(url, {
+          emailLogin: emailLogin,
+          passwordLogin: passwordLogin
+        }).then((res) => {
             console.log('Response: ', res);
           }) .catch((err) => {
             console.log(err);
           })
           */
-      }
-    } else if (e.target.id === 'forgot') {
-      // Direct user to forgot page
+        }
+      } else if (e.target.id === 'forgot') {
+        // Direct user to forgot page
       console.log('forgot');
     } else if ( e.target.id === 'signup' ) {
       // Direct user to sign up form
@@ -107,7 +124,7 @@ const Login = (props) => {
   function handleFocus(e) {
     // console.log(e.target.id);
     $(`#${e.target.id}`).css('outline', 'none');
-    $(`#${e.target.id}`).css('border', '1px #1E90FF solid');
+    $(`#${e.target.id}`).css('border', '1px blue solid');
   }
 
   function handleBlur(e) {
@@ -135,8 +152,9 @@ const Login = (props) => {
       $("#signUpLink").css('fontWeight', 'normal');
     }
   }
+
   return (
-    <form style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: '20vh auto 0 auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
+    <Grid style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: 'auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
       <div style={{backgroundColor: 'white', textAlign: 'left'}}>
         <CloseIcon id="closeLogin" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut} onClick={handleClick}/>
       </div>
@@ -145,24 +163,32 @@ const Login = (props) => {
           <h1 style={{ fontWeight: '20'}}>Enter Login Information</h1>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='email' id='emailLogin' name='emailLogin' placeholder="Email" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
+          <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='text' id='emailLogin' name='emailLogin' placeholder="Email" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='password' id='passwordLogin' name='passwordLogin' placeholder="Password" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
+          <button name='magicLink' onFocus={ handleFocus } onClick={() => signIn('email', { email: emailLogin })} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="magicLink" style={{padding:'10px 0 25px 0px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px white solid', backgroundColor: '#1E90FF', color: 'white'}}>Send Magic Link</button>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <button name='continue' onFocus={ handleFocus } onClick={handleClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="continueLogin" style={{padding:'10px 0 25px 0px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px white solid', backgroundColor: '#1E90FF', color: 'white'}}>Continue</button>
+          <button name='signInWithGoogle' onFocus={ handleFocus } onClick={() => signIn(google.id)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="signInWithGoogle" style={{padding:'10px 0 25px 0px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px white solid', backgroundColor: '#1E90FF', color: 'white'}}>Sign in with {google.name}</button>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <a id="forgot" onClick={handleClick} onMouseEnter={ handleMouseOver } onMouseLeave={ handleMouseOut } href="" style={{ fontSize: '10px'}}>Forgot password?</a>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <span style={{ padding: '20px 0 40px 0', fontSize: '12px'}}>Dont have an account? <Link href='/signupPage'><a id="signUpLink" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut} href="" style={{ textDecoration: 'underline'}}>Sign up</a></Link></span>
+          <span style={{ padding: '20px 0 40px 0', fontSize: '12px'}}>No account? <Link href='/auth/register'><a id="signUpLink" onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut} href="" style={{ textDecoration: 'underline'}}>Sign up</a></Link></span>
           <br />
         </Grid>
       </Grid>
-    </form>
+    </Grid>
   )
 }
 
-export default Login;
+export async function getServerSideProps(context) {
+  const Providers = await providers();
+  return {
+    props: {
+      providers: Providers,
+      csrfToken: await getCsrfToken(context),
+    }
+  }
+}

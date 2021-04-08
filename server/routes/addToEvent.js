@@ -4,9 +4,10 @@ const queries = require("../../database/queries");
 
 signUpRouter.use(express.json());
 
+// { user_id, event_id }
 signUpRouter.put("/", (req, res) => {
-  const user_id = req.body.user_id;
-  const event_id = req.body.event_id;
+  const user_id = parseInt(req.body.user_id);
+  const event_id = parseInt(req.body.event_id);
 
   queries.makeUserAnAttendee(user_id, event_id, (err, results) => {
     if (err) {
@@ -14,7 +15,7 @@ signUpRouter.put("/", (req, res) => {
     } else {
       res.send(results);
     }
-  })
+  });
 });
 
 module.exports = signUpRouter;

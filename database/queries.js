@@ -1,10 +1,10 @@
 const { Client } = require("pg");
 const client = new Client({
-  user: 'postgres',
-  password: 'attendeaze',
-  database: 'attendeaze_auth',
-  host: '34.212.23.186'
-})
+  user: "postgres",
+  password: "attendeaze",
+  database: "attendeaze_auth",
+  host: "34.212.23.186",
+});
 
 client
   .connect()
@@ -19,8 +19,18 @@ client
 */
 // inputs (user < {{ name, email, title, aboutMe, location, linkedinUrl }, cb (err, results) => {})
 const insertUser = (user, cb) => {
-    let { name, email, title, aboutMe, location, linkedinUrl, password, token } = user;
-    client.query(`
+  let {
+    name,
+    email,
+    title,
+    aboutMe,
+    location,
+    linkedinUrl,
+    password,
+    token,
+  } = user;
+  client.query(
+    `
     INSERT INTO users
     (name, email, title, about_me, location, linkedin_url, password, token)
     VALUES
@@ -170,7 +180,8 @@ const insertAssessment = (eventId, questions, cb) => {
 */
 
 const getAllUpcomingEvents = (cb) => {
-  client.query(`
+  client.query(
+    `
   SELECT *
   FROM events
   WHERE date > NOW()
@@ -293,7 +304,8 @@ const getAnswersByQuestion = (questionId, cb) => {
 };
 
 const getEventPhotos = (eventId, cb) => {
-  client.query(`
+  client.query(
+    `
   SELECT *
   FROM event_photos
   WHERE event_id = ${eventId}
@@ -364,11 +376,12 @@ const getUserProfileByEmail = (email, cb) => {
   SELECT *
   FROM users
   WHERE email = '${email}'`,
-  (err, results) => {
-    if (err) {
-      cb(err, null);
-    } else {
-      cb(null, results.rows)
+    (err, results) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        cb(null, results.rows);
+      }
     }
   );
 };

@@ -66,6 +66,19 @@ export default function Home() {
     setUserAttendees(userAttendeesUpdate);
   }, [session]);
 
+  useEffect(() => {
+    let searchResults = [];
+    allEvents.forEach((event) => {
+      for (let key in event) {
+        let property = event[key].split(" ");
+        if (property.includes(search) && searchResults.indexOf(event) === -1) {
+          searchResults.push(event);
+        }
+      }
+    });
+    setAllEvents(searchResults);
+  }, [search]);
+
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (

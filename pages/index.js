@@ -20,7 +20,6 @@ export default function Home() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
-  const [userAttendees, setUserAttendees] = useState([]);
 
   useEffect(() => {
     // ----TO BE USED WITH NEXT.AUTH----
@@ -55,14 +54,6 @@ export default function Home() {
       setAllEvents(data);
     });
 
-    // Currently reviewing other option for how attendees are stored in state.
-    let userAttendeesUpdate = {}
-    for (let i = 0; i < userEvents.length; i++) {
-      requests.fetchEventAttendees(userEvents[i].event_id, (data) => {
-        userAttendeesUpdate[userEvents[i].event_id] = data;
-      });
-    }
-    setUserAttendees(userAttendeesUpdate);
   }, [session]);
 
 
@@ -70,7 +61,7 @@ export default function Home() {
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (
-    <Layout userId={userId}>
+    <Layout userId={userId} >
       <div className={styles.container}>
         <Head>
           <title>My Dashboard</title>
@@ -80,7 +71,7 @@ export default function Home() {
           <div>
             <h5>All Events</h5>
             <div className="event-list">
-              <EventsList events={allEvents} userId={userId} attendees={userAttendees === undefined ? [] : userAttendees}/>
+              <EventsList events={allEvents} userId={userId} />
             </div>
           </div>
         </main>

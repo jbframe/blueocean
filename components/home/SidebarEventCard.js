@@ -4,7 +4,7 @@ import s from '../../styles/EventCard.module.css';
 import { Button, Modal } from "react-bootstrap";
 import requests from "../../handlers/requests";
 
-const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
+const SidebarEventCard = ({ image, name, location, date, eventId, userId, attendees }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -101,6 +101,10 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
             <div className="event-card-name">{name}</div>
             <div className="event-card-location">{location}</div>
             <div className="event-card-date">{date}</div>
+            {/* {attendees !== null || ? attendees.map((attendee, index)=>{
+            <div className="event-card-attendee" key={index}>{attendee.name}</div>
+            }) : ''
+            } */}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

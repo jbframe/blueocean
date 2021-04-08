@@ -9,7 +9,7 @@ const ComingUp = ({ userId, host, sidebarToggle, setSidebarToggle }) => {
 
   const getUpcomingEvents = () => {
     const options = {
-      url: `http://localhost:4000/user/${userId}`,
+      url: `api/events/get-events-by-attendee/${userId}`,
       method: 'get'
     };
 

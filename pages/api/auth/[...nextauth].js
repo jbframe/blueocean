@@ -1,15 +1,9 @@
-// import { NextApiHandler } from "next";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import Adapters from "next-auth/adapters";
 
 import { PrismaClient } from "@prisma/client";
-import axios from "axios";
-import { session } from "next-auth/client";
-
 const prisma = new PrismaClient();
-
-// we will define `options` up next
 
 const providers = [
     Providers.Google({
@@ -26,30 +20,6 @@ const providers = [
         },
       },
       from: process.env.SMTP_FROM,
-    }),
-    Providers.Credentials({
-      name: 'Credentials',
-      authorize: async (credentials) => {
-        try {
-          const user = await axios.post('/users/login', {
-            user: {
-              password: credentials.password,
-              email: credentials.email
-            }
-          },
-          {
-            headers: {
-              accept: '*/*',
-              'Content-Type': 'application/json'
-            }
-          })
-
-          if (user) return { status: 'success', data: user }
-        } catch (error) {
-          const errorMessage = e.reponse.data.errorMessage
-          throw new Error(errorMessage + '&email=' + credentials.email)
-        }
-      },
     })
   ];
 
@@ -63,7 +33,10 @@ const callbacks = {
   async session(session, token) {
     session.accessToken = token.accessToken;
     return session;
-  }
+  },
+  async redirect (_url, baseUrl) {
+    return Promise.resolve('/');
+  },
 }
 
 const options = {
@@ -73,9 +46,8 @@ const options = {
   secret: process.env.SECRET,
   pages: {
     error: '/login',
+    signIn: '/auth/sigin'
   }
 };
-
-
 
 export default (req, res) => NextAuth(req, res, options);

@@ -50,6 +50,17 @@ const requests = {
         console.log(err);
       });
   },
+
+  addEvent(postObj) {
+    axios
+      .post(`${server}/events/create`, postObj)
+      .then((response) => {
+        console.log('Added new event!', response);
+      })
+      .catch((err) => {
+        console.log('err with event posting: ', err);
+      });
+  },
 };
 
 module.exports = requests;

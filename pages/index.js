@@ -5,6 +5,7 @@ import { getSession, useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CreateEvent from './createEvent';
 
 const requests = require("../handlers/requests");
 

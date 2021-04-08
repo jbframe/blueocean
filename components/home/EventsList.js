@@ -4,6 +4,7 @@ import SidebarEventCard from './SidebarEventCard';
 import s from '../../styles/EventCard.module.css';
 
 const EventsList = ({ events, userId }) => {
+
   return (
     <div className={s.list_container}>
       {events.map((event, index) => (

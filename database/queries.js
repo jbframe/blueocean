@@ -2,7 +2,14 @@ const { Pool } = require("pg");
 
 connectionString = process.env.DATABASE_URL;
 
-const pool = new Pool({ connectionString })
+const pool = new Pool({
+  connectionString,
+  max: 90,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+})
+
+pool.on('connect', () => console.log('database connected'))
 
 /*=================================================================
 ======================                  ===========================

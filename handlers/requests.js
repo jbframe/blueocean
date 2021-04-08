@@ -31,7 +31,7 @@ const requests = {
       event_id: eventId,
     };
     axios
-      .put(`/api/signup`, updateObj)
+      .put(`/api/users/add-user-to-event`, updateObj)
       .then((response) => {
         console.log(`Added User ${userId} to Event ${eventId}`);
       })

@@ -23,10 +23,11 @@ export default function Home() {
   const [userAttendees, setUserAttendees] = useState([]);
 
   // Search Hooks
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     // ----TO BE USED WITH NEXT.AUTH----
+
     // async function getData() {
     //   if (session) {
     //     await setUserName(session.user.name);
@@ -41,8 +42,6 @@ export default function Home() {
     //   }
     // }
     // getData();
-
-
 
     requests.getUserProfile("email@email.com", (data) => {
       setUserName(data[0].name);
@@ -59,7 +58,7 @@ export default function Home() {
     });
 
     // Currently reviewing other option for how attendees are stored in state.
-    let userAttendeesUpdate = {}
+    let userAttendeesUpdate = {};
     for (let i = 0; i < userEvents.length; i++) {
       requests.fetchEventAttendees(userEvents[i].event_id, (data) => {
         userAttendeesUpdate[userEvents[i].event_id] = data;
@@ -68,7 +67,29 @@ export default function Home() {
     setUserAttendees(userAttendeesUpdate);
   }, [session]);
 
-
+  useEffect(() => {
+    if (search.length === 0) {
+      requests.fetchAllEvents((data) => {
+        setAllEvents(data);
+      });
+    }
+    let searchResults = [];
+    allEvents.forEach((event) => {
+      for (let key in event) {
+        let property = event[key];
+        if (typeof property === "string") {
+          if (
+            property.includes(search) &&
+            searchResults.indexOf(event) === -1
+          ) {
+            searchResults.push(event);
+          }
+        }
+      }
+    });
+    setAllEvents(searchResults);
+    console.log("done");
+  }, [search]);
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
@@ -83,7 +104,11 @@ export default function Home() {
           <div>
             <h5>All Events</h5>
             <div className={styles.list}>
-              <EventsList events={allEvents} userId={userId} attendees={userAttendees === undefined ? [] : userAttendees}/>
+              <EventsList
+                events={allEvents}
+                userId={userId}
+                attendees={userAttendees === undefined ? [] : userAttendees}
+              />
             </div>
           </div>
         </div>

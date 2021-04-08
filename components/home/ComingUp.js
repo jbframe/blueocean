@@ -7,12 +7,13 @@ const ComingUp = ({ userId }) => {
 
   const getUpcomingEvents = () => {
     const options = {
-      url: `http://localhost:4000/user/${userId}`,
+      url: `api/events/get-events-by-attendee/${userId}`,
       method: 'get'
     };
 
     axios(options)
     .then((results) => {
+      console.log(results);
       setUpcomingEvents(results.data);
     })
     .catch((error) => {

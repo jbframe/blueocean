@@ -1,11 +1,11 @@
 const axios = require("axios");
 
-const server = "http://localhost:4000";
+const server = "http://ec2-34-219-128-243.us-west-2.compute.amazonaws.com:4000";
 
 const requests = {
   fetchUserEvents(user, cb) {
     axios
-      .get(`${server}/user/${user}`)
+      .get(`/api/events/get-events-by-attendee/${user}`)
       .then((response) => {
         cb(response.data);
       })
@@ -16,7 +16,7 @@ const requests = {
 
   fetchAllEvents(cb) {
     axios
-      .get(`${server}/events`)
+      .get(`/api/events/get-all-events`)
       .then((response) => {
         cb(response.data);
       })
@@ -31,7 +31,7 @@ const requests = {
       event_id: eventId,
     };
     axios
-      .put(`${server}/signup`, updateObj)
+      .put(`/api/users/add-user-to-event`, updateObj)
       .then((response) => {
         console.log(`Added User ${userId} to Event ${eventId}`);
       })
@@ -42,7 +42,7 @@ const requests = {
 
   getUserProfile(email, cb) {
     axios
-      .get(`${server}/profile/${email}`)
+      .get(`/api/users/get-user-profile/${email}`)
       .then((response) => {
         cb(response.data);
       })
@@ -53,7 +53,7 @@ const requests = {
 
   addEvent(postObj) {
     axios
-      .post(`${server}/events/create`, postObj)
+      .post(`/api/events/create-event`, postObj)
       .then((response) => {
         console.log('Added new event!', response);
       })
@@ -63,12 +63,12 @@ const requests = {
   },
   fetchEventAttendees(eventID, cb) {
     axios
-      .get(`${server}/attendees/event/${eventID}`)
+      .get(`/api/events/get-event-attendees/${eventID}`)
       .then((response) => {
         cb(response.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data);
       });
   },
   removeAttendee(userId, eventId) {

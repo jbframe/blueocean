@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import CreateEvent from "./createEvent";
-import { useSession } from "next-auth/client";
+import { getSession, useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CreateEvent from './createEvent';
 
 const requests = require("../handlers/requests");
 
@@ -108,4 +108,12 @@ export default function Home() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps (context) {
+  return {
+    props: {
+      session: await getSession()
+    },
+  }
 }

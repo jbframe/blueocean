@@ -7,6 +7,7 @@ eventsRouter.use(express.urlencoded({ extended: true }));
 eventsRouter.get("/", (req, res) => {
   queries.getAllUpcomingEvents((err, results) => {
     if (err) {
+      console.log(err);
       res.sendStatus(400);
     } else {
       res.send(results);

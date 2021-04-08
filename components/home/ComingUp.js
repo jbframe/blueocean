@@ -6,7 +6,6 @@ const requests = require("../../handlers/requests");
 
 const ComingUp = ({ userId }) => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
-  const [attendees, setAttendees] = useState(null);
 
   const getUpcomingEvents = () => {
     const options = {
@@ -16,24 +15,11 @@ const ComingUp = ({ userId }) => {
     axios(options)
     .then((results) => {
       setUpcomingEvents(results.data)
-      getAttendees(results.data)
     })
     .catch((error) => {
       console.log(error);
     })
   };
-
-  const getAttendees = (eventsArray) => {
-    let attendeesUpdate = {};
-      for (let i = 0; i < eventsArray.length; i++) {
-        // if (upcomingEvents[i].host_id === userId) {
-          requests.fetchEventAttendees(eventsArray[i].event_id, (data) => {
-            attendeesUpdate[eventsArray[i].event_id] = data;
-          });
-        // }
-      }
-    setAttendees(attendeesUpdate);
-  }
 
   useEffect(() => {
     getUpcomingEvents();
@@ -49,7 +35,6 @@ const ComingUp = ({ userId }) => {
           date={event.date}
           eventId={event.event_id}
           userId={userId}
-          attendees={attendees !== null ? attendees[event.event_id] : null}
         />
       )) : null}
 

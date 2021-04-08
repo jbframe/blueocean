@@ -31,10 +31,10 @@ const StyledMenu = withStyles({
   />
 ));
 
-const Navbar = () => {
+const Navbar = ({ setSearch }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [session, loading] = useSession();
-  const [search, setSearch] = useState(); // search query is here
+  // const [search, setSearch] = useState();
   const [modalShow, setModalShow] = useState(false);
 
   const handleSearch = e => {

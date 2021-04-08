@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from 'next/image';
 import s from '../../styles/EventCard.module.css';
 import { Button, Modal } from "react-bootstrap";
 import requests from "../../handlers/requests";
+import AttendeeDisplay from "./AttendeeDisplay";
 
-const SidebarEventCard = ({ image, name, location, date, eventId, userId, attendees }) => {
+const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
   const [show, setShow] = useState(false);
+  const [eventAttendees, setEventAttendees] = useState([]);
 
   const handleClose = () => {
     setShow(false);
@@ -18,6 +20,16 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, attend
     requests.addUserToEvent(userId, eventId);
     handleClose();
   };
+
+  const getAttendees = (eventID) => {
+    requests.fetchEventAttendees(eventID, (data) => {
+      setEventAttendees(data);
+    });
+  }
+
+  useEffect(()=> {
+    getAttendees(eventId);
+  }, [eventId])
 
   const dayObj = {
     Sun: 'Sunday',
@@ -72,7 +84,6 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, attend
   const handleClick = (eventId) => {
     console.log(eventId, ' was selected!');
   }
-
   return (
     <div className={s.event_card} onClick={handleShow}>
       <Image
@@ -101,10 +112,12 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, attend
             <div className="event-card-name">{name}</div>
             <div className="event-card-location">{location}</div>
             <div className="event-card-date">{date}</div>
-            {/* {attendees !== null || ? attendees.map((attendee, index)=>{
-            <div className="event-card-attendee" key={index}>{attendee.name}</div>
-            }) : ''
-            } */}
+            <div className="event-card-attendee-heading" style={{'fontWeight':'bold'}}>Attendees</div>
+            {eventAttendees.length !== 0
+              ? eventAttendees.map((attendee, index) => (
+                <AttendeeDisplay key={index} attendee={attendee} />))
+              : <div className="event-card-attendee">None</div>
+            }
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

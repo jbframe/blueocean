@@ -27,18 +27,16 @@ export default function Home() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-
     if (session) {
       requests.getUserProfile(session.user.email, (data) => {
         setUserName(data[0].name);
         setUserId(data[0].id);
         setHost(data[0].host_status);
       });
-      
+
       requests.fetchUserEvents(userId, (data) => {
         setUserEvents(data);
       });
-      
     }
     requests.fetchAllEvents((data) => {
       setAllEvents(data);
@@ -59,23 +57,25 @@ export default function Home() {
   useEffect(() => {
     if (search.length === 0) {
       setAllEvents(compareEvents);
-    }
-    let searchResults = [];
-    compareEvents.forEach((event) => {
-      for (let key in event) {
-        let property = event[key];
-        if (typeof property === "string") {
-          if (
-            property.includes(search) &&
-            searchResults.indexOf(event) === -1
-          ) {
-            searchResults.push(event);
+    } else {
+      let searchTerm = search.toLowerCase();
+      let searchResults = [];
+      compareEvents.forEach((event) => {
+        for (let key in event) {
+          let property = event[key];
+          if (typeof property === "string") {
+            property = property.toLowerCase();
+            if (
+              property.includes(searchTerm) &&
+              searchResults.indexOf(event) === -1
+            ) {
+              searchResults.push(event);
+            }
           }
         }
-      }
-    });
-    setAllEvents(searchResults);
-    console.log("done");
+      });
+      setAllEvents(searchResults);
+    }
   }, [search]);
 
   // Wrap every page component in <Layout> tags (and import up top)

@@ -14,6 +14,7 @@ function CreateEvent(props) {
   const [questionContent, setQuestionContent] = useState([]);
   const [maxAttendees, setMaxAttendees] = useState(0);
   const [photoURL, setPhotoURL] = useState(null);
+  const [userId, setUserId] = useState();
 
   const clearFields = () => {
     setEventName("");
@@ -53,17 +54,17 @@ function CreateEvent(props) {
     event.preventDefault();
     clearFields();
     let timeStamp = new Date(eventDate);
-    if (!validationCheck()) {
-      const submitObj = {
-        hostId: 5,
-        meetingUrl: eventURL,
-        name: eventName,
-        summary: eventDescription,
-        location: eventLocation,
-        date: timeStamp,
-        max: maxAttendees,
-        photos: photoURL,
-      };
+      if (!validationCheck()) {
+        const submitObj = {
+          hostId: props.userId,
+          meetingUrl: eventURL,
+          name: eventName,
+          summary: eventDescription,
+          location: eventLocation,
+          date: timeStamp,
+          max: maxAttendees,
+          photos: photoURL,
+        }
       console.log("submitObj:", submitObj);
       requests.addEvent(submitObj);
       props.onHide();

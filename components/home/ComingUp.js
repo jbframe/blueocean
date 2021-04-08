@@ -22,7 +22,7 @@ const ComingUp = ({ userId }) => {
 
   useEffect(() => {
     getUpcomingEvents();
-  }, [])
+  }, [userId])
 
   return (
     <div>

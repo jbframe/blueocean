@@ -67,7 +67,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
   let calDate = dateArray[2];
   let year = dateArray[3];
   let time = militaryToStandard(dateArray[4]);
-  let displayDate = `${day}, ${month} ${calDate}, ${year} at ${time}`
+  let displayDate = `${day}, ${month} ${calDate}, ${year}`
 
   const handleClick = (eventId) => {
     console.log(eventId, ' was selected!');
@@ -75,16 +75,19 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
 
   return (
     <div className={s.event_card} onClick={handleShow}>
-      <Image
-        className="event-card-img"
-        src="/event-card-placeholder.jpeg"
-        alt="event card cover"
-        height={100}
-        width={175}
-        />
+      <div>
+        <Image
+          className="event-card-img"
+          src="/event-card-placeholder.jpeg"
+          alt="event card cover"
+          height={100}
+          width={175}
+          />
+      </div>
       <div className={s.name}>{name}</div>
       <div className={s.location}>{location}</div>
       <div className={s.date}>{displayDate}</div>
+      <div className={s.date}>{time}</div>
       <div onClick={e => e.stopPropagation()}>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -100,7 +103,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId }) => {
             />
             <div className="event-card-name">{name}</div>
             <div className="event-card-location">{location}</div>
-            <div className="event-card-date">{date}</div>
+            <div className="event-card-date">{date} at {time}</div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

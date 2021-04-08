@@ -21,7 +21,6 @@ export default function Home() {
   const [allEvents, setAllEvents] = useState([]);
   const [compareEvents, setCompareEvents] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
-  const [userAttendees, setUserAttendees] = useState([]);
 
   // Search Hooks
   const [search, setSearch] = useState("");
@@ -34,23 +33,17 @@ export default function Home() {
         setHost(data[0].host_status);
       });
 
-      requests.fetchUserEvents(userId, (data) => {
-        setUserEvents(data);
-      });
-    }
-    requests.fetchAllEvents((data) => {
-      setAllEvents(data);
-      setCompareEvents(data);
-    });
+      if (userId) {
+        requests.fetchUserEvents(userId, (data) => {
+          setUserEvents(data);
+        });
+      }
 
-    // Currently reviewing other option for how attendees are stored in state.
-    let userAttendeesUpdate = {};
-    for (let i = 0; i < userEvents.length; i++) {
-      requests.fetchEventAttendees(userEvents[i].event_id, (data) => {
-        userAttendeesUpdate[userEvents[i].event_id] = data;
+      requests.fetchAllEvents((data) => {
+        setAllEvents(data);
+        setCompareEvents(data);
       });
     }
-    setUserAttendees(userAttendeesUpdate);
   }, [session]);
 
   // Search Function
@@ -90,12 +83,8 @@ export default function Home() {
         <div className={styles.main}>
           <div>
             <h5>All Events</h5>
-            <div className={styles.list}>
-              <EventsList
-                events={allEvents}
-                userId={userId}
-                attendees={userAttendees === undefined ? [] : userAttendees}
-              />
+            <div className="event-list">
+              <EventsList events={allEvents} userId={userId} />
             </div>
           </div>
         </div>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SidebarEventCard from './SidebarEventCard';
 
+const requests = require("../../handlers/requests");
+
 const ComingUp = ({ userId }) => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
 
@@ -11,18 +13,20 @@ const ComingUp = ({ userId }) => {
       method: 'get'
     };
 
-    axios(options)
-    .then((results) => {
-      setUpcomingEvents(results.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    if (userId) {
+      axios(options)
+      .then((results) => {
+        setUpcomingEvents(results.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
   };
 
   useEffect(() => {
     getUpcomingEvents();
-  }, [])
+  }, [userId])
 
   return (
     <div>

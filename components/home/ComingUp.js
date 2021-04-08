@@ -36,6 +36,7 @@ const ComingUp = ({ userId, host, sidebarToggle, setSidebarToggle }) => {
       {upcomingEvents ? upcomingEvents.map((event, i) => (
         <SidebarEventCard
           key={i}
+          image={event.image}
           name={event.event_name}
           location={event.location}
           date={event.date}

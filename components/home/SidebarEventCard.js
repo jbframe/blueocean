@@ -9,14 +9,13 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
   const [show, setShow] = useState(false);
   const [eventAttendees, setEventAttendees] = useState([]);
 
-  // console.log(image);
-
   const handleClose = () => {
     setShow(false);
-  }
+  };
+
   const handleShow = () => {
     setShow(true);
-  }
+  };
 
   const handleSignUp = () => {
     requests.addUserToEvent(userId, eventId);
@@ -25,7 +24,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
   };
 
   const handleCancel = () => {
-    console.log('canceled!')
+    requests.removeAttendee(userId, eventId);
     setSidebarToggle(true);
     handleClose();
   }
@@ -97,14 +96,14 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
   }
   return (
     <div className={s.event_card} onClick={handleShow}>
-      <img src={image} alt="db-image" />
-      <Image
+      <img className={s.image} src={image} alt="db-image" />
+      {/* <Image
         className="event-card-img"
         src="/event-card-placeholder.jpeg"
         alt="event card cover"
         height={100}
         width={175}
-        />
+        /> */}
       <div className={s.name}>{name}</div>
       <div className={s.location}>{location}</div>
       <div className={s.date}>{displayDate}</div>

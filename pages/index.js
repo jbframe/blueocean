@@ -22,6 +22,9 @@ export default function Home() {
   const [modalShow, setModalShow] = React.useState(false);
   const [userAttendees, setUserAttendees] = useState([]);
 
+  // Search Hooks
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
 
     if (session) {
@@ -41,7 +44,7 @@ export default function Home() {
     });
 
     // Currently reviewing other option for how attendees are stored in state.
-    let userAttendeesUpdate = {}
+    let userAttendeesUpdate = {};
     for (let i = 0; i < userEvents.length; i++) {
       requests.fetchEventAttendees(userEvents[i].event_id, (data) => {
         userAttendeesUpdate[userEvents[i].event_id] = data;
@@ -50,25 +53,51 @@ export default function Home() {
     setUserAttendees(userAttendeesUpdate);
   }, [session]);
 
-
+  useEffect(() => {
+    if (search.length === 0) {
+      requests.fetchAllEvents((data) => {
+        setAllEvents(data);
+      });
+    }
+    let searchResults = [];
+    allEvents.forEach((event) => {
+      for (let key in event) {
+        let property = event[key];
+        if (typeof property === "string") {
+          if (
+            property.includes(search) &&
+            searchResults.indexOf(event) === -1
+          ) {
+            searchResults.push(event);
+          }
+        }
+      }
+    });
+    setAllEvents(searchResults);
+    console.log("done");
+  }, [search]);
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (
-    <Layout>
+    <Layout userId={userId} setSearch={setSearch}>
       <div className={styles.container}>
         <Head>
           <title>My Dashboard</title>
         </Head>
 
-        <main className={styles.main}>
+        <div className={styles.main}>
           <div>
             <h5>All Events</h5>
-            <div className="event-list">
-              <EventsList events={allEvents} userId={userId} attendees={userAttendees === undefined ? [] : userAttendees}/>
+            <div className={styles.list}>
+              <EventsList
+                events={allEvents}
+                userId={userId}
+                attendees={userAttendees === undefined ? [] : userAttendees}
+              />
             </div>
           </div>
-        </main>
+        </div>
         <footer className={styles.footer}></footer>
       </div>
     </Layout>

@@ -34,23 +34,25 @@ export default function Home() {
         setHost(data[0].host_status);
       });
       
-      requests.fetchUserEvents(userId, (data) => {
-        setUserEvents(data);
+      if (userId) {
+        requests.fetchUserEvents(userId, (data) => {
+          setUserEvents(data);
+        });
+      }
+    
+      requests.fetchAllEvents((data) => {
+        setAllEvents(data);
       });
-      
-    }
-    requests.fetchAllEvents((data) => {
-      setAllEvents(data);
-    });
 
-    // Currently reviewing other option for how attendees are stored in state.
-    let userAttendeesUpdate = {};
-    for (let i = 0; i < userEvents.length; i++) {
-      requests.fetchEventAttendees(userEvents[i].event_id, (data) => {
-        userAttendeesUpdate[userEvents[i].event_id] = data;
-      });
+      // Currently reviewing other option for how attendees are stored in state.
+      let userAttendeesUpdate = {};
+      for (let i = 0; i < userEvents.length; i++) {
+        requests.fetchEventAttendees(userEvents[i].event_id, (data) => {
+          userAttendeesUpdate[userEvents[i].event_id] = data;
+        });
+      }
+      setUserAttendees(userAttendeesUpdate);
     }
-    setUserAttendees(userAttendeesUpdate);
   }, [session]);
 
   useEffect(() => {

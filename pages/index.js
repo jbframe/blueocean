@@ -73,7 +73,7 @@ export default function Home() {
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
-  console.log('indexUserId: ', userId)
+
   return (
     <Layout userId={userId} setSearch={setSearch} host={host}>
       <div className={styles.container}>

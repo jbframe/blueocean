@@ -16,7 +16,6 @@ function CreateEvent(props) {
   const [maxAttendees, setMaxAttendees] = useState(0);
   const [photoURL, setPhotoURL] = useState(null);
 
-  console.log('Create Event Props: ', props)
   const clearFields = () => {
     setEventName("");
     setEventDescription("");
@@ -123,12 +122,12 @@ function CreateEvent(props) {
       questionContent
     );
   };
-
+    const {userId, ...rest} = props
   return (
     <Modal
-      dialogClassName="modal-90w public-profile-modal-class"
+    {...rest}
+      // dialogClassName="modal-90w public-profile-modal-class"
       className="special_modal"
-      {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered

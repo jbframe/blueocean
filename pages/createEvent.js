@@ -2,40 +2,45 @@ import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import requests from "../handlers/requests";
+import UploadWidget from "../components/PhotoUpload.js";
 
 function CreateEvent(props) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [eventLocation, setEventLocation] = useState("");
   const [eventDate, setEventDate] = useState("");
-  const [eventTime, setEventTime] = useState("");
+  const [eventURL, setEventURL] = useState("");
   const [questions, setQuestions] = useState([]);
   const [questionContent, setQuestionContent] = useState([]);
-  // const [questionTwo, setQuestionTwo] = useState("");
   const [maxAttendees, setMaxAttendees] = useState(0);
-  const [photos, setPhotos] = useState(null);
+  const [photoURL, setPhotoURL] = useState(null);
 
   const clearFields = () => {
     setEventName("");
     setEventDescription("");
     setEventLocation("");
+    setEventDate("");
+    setEventURL("");
     setMaxAttendees(0);
-    setPhotos(null);
+    setPhotoURL(null);
   };
 
   const validationCheck = () => {
     const required = [];
-    if (eventName === '') {
-      required.push('event name');
+    if (eventName === "") {
+      required.push("event name");
     }
-    if (eventDescription === '') {
-      required.push('event description');
+    if (eventDescription === "") {
+      required.push("event description");
     }
-    if (eventLocation === '') {
-      required.push('event location');
+    if (eventLocation === "") {
+      required.push("event location");
+    }
+    if (eventDate === "") {
+      required.push("event date");
     }
     if (required.length) {
-      let result = '\n\n';
+      let result = "\n\n";
       for (let i = 0; i < required.length; i += 1) {
         result += `${required[i]}\n`;
       }
@@ -47,22 +52,22 @@ function CreateEvent(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     clearFields();
-    let timeStamp = new Date();
-    timeStamp.parse(eventDate);
-    timeStamp.setHours(eventTime);
+    let timeStamp = new Date(eventDate);
     if (!validationCheck()) {
       const submitObj = {
+        hostId: 5,
+        meetingUrl: eventURL,
         name: eventName,
-        description: eventDescription,
+        summary: eventDescription,
         location: eventLocation,
         date: timeStamp,
         max: maxAttendees,
-        photos: photos
-      } 
-      console.log('date: ', submitObj.date)
+        photos: photoURL,
+      };
+      console.log("submitObj:", submitObj);
       requests.addEvent(submitObj);
       props.onHide();
-      alert('Event Created Successfully!')
+      alert("Event Created Successfully!");
     } else {
       alert(`Please complete the required fields: ${validationCheck()}`);
     }
@@ -77,29 +82,46 @@ function CreateEvent(props) {
 
   const handleLoadMoreQuestions = () => {
     if (questions.length < 5) {
-      setQuestions([...questions, <input
-        value={questionContent[questions.length]}
-        key={questions.length}
-        onChange={(e) => setQuestionValue(e.target.value, questions.length)}
-        placeholder="Add Question"
-      ></input>])
-      console.log(questionContent);
-      let questionCopy = questionContent.slice();
-      console.log(questionCopy);
-      questionCopy.push('');
-      console.log(questionCopy);
+      setQuestions([
+        ...questions,
+        <input
+          value={questionContent[questions.length]}
+          onChange={(e) => setQuestionValue(e.target.value, questions.length)}
+          placeholder="Add Question"
+        ></input>,
+      ]);
+      console.log(questions);
+      let questionCopy = questionContent;
+      console.log(
+        "questionCopy before push when adding question:",
+        questionCopy
+      );
+      questionCopy.push("");
+      console.log(
+        "questionCopy after push when adding question:",
+        questionCopy
+      );
       setQuestionContent(questionCopy);
-      console.log(questionContent);
+      console.log(
+        "questionContent after setting to copy when adding question:",
+        questionContent
+      );
     }
-  }
+  };
 
   const setQuestionValue = (value, index) => {
-    console.log('questionContent: ', questionContent);
-    let questionCopy = questionContent.slice();
+    console.log(
+      "questionContent before anything setting value: ",
+      questionContent
+    );
+    let questionCopy = questionContent;
     questionCopy[index] = value;
     setQuestionContent(questionCopy);
-    console.log('questionContent: ', questionContent);
-  }
+    console.log(
+      "questionContent at the end of setting value: ",
+      questionContent
+    );
+  };
 
   return (
     <Modal
@@ -136,18 +158,16 @@ function CreateEvent(props) {
         <br></br>
 
         <input
-          type='date'
-          value={eventDate}
-          onChange={(e) => setEventDate(e.target.value)}
-          placeholder="Add Event Date (YYYY-MM-DD)"
+          value={eventURL}
+          onChange={(e) => setEventURL(e.target.value)}
+          placeholder="Add Event URL (if online)"
         ></input>
         <br></br>
 
         <input
-          type='time'
-          value={eventTime}
-          onChange={(e) => setEventTime(e.target.value)}
-          placeholder="Add Event Time"
+          type="datetime-local"
+          value={eventDate}
+          onChange={(e) => setEventDate(e.target.value)}
         ></input>
         <br></br>
 
@@ -181,36 +201,18 @@ function CreateEvent(props) {
         </label>
         <br></br>
 
-        <label>
-          Photos
-          <input type="file" onChange={configurePhoto}></input>
-          <img src={photos} />
-        </label>
-        <button onClick={handleLoadMoreQuestions}>Add More Questions</button>
-        {/* { <button onClick={handleLoadMoreQuestions}>Add More Questions</button> ?
-        <input
-          value={questionOne}
-          onChange={(e) => setQuestionOne(e.target.value)}
-          placeholder="Add Question"
-        ></input> : 
-        <input
-        value={questionOne}
-        onChange={(e) => setQuestionOne(e.target.value)}
-        placeholder="Add Question"
-      ></input>
-        <input
-        value={questionTwo}
-        onChange={(e) => setQuestionTwo(e.target.value)}
-        placeholder="Add Question"
-      ></input>
-        } */}
-        {questions}
+        <UploadWidget photoURL={photoURL} setPhotoURL={setPhotoURL} />
+      <br></br>
+      <button onClick={handleLoadMoreQuestions}>Add More Questions</button>
+      {questions}
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={props.onHide}>Close</Button>
-        <Button onClick={handleSubmit}>Submit</Button>
-      </Modal.Footer>
-    </Modal>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={props.onHide}>
+        Close
+        </Button>
+      <Button onClick={handleSubmit}>Submit</Button>
+    </Modal.Footer>
+    </Modal >
   );
 }
 

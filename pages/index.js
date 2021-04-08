@@ -19,11 +19,11 @@ export default function Home() {
   // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
-  const [compareEvents, setCompareEvents] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
 
   // Search Hooks
   const [search, setSearch] = useState("");
+  const [compareEvents, setCompareEvents] = useState([]);
 
   useEffect(() => {
     if (session) {

@@ -112,6 +112,19 @@ const makeUserAnAttendee = (userId, eventId, cb) => {
   );
 };
 
+const removeAttendee = (userId, eventId, cb) => {
+  client.query(
+    `DELETE FROM attendees WHERE event_id = ${eventId} AND user_id = ${userId}`,
+    (err, results) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        cb(null, results);
+      }
+    }
+  )
+}
+
 // inputs (eventId <number>, questions <[{text: "question text here?", answers: [{text: "answer text here.", correct: true/false }, {}] }]>, cb (err, results) =>{})
 const insertAssessment = (eventId, questions, cb) => {
   client.query(
@@ -406,4 +419,5 @@ module.exports = {
   getEventPhotos,
   getUserProfileByEmail,
   updateUserProfile,
+  removeAttendee
 };

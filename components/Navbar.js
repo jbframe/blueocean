@@ -61,8 +61,10 @@ const Navbar = ({ setSearch, userId, host }) => {
         />
       </div>
       <div className={styles.nav_cluster_right}>
-        <div className={styles.create} onClick={() => setModalShow(true)}>Create Event</div>
-        {/* <Button>Create Event</Button> */}
+        {host
+          ? <div className={styles.create} onClick={() => setModalShow(true)}>Create Event</div>
+          : <React.Fragment></React.Fragment>
+        }
         <CreateEvent show={modalShow} onHide={() => setModalShow(false) } userId={userId}/>
         <AccountCircleIcon className={styles.account} onClick={handleClick} />
         <StyledMenu

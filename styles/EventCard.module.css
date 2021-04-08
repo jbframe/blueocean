@@ -16,6 +16,11 @@
   font-size: 14px;
 }
 
+.event-card-attendee-heading {
+  font-size: 18px;
+}
+
+
 .list_container {
   display: flex;
   /* flex-direction: row; */

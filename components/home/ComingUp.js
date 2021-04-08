@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SidebarEventCard from './SidebarEventCard';
 
+const requests = require("../../handlers/requests");
+
 const ComingUp = ({ userId }) => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
 

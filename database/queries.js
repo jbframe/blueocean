@@ -186,6 +186,7 @@ const getAllUpcomingEvents = (cb) => {
   SELECT *
   FROM events
   WHERE date > NOW()
+  RIGHT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
   GROUP BY event_id
   ORDER BY date ASC
   `,
@@ -205,6 +206,7 @@ const getEventsByAttendee = (userId, cb) => {
     *
     FROM events
     LEFT OUTER JOIN attendees ON events.event_id = attendees.event_id
+    RIGHT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
     WHERE date > NOW()
     AND user_id = ${userId}`,
     (err, results) => {
@@ -223,6 +225,7 @@ const getEventsByHost = (userId, cb) => {
     SELECT *
     FROM events
     LEFT OUTER JOIN users ON events.host_id = users.id
+    RIGHT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
     WHERE date > NOW()
     AND id = ${userId}`,
     (err, results) => {

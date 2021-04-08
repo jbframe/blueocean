@@ -4,7 +4,7 @@ import SidebarEventCard from './SidebarEventCard';
 
 const requests = require("../../handlers/requests");
 
-const ComingUp = ({ userId, host }) => {
+const ComingUp = ({ userId, host, sidebarToggle, setSidebarToggle }) => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
 
   const getUpcomingEvents = () => {
@@ -18,6 +18,9 @@ const ComingUp = ({ userId, host }) => {
       .then((results) => {
         setUpcomingEvents(results.data);
       })
+      .then(() => {
+        setSidebarToggle(false);
+      })
       .catch((error) => {
         console.log(error);
       })
@@ -26,7 +29,7 @@ const ComingUp = ({ userId, host }) => {
 
   useEffect(() => {
     getUpcomingEvents();
-  }, [userId])
+  }, [userId, sidebarToggle])
 
   return (
     <div>
@@ -39,6 +42,8 @@ const ComingUp = ({ userId, host }) => {
           eventId={event.event_id}
           userId={userId}
           host={host}
+          sideCard={true}
+          setSidebarToggle={setSidebarToggle}
         />
       )) : null}
 

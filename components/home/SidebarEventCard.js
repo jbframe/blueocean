@@ -5,9 +5,11 @@ import { Button, Modal } from "react-bootstrap";
 import requests from "../../handlers/requests";
 import AttendeeDisplay from "./AttendeeDisplay";
 
-const SidebarEventCard = ({ image, name, location, date, eventId, userId, host }) => {
+const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, setSidebarToggle, sideCard }) => {
   const [show, setShow] = useState(false);
   const [eventAttendees, setEventAttendees] = useState([]);
+
+  // console.log(image);
 
   const handleClose = () => {
     setShow(false);
@@ -18,8 +20,15 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host }
 
   const handleSignUp = () => {
     requests.addUserToEvent(userId, eventId);
+    setSidebarToggle(true);
     handleClose();
   };
+
+  const handleCancel = () => {
+    console.log('canceled!')
+    setSidebarToggle(true);
+    handleClose();
+  }
 
   const getAttendees = (eventID) => {
     requests.fetchEventAttendees(eventID, (data) => {
@@ -88,15 +97,14 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host }
   }
   return (
     <div className={s.event_card} onClick={handleShow}>
-      <div>
-        <Image
-          className="event-card-img"
-          src="/event-card-placeholder.jpeg"
-          alt="event card cover"
-          height={100}
-          width={175}
-          />
-      </div>
+      <img src={image} alt="db-image" />
+      <Image
+        className="event-card-img"
+        src="/event-card-placeholder.jpeg"
+        alt="event card cover"
+        height={100}
+        width={175}
+        />
       <div className={s.name}>{name}</div>
       <div className={s.location}>{location}</div>
       <div className={s.date}>{displayDate}</div>
@@ -133,9 +141,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host }
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleSignUp}>
-              Sign Up
-            </Button>
+            {!sideCard ? <Button variant="primary" onClick={handleSignUp}>Sign Up</Button> : <Button variant="primary" onClick={handleCancel}>Remove Event</Button>}
           </Modal.Footer>
         </Modal>
       </div>

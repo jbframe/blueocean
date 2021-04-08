@@ -25,6 +25,11 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [compareEvents, setCompareEvents] = useState([]);
 
+  // Toggle Hooks
+  const [sidebarToggle, setSidebarToggle] = useState(false);
+
+  // console.log(allEvents)
+
   useEffect(() => {
     if (session) {
       requests.getUserProfile(session.user.email, (data) => {
@@ -74,7 +79,13 @@ export default function Home() {
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (
-    <Layout userId={userId} setSearch={setSearch} host={host}>
+    <Layout
+      userId={userId}
+      setSearch={setSearch}
+      host={host}
+      sidebarToggle={sidebarToggle}
+      setSidebarToggle={setSidebarToggle}
+    >
       <div className={styles.container}>
         <Head>
           <title>My Dashboard</title>
@@ -84,7 +95,12 @@ export default function Home() {
           <div>
             <h5>All Events</h5>
             <div className="event-list">
-              <EventsList events={allEvents} userId={userId} host={host}/>
+              <EventsList
+                events={allEvents}
+                userId={userId}
+                host={host}
+                setSidebarToggle={setSidebarToggle}
+              />
             </div>
           </div>
         </div>

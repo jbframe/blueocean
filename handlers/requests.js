@@ -51,6 +51,16 @@ const requests = {
       });
   },
 
+  addEvent(postObj) {
+    axios
+      .post(`${server}/events/create`, postObj)
+      .then((response) => {
+        console.log('Added new event!', response);
+      })
+      .catch((err) => {
+        console.log('err with event posting: ', err);
+      });
+  },
   fetchEventAttendees(eventID, cb) {
     axios
       .get(`${server}/attendees/event/${eventID}`)

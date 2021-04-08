@@ -17,6 +17,11 @@
   word-wrap: break-word;
 }
 
+.event-card-attendee-heading {
+  font-size: 18px;
+}
+
+
 .list_container {
   display: flex;
   flex-wrap: wrap;

@@ -12,7 +12,7 @@ const requests = require("../handlers/requests");
 export default function Home() {
   // User Hooks
   const [userName, setUserName] = useState("");
-  const [userId, setuserId] = useState(39);
+  const [userId, setUserId] = useState();
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
 
@@ -20,81 +20,61 @@ export default function Home() {
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
-  const [userAttendees, setUserAttendees] = useState([]);
 
   // Search Hooks
   const [search, setSearch] = useState("");
+  const [compareEvents, setCompareEvents] = useState([]);
 
   useEffect(() => {
-    // ----TO BE USED WITH NEXT.AUTH----
-
-    // async function getData() {
-    //   if (session) {
-    //     await setUserName(session.user.name);
-
-    //     await requests.fetchUserEvents(userId, (data) => {
-    //       setUserEvents(data);
-    //     });
-
-    //     await requests.fetchAllEvents((data) => {
-    //       setAllEvents(data);
-    //     });
-    //   }
-    // }
-    // getData();
-
-    requests.getUserProfile("email@email.com", (data) => {
-      setUserName(data[0].name);
-      // setuserId(data[0].id);
-      setHost(data[0].host_status);
-    });
-
-    requests.fetchUserEvents(userId, (data) => {
-      setUserEvents(data);
-    });
-
-    requests.fetchAllEvents((data) => {
-      setAllEvents(data);
-    });
-
-    // Currently reviewing other option for how attendees are stored in state.
-    let userAttendeesUpdate = {};
-    for (let i = 0; i < userEvents.length; i++) {
-      requests.fetchEventAttendees(userEvents[i].event_id, (data) => {
-        userAttendeesUpdate[userEvents[i].event_id] = data;
+    if (session) {
+      requests.getUserProfile(session.user.email, (data) => {
+        setUserName(data[0].name);
+        setUserId(data[0].id);
+        setHost(data[0].host_status);
       });
-    }
-    setUserAttendees(userAttendeesUpdate);
-  }, [session]);
 
-  useEffect(() => {
-    if (search.length === 0) {
+      if (userId) {
+        requests.fetchUserEvents(userId, (data) => {
+          setUserEvents(data);
+        });
+      }
+
       requests.fetchAllEvents((data) => {
         setAllEvents(data);
+        setCompareEvents(data);
       });
     }
-    let searchResults = [];
-    allEvents.forEach((event) => {
-      for (let key in event) {
-        let property = event[key];
-        if (typeof property === "string") {
-          if (
-            property.includes(search) &&
-            searchResults.indexOf(event) === -1
-          ) {
-            searchResults.push(event);
+  }, [session]);
+
+  // Search Function
+  useEffect(() => {
+    if (search.length === 0) {
+      setAllEvents(compareEvents);
+    } else {
+      let searchTerm = search.toLowerCase();
+      let searchResults = [];
+      compareEvents.forEach((event) => {
+        for (let key in event) {
+          let property = event[key];
+          if (typeof property === "string") {
+            property = property.toLowerCase();
+            if (
+              property.includes(searchTerm) &&
+              searchResults.indexOf(event) === -1
+            ) {
+              searchResults.push(event);
+            }
           }
         }
-      }
-    });
-    setAllEvents(searchResults);
-    console.log("done");
+      });
+      setAllEvents(searchResults);
+    }
   }, [search]);
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (
-    <Layout userId={userId} setSearch={setSearch}>
+    <Layout userId={userId} setSearch={setSearch} host={host}>
       <div className={styles.container}>
         <Head>
           <title>My Dashboard</title>
@@ -103,12 +83,8 @@ export default function Home() {
         <div className={styles.main}>
           <div>
             <h5>All Events</h5>
-            <div className={styles.list}>
-              <EventsList
-                events={allEvents}
-                userId={userId}
-                attendees={userAttendees === undefined ? [] : userAttendees}
-              />
+            <div className="event-list">
+              <EventsList events={allEvents} userId={userId} host={host}/>
             </div>
           </div>
         </div>

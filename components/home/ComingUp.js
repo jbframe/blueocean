@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SidebarEventCard from './SidebarEventCard';
 
-const ComingUp = ({ userId }) => {
+const requests = require("../../handlers/requests");
+
+const ComingUp = ({ userId, host }) => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
 
   const getUpcomingEvents = () => {
@@ -11,13 +13,15 @@ const ComingUp = ({ userId }) => {
       method: 'get'
     };
 
-    axios(options)
-    .then((results) => {
-      setUpcomingEvents(results.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    if (userId) {
+      axios(options)
+      .then((results) => {
+        setUpcomingEvents(results.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
   };
 
   useEffect(() => {
@@ -34,6 +38,7 @@ const ComingUp = ({ userId }) => {
           date={event.date}
           eventId={event.event_id}
           userId={userId}
+          host={host}
         />
       )) : null}
 

@@ -31,7 +31,7 @@ const StyledMenu = withStyles({
   />
 ));
 
-const Navbar = ({ setSearch }) => {
+const Navbar = ({ setSearch, userId, host }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [session, loading] = useSession();
   // const [search, setSearch] = useState();
@@ -63,7 +63,7 @@ const Navbar = ({ setSearch }) => {
       <div className={styles.nav_cluster_right}>
         <div className={styles.create} onClick={() => setModalShow(true)}>Create Event</div>
         {/* <Button>Create Event</Button> */}
-        <CreateEvent show={modalShow} onHide={() => setModalShow(false)} />
+        <CreateEvent show={modalShow} onHide={() => setModalShow(false) } userId={userId}/>
         <AccountCircleIcon className={styles.account} onClick={handleClick} />
         <StyledMenu
           className={styles.menu}

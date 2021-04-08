@@ -5,7 +5,7 @@ export default (req, res) => new Promise(async resolve => {
   const event_id = parseInt(req.body.event_id);
   queries.makeUserAnAttendee(user_id, event_id, (err, results) => {
     if (err) {
-      res.sendStatus(400);
+      res.status(400);
     } else {
       res.send(results);
     }

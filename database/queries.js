@@ -1,15 +1,8 @@
-const { Client } = require("pg");
-const client = new Client({
-  user: 'postgres',
-  password: 'attendeaze',
-  database: 'attendeaze_auth',
-  host: '34.212.23.186'
-})
+const { Pool } = require("pg");
 
-client
-  .connect()
-  .then(() => console.log("Database Connected!"))
-  .catch((e) => console.log(e));
+connectionString = process.env.DATABASE_URL;
+
+const pool = new Pool({ connectionString })
 
 /*=================================================================
 ======================                  ===========================
@@ -29,7 +22,7 @@ const insertUser = (user, cb) => {
     password,
     token,
   } = user;
-  client.query(
+  pool.query(
     `
     INSERT INTO users
     (name, email, title, about_me, location, linkedin_url, password, token)
@@ -58,7 +51,7 @@ const insertUser = (user, cb) => {
 // inputs (event < {name, location, date, hostId, meetingUrl, summary, max} >, cb (err, results) => {} )
 const insertEvent = (event, cb) => {
   let { name, location, date, hostId, meetingUrl, summary, max } = event;
-  client.query(
+  pool.query(
     `INSERT INTO events (event_name, location, date, host_id, meeting_url, summary, attendee_max) VALUES
     (
         '${name}',
@@ -81,7 +74,7 @@ const insertEvent = (event, cb) => {
 };
 
 const insertEventPhoto = (eventId, url, cb) => {
-  client.query(
+  pool.query(
     `
   INSERT INTO events_photos
   (event_id, image)
@@ -100,7 +93,7 @@ const insertEventPhoto = (eventId, url, cb) => {
 };
 // inputs (userId <number>, eventId <number>, cb (err, results) => {})
 const makeUserAnAttendee = (userId, eventId, cb) => {
-  client.query(
+  pool.query(
     `INSERT INTO attendees (user_id, event_id) VALUES (${userId}, ${eventId})`,
     (err, results) => {
       if (err) {
@@ -114,7 +107,7 @@ const makeUserAnAttendee = (userId, eventId, cb) => {
 
 // inputs (eventId <number>, questions <[{text: "question text here?", answers: [{text: "answer text here.", correct: true/false }, {}] }]>, cb (err, results) =>{})
 const insertAssessment = (eventId, questions, cb) => {
-  client.query(
+  pool.query(
     `INSERT INTO assessments (event_id) VALUES (${eventId}) RETURNING assessment_id`,
     (err, results) => {
       if (err) {
@@ -181,7 +174,7 @@ const insertAssessment = (eventId, questions, cb) => {
 */
 
 const getAllUpcomingEvents = (cb) => {
-  client.query(
+  pool.query(
     `
   SELECT *
   FROM events
@@ -200,7 +193,7 @@ const getAllUpcomingEvents = (cb) => {
 };
 
 const getEventsByAttendee = (userId, cb) => {
-  client.query(
+  pool.query(
     `SELECT
     *
     FROM events
@@ -218,7 +211,7 @@ const getEventsByAttendee = (userId, cb) => {
 };
 
 const getEventsByHost = (userId, cb) => {
-  client.query(
+  pool.query(
     `
     SELECT *
     FROM events
@@ -236,7 +229,7 @@ const getEventsByHost = (userId, cb) => {
 };
 
 const getAllUsers = (cb) => {
-  client.query(`SELECT * FROM users`, (err, results) => {
+  pool.query(`SELECT * FROM users`, (err, results) => {
     if (err) {
       cb(err, null);
     } else {
@@ -246,7 +239,7 @@ const getAllUsers = (cb) => {
 };
 
 const getAttendeesByEvent = (eventId, cb) => {
-  client.query(
+  pool.query(
     `
     SELECT *
     FROM users
@@ -263,7 +256,7 @@ const getAttendeesByEvent = (eventId, cb) => {
 };
 
 const getAssessmentQuestionsByEvent = (eventId, cb) => {
-  client.query(
+  pool.query(
     `
     SELECT
     assessments.assessment_id,
@@ -288,7 +281,7 @@ const getAssessmentQuestionsByEvent = (eventId, cb) => {
 };
 
 const getAnswersByQuestion = (questionId, cb) => {
-  client.query(
+  pool.query(
     `
   SELECT *
   FROM answers
@@ -305,7 +298,7 @@ const getAnswersByQuestion = (questionId, cb) => {
 };
 
 const getEventPhotos = (eventId, cb) => {
-  client.query(
+  pool.query(
     `
   SELECT *
   FROM event_photos
@@ -354,7 +347,7 @@ const updateUserProfile = (updateInfo, cb) => {
   }
   updateString = updateString.slice(0, -2);
 
-  client.query(
+  pool.query(
     `
   UPDATE users
   SET ${updateString}
@@ -372,7 +365,7 @@ const updateUserProfile = (updateInfo, cb) => {
 };
 
 const getUserProfileByEmail = (email, cb) => {
-  client.query(
+  pool.query(
     `
   SELECT *
   FROM users

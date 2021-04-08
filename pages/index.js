@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+<<<<<<< HEAD
 import CreateEvent from "./createEvent";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from 'next/router'
 import { getSession, useSession } from "next-auth/client";
+=======
+import { getSession, useSession } from "next-auth/client";
+import Layout from "../components/Layout";
+import EventsList from "../components/home/EventsList";
+import "bootstrap/dist/css/bootstrap.min.css";
+import CreateEvent from './createEvent';
+>>>>>>> a8709c4ee26e1d35f1d0fd3ea4f4cd91aaebdae3
 
 const requests = require("../handlers/requests");
 
@@ -27,8 +35,15 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [compareEvents, setCompareEvents] = useState([]);
 
+<<<<<<< HEAD
   // Forced Routing
   const router = useRouter();
+=======
+  // Toggle Hooks
+  const [sidebarToggle, setSidebarToggle] = useState(false);
+
+  // console.log(allEvents)
+>>>>>>> a8709c4ee26e1d35f1d0fd3ea4f4cd91aaebdae3
 
   useEffect(() => {
     if (session) {
@@ -81,7 +96,13 @@ export default function Home() {
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
   return (
-    <Layout userId={userId} setSearch={setSearch} host={host}>
+    <Layout
+      userId={userId}
+      setSearch={setSearch}
+      host={host}
+      sidebarToggle={sidebarToggle}
+      setSidebarToggle={setSidebarToggle}
+    >
       <div className={styles.container}>
         <Head>
           <title>My Dashboard</title>
@@ -91,7 +112,12 @@ export default function Home() {
           <div>
             <h5>All Events</h5>
             <div className="event-list">
-              <EventsList events={allEvents} userId={userId} host={host}/>
+              <EventsList
+                events={allEvents}
+                userId={userId}
+                host={host}
+                setSidebarToggle={setSidebarToggle}
+              />
             </div>
           </div>
         </div>
@@ -101,6 +127,14 @@ export default function Home() {
   )
 }
 
+
+export async function getServerSideProps (context) {
+  return {
+    props: {
+      session: await getSession()
+    },
+  }
+}
 
 export async function getServerSideProps (context) {
   return {

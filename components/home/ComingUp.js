@@ -4,7 +4,7 @@ import SidebarEventCard from './SidebarEventCard';
 
 const requests = require("../../handlers/requests");
 
-const ComingUp = ({ userId }) => {
+const ComingUp = ({ userId, host }) => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
 
   const getUpcomingEvents = () => {
@@ -38,6 +38,7 @@ const ComingUp = ({ userId }) => {
           date={event.date}
           eventId={event.event_id}
           userId={userId}
+          host={host}
         />
       )) : null}
 

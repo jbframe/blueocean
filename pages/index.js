@@ -33,11 +33,11 @@ export default function Home() {
         setUserId(data[0].id);
         setHost(data[0].host_status);
       });
-      
+
       requests.fetchUserEvents(userId, (data) => {
         setUserEvents(data);
       });
-      
+
     }
     requests.fetchAllEvents((data) => {
       setAllEvents(data);
@@ -79,6 +79,7 @@ export default function Home() {
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
+
   return (
     <Layout userId={userId} setSearch={setSearch}>
       <div className={styles.container}>
@@ -95,6 +96,7 @@ export default function Home() {
                 userId={userId}
                 attendees={userAttendees === undefined ? [] : userAttendees}
               />
+              <CreateEvent userId={userId}/>
             </div>
           </div>
         </div>

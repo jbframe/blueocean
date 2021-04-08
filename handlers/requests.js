@@ -48,9 +48,30 @@ const requests = {
       })
       .catch((err) => {
         console.log(err);
-        // res.sendStatus(500);
       });
   },
+
+  addEvent(postObj) {
+    axios
+      .post(`${server}/events/create`, postObj)
+      .then((response) => {
+        console.log('Added new event!', response);
+      })
+      .catch((err) => {
+        console.log('err with event posting: ', err);
+      });
+  },
+  fetchEventAttendees(eventID, cb) {
+    axios
+      .get(`${server}/attendees/event/${eventID}`)
+      .then((response) => {
+        cb(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
 };
 
 module.exports = requests;

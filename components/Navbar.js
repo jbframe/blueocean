@@ -8,6 +8,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import styles from '../styles/Navbar.module.css';
 import { signIn, signOut, useSession } from 'next-auth/client';
+import CreateEvent from '../pages/createEvent';
+import { Button } from 'react-bootstrap';
 
 const StyledMenu = withStyles({
   paper: {
@@ -29,10 +31,11 @@ const StyledMenu = withStyles({
   />
 ));
 
-const Navbar = () => {
+const Navbar = ({ setSearch }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [session, loading] = useSession();
-  const [search, setSearch] = useState(); // search query is here
+  // const [search, setSearch] = useState();
+  const [modalShow, setModalShow] = useState(false);
 
   const handleSearch = e => {
     setSearch(e.target.value);
@@ -58,10 +61,9 @@ const Navbar = () => {
         />
       </div>
       <div className={styles.nav_cluster_right}>
-        {/* link to new page creation here */}
-        <div className={styles.create}>Create Event</div>
-        {/* link to my events view here */}
-        <div className={styles.events}>My Events</div>
+        <div className={styles.create} onClick={() => setModalShow(true)}>Create Event</div>
+        {/* <Button>Create Event</Button> */}
+        <CreateEvent show={modalShow} onHide={() => setModalShow(false)} />
         <AccountCircleIcon className={styles.account} onClick={handleClick} />
         <StyledMenu
           className={styles.menu}

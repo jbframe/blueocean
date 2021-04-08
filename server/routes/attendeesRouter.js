@@ -4,29 +4,18 @@ const queries = require("../../database/queries");
 
 eventsRouter.use(express.urlencoded({ extended: true }));
 
-eventsRouter.get("/", (req, res) => {
-  queries.getAllUpcomingEvents((err, results) => {
-    if (err) {
-      res.sendStatus(400);
-    } else {
-      res.send(results);
-    }
-  });
-});
+
 
 // req.body = { name, location, date, hostId, meetingUrl, summary, max }
-eventsRouter.post("/create", (req, res) => {
-  let event = req.body
-  console.log(event);
-  queries.insertEvent(event, (err, results) => {
+eventsRouter.get("/event/:id", (req, res) => {
+  let eventId = req.params.id;
+  queries.getAttendeesByEvent(eventId, (err, results) => {
     if (err) {
-      console.log(err)
       res.sendStatus(401);
     } else {
       res.send(results);
     }
   })
 })
-
 
 module.exports = eventsRouter;

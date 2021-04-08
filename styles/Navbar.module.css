@@ -7,6 +7,7 @@
   position: fixed;
   width: 100%;
   top: 0;
+  z-index: 2;
 }
 
 .nav_cluster_left {
@@ -32,6 +33,14 @@
 .create {
   margin-right: 5px;
   font-weight: bold;
+  border: solid 2px black;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.create:hover {
+  color: lightgray;
+  background-color: black;
 }
 
 .events {
@@ -42,4 +51,5 @@
 .account {
   font-size: 50px !important;
   margin-left: 15px !important;
+  cursor: pointer;
 }

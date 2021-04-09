@@ -104,26 +104,28 @@ export default function Home() {
       name={session.user.name}
     >
       <div className={styles.container}>
-        <Head>
-          <title>My Dashboard</title>
-        </Head>
+        <div className={styles.content}>
+          <Head>
+            <title>My Dashboard</title>
+          </Head>
 
-        <div className={styles.main}>
-          <div>
-            {/* <h5>All Events</h5> */}
-            <div className="event-list">
-              <EventsList
-                events={allEvents}
-                userId={userId}
-                host={host}
-                setSidebarToggle={setSidebarToggle}
-                mainToggle={mainToggle}
-                setMainToggle={setMainToggle}
-              />
+          <div className={styles.main}>
+            <div>
+              {/* <h5>All Events</h5> */}
+              <div className="event-list">
+                <EventsList
+                  events={allEvents}
+                  userId={userId}
+                  host={host}
+                  setSidebarToggle={setSidebarToggle}
+                  mainToggle={mainToggle}
+                  setMainToggle={setMainToggle}
+                />
+              </div>
             </div>
           </div>
+          <footer className={styles.footer}></footer>
         </div>
-        <footer className={styles.footer}></footer>
       </div>
     </Layout>
   );

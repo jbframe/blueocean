@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: fixed;
+  width: 20%;
+  top: 1;
+  left: 0;
+  background-color: lightblue;
+  height: 100%;
+}
+
+.sidebar {
+  background-color: lightblue;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  padding: 20px 20px;
+  overflow-y: scroll;
+  padding-right: 17px;
+  box-sizing: content-box;
+  padding-bottom: 200px;
+}
+
+.coming_up {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 25px;
+}
+

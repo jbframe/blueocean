@@ -1,0 +1,60 @@
+.special_modal {
+  background-color: lightblue;
+}
+
+.eventName {
+  width: 100% !important;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+.eventDescription {
+  width: 100% !important;
+  border: rgb(121, 116, 116) solid;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+.eventLocation {
+  width: 100% !important;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+.eventURL {
+  width: 100% !important;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+#containerOne {
+  display: grid;
+  margin-top: 20px;
+  grid-template-areas: "maxText maxAttendees eventDate";
+
+  grid-template-rows: 50px;
+  grid-template-columns: auto 60px 240px;
+}
+
+#containerOne .maxText {
+  margin-top: 10px;
+  justify-self: right;
+  border-radius: 5px !important;
+  grid-area: maxText;
+}
+
+#containerOne .maxAttendees {
+  margin-top: 10px;
+  margin-right: 10px;
+  border-radius: 5px !important;
+  margin: 5px !important;
+  grid-area: maxAttendees;
+}
+
+#containerOne .eventDate {
+  margin-top: 10px;
+  border-radius: 5px !important;
+  margin: 5px !important;
+  grid-area: eventDate;
+}
+

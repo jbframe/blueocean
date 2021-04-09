@@ -15,6 +15,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
 
   const handleShow = () => {
     setShow(true);
+    getAttendees(eventId);
   };
 
   const handleSignUp = () => {
@@ -33,13 +34,14 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
     requests.fetchEventAttendees(eventID, (data) => {
       setEventAttendees(data);
     });
+    console.log('hey!');
   }
 
-  useEffect(()=> {
-    if (host) {
-      getAttendees(eventId);
-    }
-  }, [eventId, host])
+  // useEffect(()=> {
+  //   if (host) {
+  //     getAttendees(eventId);
+  //   }
+  // }, [eventId, host])
 
   const dayObj = {
     Sun: 'Sunday',
@@ -97,30 +99,17 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
   return (
     <div className={s.event_card} onClick={handleShow}>
       <img className={s.image} src={image} alt="db-image" />
-      {/* <Image
-        className="event-card-img"
-        src="/event-card-placeholder.jpeg"
-        alt="event card cover"
-        height={100}
-        width={175}
-        /> */}
       <div className={s.name}>{name}</div>
       <div className={s.location}>{location}</div>
       <div className={s.date}>{displayDate}</div>
       <div className={s.date}>{time}</div>
       <div onClick={e => e.stopPropagation()}>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} onShow={handleShow}>
           <Modal.Header closeButton>
             <Modal.Title>{name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Image
-              className="event-card-img"
-              src="/event-card-placeholder.jpeg"
-              alt="event card cover"
-              width={175}
-              height={100}
-            />
+            <img className={s.image} src={image} alt="db-image" />
             <div className="event-card-name">{name}</div>
             <div className="event-card-location">{location}</div>
             <div className="event-card-date">{date}</div>

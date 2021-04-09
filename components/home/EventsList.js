@@ -7,7 +7,6 @@ const EventsList = ({ events, userId, host, setSidebarToggle }) => {
   return (
     <div className={s.list_container}>
       {events.map((event, index) => (
-        <div className={s.shadow}>
           <SidebarEventCard
             key={index}
             userId={userId}
@@ -19,7 +18,6 @@ const EventsList = ({ events, userId, host, setSidebarToggle }) => {
             host={host}
             setSidebarToggle={setSidebarToggle}
           />
-        </div>
       ))}
     </div>
   );

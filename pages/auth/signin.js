@@ -127,7 +127,7 @@ export default function SignIn({ providers, csrfToken }) {
   })
 
   return (
-    <Grid style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: 'auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
+    <Grid style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: '30vh auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
       <Grid container spacing={2} className={classes.grid}>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <h1 style={{ fontWeight: '20'}}>Enter Login Information</h1>

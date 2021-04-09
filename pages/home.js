@@ -37,10 +37,17 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
+<<<<<<< HEAD
     // if (!session) {
     //   router.push('/auth/signin')
     // }
   });
+=======
+    if (!session) {
+      router.push('/auth/signin')
+    }
+  })
+>>>>>>> a9713fbd2bde2b1ae82779256b76cdefe4cc0e39
 
   useEffect(() => {
     if (session) {

@@ -53,19 +53,6 @@ const SidebarEventCard = ({
     });
   };
 
-  const getQuestions = (eventId) => {
-    requests.fetchEventQuestions(eventId, (data) => {
-      const questions = data.data[0].questions;
-      setEventQuestions(questions);
-    });
-  };
-
-  // useEffect(()=> {
-  //   if (host) {
-  //     getAttendees(eventId);
-  //   }
-  // }, [eventId, host])
-
   const dayObj = {
     Sun: "Sunday",
     Mon: "Monday",

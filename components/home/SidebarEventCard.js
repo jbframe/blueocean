@@ -15,6 +15,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
 
   const handleShow = () => {
     setShow(true);
+    getAttendees(eventId);
   };
 
   const handleSignUp = () => {
@@ -33,13 +34,14 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
     requests.fetchEventAttendees(eventID, (data) => {
       setEventAttendees(data);
     });
+    console.log('hey!');
   }
 
-  useEffect(()=> {
-    if (host) {
-      getAttendees(eventId);
-    }
-  }, [eventId, host])
+  // useEffect(()=> {
+  //   if (host) {
+  //     getAttendees(eventId);
+  //   }
+  // }, [eventId, host])
 
   const dayObj = {
     Sun: 'Sunday',
@@ -102,7 +104,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
       <div className={s.date}>{displayDate}</div>
       <div className={s.date}>{time}</div>
       <div onClick={e => e.stopPropagation()}>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} onShow={handleShow}>
           <Modal.Header closeButton>
             <Modal.Title>{name}</Modal.Title>
           </Modal.Header>

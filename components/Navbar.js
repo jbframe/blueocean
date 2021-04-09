@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
@@ -31,7 +32,7 @@ const StyledMenu = withStyles({
   />
 ));
 
-const Navbar = ({ setSearch }) => {
+const Navbar = ({ setSearch, userId, host }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [session, loading] = useSession();
   // const [search, setSearch] = useState();
@@ -52,7 +53,12 @@ const Navbar = ({ setSearch }) => {
   return (
     <div className={styles.navbar}>
       <div className={styles.nav_cluster_left}>
-        <EventAvailableIcon className={styles.logo} />
+        <Image
+          src="/dean.jpeg"
+          alt="company logo"
+          height={55}
+          width={55}
+        />
         <TextField
           className={styles.search}
           label="Search Events"
@@ -61,9 +67,11 @@ const Navbar = ({ setSearch }) => {
         />
       </div>
       <div className={styles.nav_cluster_right}>
-        <div className={styles.create} onClick={() => setModalShow(true)}>Create Event</div>
-        {/* <Button>Create Event</Button> */}
-        <CreateEvent show={modalShow} onHide={() => setModalShow(false)} />
+        {host
+          ? <div className={styles.create} onClick={() => setModalShow(true)}>Create Event</div>
+          : <React.Fragment></React.Fragment>
+        }
+        <CreateEvent show={modalShow} onHide={() => setModalShow(false) } userId={userId}/>
         <AccountCircleIcon className={styles.account} onClick={handleClick} />
         <StyledMenu
           className={styles.menu}
@@ -72,9 +80,7 @@ const Navbar = ({ setSearch }) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {/* link to profile view here  */}
-          <MenuItem onClick={handleClose}>My Profile</MenuItem>
-          {/* sign out functionality here  */}
+          <MenuItem>USER NAME HERE</MenuItem>
           <MenuItem onClick={() => {handleClose(); signOut();}}>Sign Out</MenuItem>
         </StyledMenu>
       </div>

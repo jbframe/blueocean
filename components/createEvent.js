@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import requests from "../handlers/requests";
-import UploadWidget from "./PhotoUpload.js";
+import UploadWidget from "../components/PhotoUpload.js";
+import styles from '../styles/createEvent.module.css';
 
 function CreateEvent(props) {
   const [eventName, setEventName] = useState("");
@@ -106,22 +107,39 @@ function CreateEvent(props) {
     if (target.name === toggle1) {
 
     }
-  }
+  };
 
+  const setQuestionValue = (value, index) => {
+    console.log(
+      "questionContent before anything setting value: ",
+      questionContent
+    );
+    let questionCopy = questionContent;
+    questionCopy[index] = value;
+    setQuestionContent(questionCopy);
+    console.log(
+      "questionContent at the end of setting value: ",
+      questionContent
+    );
+  };
+    const {userId, ...rest} = props
   return (
     <Modal
-      {...props}
+    {...rest}
+      // dialogClassName="modal-90w public-profile-modal-class"
+      className="special_modal"
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header as='span' closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Enter Event Details...
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <input
+          className='eventName'
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
           placeholder="Event Name"

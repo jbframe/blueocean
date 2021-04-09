@@ -137,7 +137,7 @@ const insertAssessment = (eventId, questions, cb) => {
       } else {
         let assessmentId = results.rows[0].assessment_id;
           pool.query(
-            `INSERT INTO questions (assessment_id, question_text) VALUES (${assessmentId}, '${questions.text}' RETURNING question_id`,
+            `INSERT INTO questions (assessment_id, question_text) VALUES (${assessmentId}, '${questions.text}') RETURNING question_id`,
             (err, results) => {
               var valueString = ''
               if (err) {
@@ -146,7 +146,7 @@ const insertAssessment = (eventId, questions, cb) => {
               } else {
                 
                 questionId = results.rows[0].question_id
-                  answers.forEach((answer) => {
+                  questions.answers.forEach((answer) => {
                     valueString +=
                       ", (" +
                       questionId +

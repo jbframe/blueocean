@@ -15,7 +15,7 @@ const EventCard = ({ image, name, location, date, userId, eventId }) => {
     //   console.log("YO");
     //   console.log({ data });
     // });
-    // setShow(true);
+    setShow(true);
   };
 
   const handleSignUp = () => {

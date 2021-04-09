@@ -87,7 +87,6 @@ const requests = {
     axios
       .get(`/api/assessments/get-questions/${eventId}`)
       .then((response) => {
-        console.log("YOYYOYO");
         cb(response);
       })
       .catch((err) => {

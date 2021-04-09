@@ -12,8 +12,6 @@ import { signIn, signOut, useSession } from "next-auth/client";
 import CreateEvent from "../pages/createEvent";
 import { Button } from "react-bootstrap";
 
-import DarkMode from "./DarkMode";
-
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5",
@@ -71,7 +69,6 @@ const Navbar = ({ setSearch, userId, host }) => {
         ) : (
           <React.Fragment></React.Fragment>
         )}
-        <DarkMode />
         <CreateEvent
           show={modalShow}
           onHide={() => setModalShow(false)}

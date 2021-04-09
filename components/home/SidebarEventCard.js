@@ -28,7 +28,7 @@ const SidebarEventCard = ({
     setShow(true);
     console.log("works");
     getAttendees(eventId);
-    // getQuestions(eventId);
+    getQuestions(eventId);
   };
 
   const handleQuestions = () => {
@@ -50,6 +50,12 @@ const SidebarEventCard = ({
   const getAttendees = (eventID) => {
     requests.fetchEventAttendees(eventID, (data) => {
       setEventAttendees(data);
+    });
+  };
+
+  const getQuestions = (eventId) => {
+    requests.fetchEventQuestions(eventId, (data) => {
+      console.log(data.data);
     });
   };
 

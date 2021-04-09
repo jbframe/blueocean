@@ -1,3 +1,11 @@
+# Mr. Dean's AttendEaze
+A company events application to create, join, and organize internal events for employees.
+
+## Installation
+Fork and clone this repo and install to a local directory. You will need to install and run PostgreSQL on your local machine before running this application.
+
+https://www.postgresql.org/download/
+
 ## Instal dependencies
 npm install
 

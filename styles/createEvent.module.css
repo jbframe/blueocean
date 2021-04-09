@@ -1,3 +1,40 @@
-.special_modal {
-  background-color: rgb(241, 14, 14);
+.eventName {
+  width: 100% !important;
+  border: black solid;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+.eventDescription {
+  width: 100% !important;
+  border: black solid;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+.eventLocation {
+  width: 100% !important;
+  border: black solid;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+.eventURL {
+  width: 100% !important;
+  border: black solid;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+.eventDate {
+  width: 50% !important;
+  border: black solid;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+.maxAttendees {
+  width: 20% !important;
+  border-radius: 5px !important;
+  margin: 5px !important;
 }

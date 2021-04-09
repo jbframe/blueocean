@@ -90,43 +90,43 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
     console.log(eventId, ' was selected!');
   }
   return (
-      <div className={s.event_card} onClick={handleShow}>
-        <img className={s.image} src={image} alt="db-image" />
-        <div className={s.name}>{name}</div>
-        <div className={s.location}>{location}</div>
-        <div className={s.date}>{displayDate}</div>
-        <div className={s.date}>{time}</div>
-        <div onClick={e => e.stopPropagation()}>
-          <Modal show={show} onHide={handleClose} onShow={handleShow}>
-            <Modal.Header closeButton>
-              <Modal.Title>{name}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <img className={s.image} src={image} alt="db-image" />
-              <div className="event-card-name">{name}</div>
-              <div className="event-card-location">{location}</div>
-              <div className="event-card-date">{date}</div>
-              {host === true
-                ? <div className="event-card-attendee-heading" style={{'fontWeight':'bold'}}>Attendees</div>
+    <div className={s.event_card} onClick={handleShow}>
+      <img className={s.image} src={image} alt="db-image" />
+      <div className={s.name}>{name}</div>
+      <div className={s.location}>{location}</div>
+      <div className={s.date}>{displayDate}</div>
+      <div className={s.date}>{time}</div>
+      <div onClick={e => e.stopPropagation()}>
+        <Modal show={show} onHide={handleClose} onShow={handleShow}>
+          <Modal.Header closeButton>
+            <Modal.Title>{name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <img className={s.image} src={image} alt="db-image" />
+            <div className="event-card-name">{name}</div>
+            <div className="event-card-location">{location}</div>
+            <div className="event-card-date">{date}</div>
+            {host === true
+              ? <div className="event-card-attendee-heading" style={{'fontWeight':'bold'}}>Attendees</div>
+              : <React.Fragment></React.Fragment>
+            }
+            {eventAttendees.length !== 0
+              ? eventAttendees.map((attendee, index) => (
+                <AttendeeDisplay key={index} attendee={attendee} />))
+              : host === true
+                ? <div className="event-card-attendee">None</div>
                 : <React.Fragment></React.Fragment>
-              }
-              {eventAttendees.length !== 0
-                ? eventAttendees.map((attendee, index) => (
-                  <AttendeeDisplay key={index} attendee={attendee} />))
-                : host === true
-                  ? <div className="event-card-attendee">None</div>
-                  : <React.Fragment></React.Fragment>
-              }
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              {!sideCard ? <Button variant="primary" onClick={handleSignUp}>Sign Up</Button> : <Button variant="primary" onClick={handleCancel}>Remove Event</Button>}
-            </Modal.Footer>
-          </Modal>
-        </div>
+            }
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            {!sideCard ? <Button variant="primary" onClick={handleSignUp}>Sign Up</Button> : <Button variant="primary" onClick={handleCancel}>Remove Event</Button>}
+          </Modal.Footer>
+        </Modal>
       </div>
+    </div>
   );
 };
 

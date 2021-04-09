@@ -6,17 +6,26 @@ Fork and clone this repo and install to a local directory. You will need to inst
 
 https://www.postgresql.org/download/
 
-## Instal dependencies
-npm install
+### From your local directory, install dependencies
+```
+npm run install
+```
 
-## How to run development build + client server
+### Run a development Next/React build + client server on localhost:3000
+```
 npm run dev
+```
 
+### Run the Express server on localhost:4000
+```
+npm run server
+```
 
-## How to run production build + client server
+### Run a production build + client server on localhost:3000
+```
 npm run build
 npm start
-
+```
 
 
 ## Backend Api Documentation

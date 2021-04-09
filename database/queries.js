@@ -113,7 +113,7 @@ const makeUserAnAttendee = (userId, eventId, cb) => {
 };
 
 const removeAttendee = (userId, eventId, cb) => {
-  client.query(
+  pool.query(
     `DELETE FROM attendees WHERE event_id = ${eventId} AND user_id = ${userId}`,
     (err, results) => {
       if (err) {
@@ -402,6 +402,8 @@ const getUserProfileByEmail = (email, cb) => {
     }
   );
 };
+
+
 
 module.exports = {
   insertUser,

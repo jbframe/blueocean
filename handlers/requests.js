@@ -40,6 +40,7 @@ const requests = {
       });
   },
 
+
   getUserProfile(email, cb) {
     axios
       .get(`/api/users/get-user-profile/${email}`)
@@ -61,6 +62,7 @@ const requests = {
         console.log('err with event posting: ', err);
       });
   },
+  
   fetchEventAttendees(eventID, cb) {
     axios
       .get(`/api/events/get-event-attendees/${eventID}`)
@@ -73,7 +75,7 @@ const requests = {
   },
   removeAttendee(userId, eventId) {
     axios
-      .post(`${server}/attendees/event/${eventId}`, {"userId": userId})
+      .post(`/api/events/remove-attendee/${eventId}`, {"userId": userId})
       .then((response) => {
         console.log('Removed from the event!');
       })

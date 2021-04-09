@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import requests from "../handlers/requests";
@@ -11,10 +11,17 @@ function CreateEvent(props) {
   const [eventLocation, setEventLocation] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventURL, setEventURL] = useState("");
-  const [questions, setQuestions] = useState([]);
-  const [questionContent, setQuestionContent] = useState([]);
+  const [question, setQuestion] = useState("");
+  const [answer1, setAnswer1] = useState("");
+  const [answer2, setAnswer2] = useState("");
+  const [answer3, setAnswer3] = useState("");
+  const [answer4, setAnswer4] = useState("");
+  const [toggle1, setToggle1] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
+  const [toggle3, setToggle3] = useState(false);
+  const [toggle4, setToggle4] = useState(false);
   const [maxAttendees, setMaxAttendees] = useState(0);
-  const [photoURL, setPhotoURL] = useState(null);
+  const [photoURL, setPhotoURL] = useState([null]);
 
   const clearFields = () => {
     setEventName("");
@@ -54,17 +61,38 @@ function CreateEvent(props) {
     event.preventDefault();
     clearFields();
     let timeStamp = new Date(eventDate);
-      if (!validationCheck()) {
-        const submitObj = {
-          hostId: props.userId,
-          meetingUrl: eventURL,
-          name: eventName,
-          summary: eventDescription,
-          location: eventLocation,
-          date: timeStamp,
-          max: maxAttendees,
-          photos: photoURL,
+    if (!validationCheck()) {
+      const submitObj = {
+        hostId: 5,
+        meetingUrl: eventURL,
+        name: eventName,
+        summary: eventDescription,
+        location: eventLocation,
+        date: timeStamp,
+        max: maxAttendees,
+        photos: photoURL,
+        assessment: {
+          text: question,
+          answers: [
+            {
+              text: answer1,
+              correct: toggle1
+            },
+            {
+              text: answer2,
+              correct: toggle2
+            },
+            {
+              text: answer3,
+              correct: toggle3
+            },
+            {
+              text: answer4,
+              correct: toggle4
+            }
+          ]
         }
+      };
       console.log("submitObj:", submitObj);
       requests.addEvent(submitObj);
       props.onHide();
@@ -73,39 +101,11 @@ function CreateEvent(props) {
       alert(`Please complete the required fields: ${validationCheck()}`);
     }
   };
+  // 2021-04-12 0004:12:98
 
-  const configurePhoto = () => {
-    setPhotos(URL.createObjectURL(event.target.files[0]));
-    console.log(URL.createObjectURL(event.target.files[0]));
-    console.log(event.target.files[0]);
-  };
+  const handleToggle = (target) => {
+    if (target.name === toggle1) {
 
-  const handleLoadMoreQuestions = () => {
-    if (questions.length < 5) {
-      setQuestions([
-        ...questions,
-        <input
-          value={questionContent[questions.length]}
-          onChange={(e) => setQuestionValue(e.target.value, questions.length)}
-          placeholder="Add Question"
-        ></input>,
-      ]);
-      console.log(questions);
-      let questionCopy = questionContent;
-      console.log(
-        "questionCopy before push when adding question:",
-        questionCopy
-      );
-      questionCopy.push("");
-      console.log(
-        "questionCopy after push when adding question:",
-        questionCopy
-      );
-      setQuestionContent(questionCopy);
-      console.log(
-        "questionContent after setting to copy when adding question:",
-        questionContent
-      );
     }
   };
 
@@ -156,14 +156,14 @@ function CreateEvent(props) {
         <input
           value={eventLocation}
           onChange={(e) => setEventLocation(e.target.value)}
-          placeholder="Add Event Location"
+          placeholder="Event Location"
         ></input>
         <br></br>
 
         <input
           value={eventURL}
           onChange={(e) => setEventURL(e.target.value)}
-          placeholder="Add Event URL (if online)"
+          placeholder="Event URL (if online)"
         ></input>
         <br></br>
 
@@ -176,38 +176,74 @@ function CreateEvent(props) {
 
         <label>
           Max Attendees
-          <select
+          <input
+            type="number"
             value={maxAttendees}
             onChange={(e) => setMaxAttendees(e.target.value)}
           >
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
-            <option>13</option>
-            <option>14</option>
-            <option>15</option>
-            <option>16</option>
-            <option>17</option>
-            <option>18</option>
-            <option>19</option>
-            <option>20</option>
-          </select>
+          </input>
         </label>
         <br></br>
-
+        <input
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="Question (if any)"
+        ></input>
+        <label>
+          Correct
+          <input
+            type="checkbox"
+            onChange={(e) => setToggle1(!toggle1)}
+            checked={toggle1}
+          ></input>
+        </label>
+        <input
+          value={answer1}
+          onChange={(e) => setAnswer1(e.target.value)}
+          placeholder="Answer One (if any)"
+        ></input>
+        <label>
+          Correct
+          <input
+            type="checkbox"
+            onChange={(e) => setToggle2(!toggle2)}
+            checked={toggle2}
+          ></input>
+        </label>
+        <input
+          value={answer2}
+          onChange={(e) => setAnswer2(e.target.value)}
+          placeholder="Answer Two (if any)"
+        ></input>
+        <label>
+          Correct
+          <input
+            type="checkbox"
+            onChange={(e) => setToggle3(!toggle3)}
+            checked={toggle3}
+          ></input>
+        </label>
+        <input
+          value={answer3}
+          onChange={(e) => setAnswer3(e.target.value)}
+          placeholder="Answer Three (if any)"
+        ></input>
+        <label>
+          Correct
+          <input
+            type="checkbox"
+            onChange={(e) => setToggle4(!toggle4)}
+            checked={toggle4}
+          ></input>
+        </label>
+        <input
+          value={answer4}
+          onChange={(e) => setAnswer4(e.target.value)}
+          placeholder="Answer Four (if any)"
+        ></input>
         <UploadWidget photoURL={photoURL} setPhotoURL={setPhotoURL} />
         <br></br>
-        <button onClick={handleLoadMoreQuestions}>Add More Questions</button>
-        {questions}
+
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onHide}>
@@ -215,7 +251,7 @@ function CreateEvent(props) {
         </Button>
         <Button onClick={handleSubmit}>Submit</Button>
       </Modal.Footer>
-    </Modal>
+    </Modal >
   );
 }
 

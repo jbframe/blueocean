@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
+const assessmentRouter = require("../server/routes/assessments");
 
 connectionString = process.env.DATABASE_URL;
 
@@ -135,24 +136,16 @@ const insertAssessment = (eventId, questions, cb) => {
         cb(err, null);
       } else {
         let assessmentId = results.rows[0].assessment_id;
-        let valueString = "";
-        questions.forEach((question) => {
-          valueString += ", (" + assessmentId + ", '" + question.text + "') ";
-        });
-
-        valueString = valueString.slice(3);
-        if (valueString !== "") {
-          client.query(
-            `INSERT INTO questions (assessment_id, question_text) VALUES (${valueString} RETURNING question_id`,
+          pool.query(
+            `INSERT INTO questions (assessment_id, question_text) VALUES (${assessmentId}, '${questions.text}' RETURNING question_id`,
             (err, results) => {
+              var valueString = ''
               if (err) {
                 console.log(err);
                 cb(err, null);
               } else {
-                let valueString = "";
-                results.rows.forEach((question, i) => {
-                  let questionId = question.question_id;
-                  let answers = questions[i].answers;
+                
+                questionId = results.rows[0].question_id
                   answers.forEach((answer) => {
                     valueString +=
                       ", (" +
@@ -163,10 +156,10 @@ const insertAssessment = (eventId, questions, cb) => {
                       answer.correct +
                       ") ";
                   });
-                });
+                };
                 valueString = valueString.slice(3);
                 if (valueString !== "") {
-                  client.query(
+                  pool.query(
                     `INSERT INTO answers (question_id, answer_text, correct) VALUES (${valueString}`,
                     (err, results) => {
                       if (err) {
@@ -175,14 +168,12 @@ const insertAssessment = (eventId, questions, cb) => {
                       }
                     }
                   );
-                }
+                } 
               }
-            }
           );
         }
         cb(null, results);
-      }
-    }
+      }// good
   );
 };
 

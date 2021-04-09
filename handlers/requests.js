@@ -55,12 +55,13 @@ const requests = {
     axios
       .post(`/api/events/create-event`, postObj)
       .then((response) => {
-        console.log('Added new event!', response);
+        console.log("Added new event!", response);
       })
       .catch((err) => {
-        console.log('err with event posting: ', err);
+        console.log("err with event posting: ", err);
       });
   },
+
   fetchEventAttendees(eventID, cb) {
     axios
       .get(`/api/events/get-event-attendees/${eventID}`)
@@ -73,14 +74,26 @@ const requests = {
   },
   removeAttendee(userId, eventId) {
     axios
-      .post(`${server}/attendees/event/${eventId}`, {"userId": userId})
+      .post(`/api/events/remove-attendee/${eventId}`, { userId: userId })
       .then((response) => {
-        console.log('Removed from the event!');
+        console.log("Removed from the event!");
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
-  }
+  },
+
+  fetchEventQuestions(eventId, cb) {
+    axios
+      .get(`/api/assessments/get-questions/${eventId}`)
+      .then((response) => {
+        console.log("YOYYOYO");
+        cb(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 
 module.exports = requests;

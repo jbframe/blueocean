@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import $ from 'jquery';
-
+import { useSession } from 'next-auth/client';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -114,6 +116,15 @@ export default function SignIn({ providers, csrfToken }) {
       $("#signUpLink").css('fontWeight', 'normal');
     }
   }
+
+  const [session] = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if(session) {
+      router.push('/home')
+    }
+  })
 
   return (
     <Grid style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: 'auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>

@@ -40,6 +40,7 @@ const requests = {
       });
   },
 
+
   getUserProfile(email, cb) {
     axios
       .get(`/api/users/get-user-profile/${email}`)
@@ -61,6 +62,7 @@ const requests = {
         console.log('err with event posting: ', err);
       });
   },
+  
   fetchEventAttendees(eventID, cb) {
     axios
       .get(`/api/events/get-event-attendees/${eventID}`)

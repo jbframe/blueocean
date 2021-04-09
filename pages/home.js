@@ -17,7 +17,7 @@ export default function Home() {
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
 
-  console.log(session)
+  console.log(session);
 
   // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
@@ -37,17 +37,10 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-<<<<<<< HEAD
-    // if (!session) {
-    //   router.push('/auth/signin')
-    // }
-  });
-=======
     if (!session) {
-      router.push('/auth/signin')
+      router.push("/auth/signin");
     }
-  })
->>>>>>> a9713fbd2bde2b1ae82779256b76cdefe4cc0e39
+  });
 
   useEffect(() => {
     if (session) {
@@ -99,43 +92,43 @@ export default function Home() {
   // to have the nav bar up top
 
   if (session) {
-  return (
-    <Layout
-      userId={userId}
-      setSearch={setSearch}
-      host={host}
-      sidebarToggle={sidebarToggle}
-      setSidebarToggle={setSidebarToggle}
-      mainToggle={mainToggle}
-      setMainToggle={setMainToggle}
-      name={session.user.name}
-    >
-      <div className={styles.container}>
-        <Head>
-          <title>My Dashboard</title>
-        </Head>
+    return (
+      <Layout
+        userId={userId}
+        setSearch={setSearch}
+        host={host}
+        sidebarToggle={sidebarToggle}
+        setSidebarToggle={setSidebarToggle}
+        mainToggle={mainToggle}
+        setMainToggle={setMainToggle}
+        name={session.user.name}
+      >
+        <div className={styles.container}>
+          <Head>
+            <title>My Dashboard</title>
+          </Head>
 
-        <div className={styles.main}>
-          <div>
-            {/* <h5>All Events</h5> */}
-            <div className="event-list">
-              <EventsList
-                events={allEvents}
-                userId={userId}
-                host={host}
-                setSidebarToggle={setSidebarToggle}
-                mainToggle={mainToggle}
-                setMainToggle={setMainToggle}
-              />
+          <div className={styles.main}>
+            <div>
+              {/* <h5>All Events</h5> */}
+              <div className="event-list">
+                <EventsList
+                  events={allEvents}
+                  userId={userId}
+                  host={host}
+                  setSidebarToggle={setSidebarToggle}
+                  mainToggle={mainToggle}
+                  setMainToggle={setMainToggle}
+                />
+              </div>
             </div>
           </div>
+          <footer className={styles.footer}></footer>
         </div>
-        <footer className={styles.footer}></footer>
-      </div>
-    </Layout>
-  );
+      </Layout>
+    );
   } else {
-    return null
+    return null;
   }
 }
 

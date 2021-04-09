@@ -5,8 +5,8 @@ import { getSession, useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
-import CreateEvent from '../components/createEvent';
-import { useRouter } from 'next/router';
+import CreateEvent from "../components/createEvent";
+import { useRouter } from "next/router";
 
 const requests = require("../handlers/requests");
 
@@ -34,10 +34,10 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!session) {
-      router.push('/auth/signin')
-    }
-  })
+    // if (!session) {
+    //   router.push('/auth/signin')
+    // }
+  });
 
   useEffect(() => {
     if (session) {
@@ -119,10 +119,10 @@ export default function Home() {
   );
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
   return {
     props: {
-      session: await getSession()
+      session: await getSession(),
     },
-  }
+  };
 }

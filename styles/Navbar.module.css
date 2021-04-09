@@ -26,17 +26,18 @@
 }
 
 .search {
-  width: 300px !important;
+  width: 500px !important;
   margin-left: 25px !important;
 }
 
 .create {
   margin-right: 5px;
   font-weight: bold;
-  border: solid 1.5px black;
+  border: solid 1.5px gray;
   border-radius: 10px;
   padding: 12px;
   cursor: pointer;
+  background-color: lightgray;
 }
 
 .create:hover {

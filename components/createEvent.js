@@ -102,10 +102,9 @@ function CreateEvent(props) {
           ],
         },
       };
-      console.log("submitObj:", submitObj);
       requests.addEvent(submitObj);
+      props.setMainToggle(true);
       props.onHide();
-      alert("Event Created Successfully!");
     } else {
       alert(`Please complete the required fields: ${validationCheck()}`);
     }

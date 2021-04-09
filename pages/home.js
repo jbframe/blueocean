@@ -17,6 +17,8 @@ export default function Home() {
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
 
+  console.log(session)
+
   // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
@@ -28,6 +30,7 @@ export default function Home() {
 
   // Toggle Hooks
   const [sidebarToggle, setSidebarToggle] = useState(false);
+  const [mainToggle, setMainToggle] = useState(false);
 
   // console.log(allEvents)
 
@@ -35,7 +38,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!session) {
-      // router.push('/auth/signin')
+      router.push('/auth/signin')
     }
   })
 
@@ -58,7 +61,7 @@ export default function Home() {
         setCompareEvents(data);
       });
     }
-  }, [session]);
+  }, [session, mainToggle]);
 
   // Search Function
   useEffect(() => {
@@ -87,6 +90,8 @@ export default function Home() {
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
+
+  if (session) {
   return (
     <Layout
       userId={userId}
@@ -94,6 +99,9 @@ export default function Home() {
       host={host}
       sidebarToggle={sidebarToggle}
       setSidebarToggle={setSidebarToggle}
+      mainToggle={mainToggle}
+      setMainToggle={setMainToggle}
+      name={session.user.name}
     >
       <div className={styles.container}>
         <Head>
@@ -102,13 +110,15 @@ export default function Home() {
 
         <div className={styles.main}>
           <div>
-            <h5>All Events</h5>
+            {/* <h5>All Events</h5> */}
             <div className="event-list">
               <EventsList
                 events={allEvents}
                 userId={userId}
                 host={host}
                 setSidebarToggle={setSidebarToggle}
+                mainToggle={mainToggle}
+                setMainToggle={setMainToggle}
               />
             </div>
           </div>
@@ -117,6 +127,9 @@ export default function Home() {
       </div>
     </Layout>
   );
+  } else {
+    return null
+  }
 }
 
 export async function getServerSideProps (context) {

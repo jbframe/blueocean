@@ -32,7 +32,7 @@ const StyledMenu = withStyles({
   />
 ));
 
-const Navbar = ({ setSearch, userId, host }) => {
+const Navbar = ({ setSearch, userId, host, setMainToggle, name }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [session, loading] = useSession();
   // const [search, setSearch] = useState();
@@ -71,7 +71,12 @@ const Navbar = ({ setSearch, userId, host }) => {
           ? <div className={styles.create} onClick={() => setModalShow(true)}>Create Event</div>
           : <React.Fragment></React.Fragment>
         }
-        <CreateEvent show={modalShow} onHide={() => setModalShow(false) } userId={userId}/>
+        <CreateEvent
+          show={modalShow}
+          onHide={() => setModalShow(false) }
+          userId={userId}
+          setMainToggle={setMainToggle}
+        />
         <AccountCircleIcon className={styles.account} onClick={handleClick} />
         <StyledMenu
           className={styles.menu}
@@ -80,7 +85,7 @@ const Navbar = ({ setSearch, userId, host }) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem>USER NAME HERE</MenuItem>
+          <MenuItem>{name}</MenuItem>
           <MenuItem onClick={() => {handleClose(); signOut();}}>Sign Out</MenuItem>
         </StyledMenu>
       </div>

@@ -47,12 +47,6 @@ const SidebarEventCard = ({
     });
   };
 
-  // useEffect(()=> {
-  //   if (host) {
-  //     getAttendees(eventId);
-  //   }
-  // }, [eventId, host])
-
   const dayObj = {
     Sun: "Sunday",
     Mon: "Monday",

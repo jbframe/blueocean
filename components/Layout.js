@@ -7,6 +7,8 @@ const Layout = props => (
       setSearch={props.setSearch}
       userId={props.userId}
       host={props.host}
+      setMainToggle={props.setMainToggle}
+      name={props.name}
     />
     <Sidebar
       userId={props.userId}

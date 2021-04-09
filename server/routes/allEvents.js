@@ -23,21 +23,17 @@ eventsRouter.post("/create", (req, res) => {
       console.log(err)
       res.send(err);
     } else {
-      if (event.photos) {
-        queries.insertEventPhoto(results.rows[0].event_id, event.photos, (err, photoResults) => {
-          if (err) {
-            res.send(err)
-          } else {
-            results.photos = photoResults;
-            res.send(results)
-          }
-        })
-      } else {
-        res.send(results);
-      }
+      if (!event.photos) event.photos = "https://res.cloudinary.com/attendeaze/image/upload/v1617932551/attendeaze/dean_vy3zke.jpg";
+      queries.insertEventPhoto(results.rows[0].event_id, event.photos, (err, photoResults) => {
+        if (err) {
+          res.send(err)
+        } else {
+          results.photos = photoResults;
+          res.send(results)
+        }
+      })
     }
   })
 })
-
 
 module.exports = eventsRouter;

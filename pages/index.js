@@ -10,7 +10,7 @@ export default function Home() {
     if (dir === 'home') {
       router.push('/home')
     }
-    // router.push('/auth/signin')
+    router.push('/auth/signin')
   }
 
   useEffect(() => {

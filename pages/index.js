@@ -10,8 +10,13 @@ export default function Home() {
     if (dir === "home") {
       router.push("/home");
     }
+<<<<<<< HEAD
     router.push("/auth/signin");
   };
+=======
+    // router.push('/auth/signin')
+  }
+>>>>>>> 2adc0edac32a971afc571556415a5c6babf9dfd4
 
   useEffect(() => {
     if (!session) handleRedirect("signin");

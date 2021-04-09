@@ -14,8 +14,8 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (session) handleRedirect('home')
-    else handleRedirect('signin')
+    if (!session) handleRedirect('signin')
+    handleRedirect('home')
   })
 
   return (

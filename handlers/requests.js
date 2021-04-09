@@ -75,7 +75,7 @@ const requests = {
   },
   removeAttendee(userId, eventId) {
     axios
-      .post(`${server}/attendees/event/${eventId}`, {"userId": userId})
+      .post(`/api/events/remove-attendee/${eventId}`, {"userId": userId})
       .then((response) => {
         console.log('Removed from the event!');
       })

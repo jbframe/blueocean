@@ -1,32 +1,34 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import styles from '../styles/Navbar.module.css';
-import { signIn, signOut, useSession } from 'next-auth/client';
-import CreateEvent from '../pages/createEvent';
-import { Button } from 'react-bootstrap';
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { withStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import styles from "../styles/Navbar.module.css";
+import { signIn, signOut, useSession } from "next-auth/client";
+import CreateEvent from "../pages/createEvent";
+import { Button } from "react-bootstrap";
+
+import DarkMode from "./DarkMode";
 
 const StyledMenu = withStyles({
   paper: {
-    border: '1px solid #d3d4d5',
+    border: "1px solid #d3d4d5",
   },
 })((props) => (
   <Menu
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
+      vertical: "bottom",
+      horizontal: "center",
     }}
     transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
+      vertical: "top",
+      horizontal: "center",
     }}
     {...props}
   />
@@ -38,27 +40,22 @@ const Navbar = ({ setSearch, userId, host }) => {
   // const [search, setSearch] = useState();
   const [modalShow, setModalShow] = useState(false);
 
-  const handleSearch = e => {
+  const handleSearch = (e) => {
     setSearch(e.target.value);
-  }
+  };
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
-  }
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
 
   return (
     <div className={styles.navbar}>
       <div className={styles.nav_cluster_left}>
-        <Image
-          src="/dean.jpeg"
-          alt="company logo"
-          height={55}
-          width={55}
-        />
+        <Image src="/dean.jpeg" alt="company logo" height={55} width={55} />
         <TextField
           className={styles.search}
           label="Search Events"
@@ -67,11 +64,19 @@ const Navbar = ({ setSearch, userId, host }) => {
         />
       </div>
       <div className={styles.nav_cluster_right}>
-        {host
-          ? <div className={styles.create} onClick={() => setModalShow(true)}>Create Event</div>
-          : <React.Fragment></React.Fragment>
-        }
-        <CreateEvent show={modalShow} onHide={() => setModalShow(false) } userId={userId}/>
+        {host ? (
+          <div className={styles.create} onClick={() => setModalShow(true)}>
+            Create Event
+          </div>
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
+        <DarkMode />
+        <CreateEvent
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          userId={userId}
+        />
         <AccountCircleIcon className={styles.account} onClick={handleClick} />
         <StyledMenu
           className={styles.menu}
@@ -81,7 +86,14 @@ const Navbar = ({ setSearch, userId, host }) => {
           onClose={handleClose}
         >
           <MenuItem>USER NAME HERE</MenuItem>
-          <MenuItem onClick={() => {handleClose(); signOut();}}>Sign Out</MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              signOut();
+            }}
+          >
+            Sign Out
+          </MenuItem>
         </StyledMenu>
       </div>
     </div>

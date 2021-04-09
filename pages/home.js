@@ -37,11 +37,7 @@ export default function Home() {
     // if (!session) {
     //   router.push('/auth/signin')
     // }
-<<<<<<< HEAD
   });
-=======
-  })
->>>>>>> 2adc0edac32a971afc571556415a5c6babf9dfd4
 
   useEffect(() => {
     if (session) {

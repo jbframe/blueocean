@@ -33,10 +33,7 @@ const callbacks = {
   async session(session, token) {
     session.accessToken = token.accessToken;
     return session;
-  },
-  async redirect (_url, baseUrl) {
-    return Promise.resolve('/');
-  },
+  }
 }
 
 const options = {

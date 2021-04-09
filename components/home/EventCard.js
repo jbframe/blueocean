@@ -49,7 +49,7 @@ const EventCard = ({ image, name, location, date, userId, eventId }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+   </>
   );
 };
 

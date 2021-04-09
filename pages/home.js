@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import CreateEvent from "./createEvent";
+import { getSession, useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useRouter } from 'next/router'
-import { getSession, useSession } from "next-auth/client";
+import CreateEvent from './createEvent';
+import { useRouter } from 'next/router';
 
 const requests = require("../handlers/requests");
-
 
 export default function Home() {
   // User Hooks
@@ -27,12 +26,18 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [compareEvents, setCompareEvents] = useState([]);
 
-  // Forced Routing
-  const router = useRouter();
   // Toggle Hooks
   const [sidebarToggle, setSidebarToggle] = useState(false);
 
   // console.log(allEvents)
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/auth/signin')
+    }
+  })
 
   useEffect(() => {
     if (session) {
@@ -52,8 +57,6 @@ export default function Home() {
         setAllEvents(data);
         setCompareEvents(data);
       });
-    } else {
-      // router.push('api/auth/signin')
     }
   }, [session]);
 
@@ -113,16 +116,7 @@ export default function Home() {
         <footer className={styles.footer}></footer>
       </div>
     </Layout>
-  )
-}
-
-
-export async function getServerSideProps (context) {
-  return {
-    props: {
-      session: await getSession()
-    },
-  }
+  );
 }
 
 export async function getServerSideProps (context) {

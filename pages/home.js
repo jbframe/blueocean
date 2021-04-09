@@ -110,7 +110,7 @@ export default function Home() {
 
         <div className={styles.main}>
           <div>
-            <h5>All Events</h5>
+            {/* <h5>All Events</h5> */}
             <div className="event-list">
               <EventsList
                 events={allEvents}

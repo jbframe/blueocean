@@ -221,7 +221,8 @@ const getEventsByAttendee = (userId, cb) => {
     LEFT OUTER JOIN attendees ON events.event_id = attendees.event_id
     RIGHT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
     WHERE date > NOW()
-    AND user_id = ${userId}`,
+    AND user_id = ${userId}
+    ORDER BY date ASC`,
     (err, results) => {
       if (err) {
         cb(err, null);
@@ -240,7 +241,8 @@ const getEventsByHost = (userId, cb) => {
     LEFT OUTER JOIN users ON events.host_id = users.id
     RIGHT OUTER JOIN event_photos ON events.event_id = event_photos.event_id
     WHERE date > NOW()
-    AND id = ${userId}`,
+    AND id = ${userId}
+    ORDER BY date ASC`,
     (err, results) => {
       if (err) {
         cb(err, null);

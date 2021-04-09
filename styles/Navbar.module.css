@@ -1,6 +1,6 @@
 .navbar {
   display: flex;
-  background-color: grey;
+  background-color: lightblue;
   padding: 15px 20px;
   height: auto;
   align-items: center;
@@ -41,7 +41,7 @@
 
 .create:hover {
   color: lightgray;
-  background-color: black;
+  background-color: rgb(37, 37, 37);
 }
 
 .events {

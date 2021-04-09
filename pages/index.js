@@ -87,24 +87,17 @@ export default function Home() {
       setSidebarToggle={setSidebarToggle}
     >
       <div className={styles.container}>
-        <Head>
-          <title>My Dashboard</title>
-        </Head>
-
         <div className={styles.main}>
-          <div>
-            <h5>All Events</h5>
-            <div className="event-list">
-              <EventsList
-                events={allEvents}
-                userId={userId}
-                host={host}
-                setSidebarToggle={setSidebarToggle}
-              />
-            </div>
+          <h5>All Events</h5>
+          <div className="event-list">
+            <EventsList
+              events={allEvents}
+              userId={userId}
+              host={host}
+              setSidebarToggle={setSidebarToggle}
+            />
           </div>
         </div>
-        <footer className={styles.footer}></footer>
       </div>
     </Layout>
   );

@@ -25,7 +25,6 @@ const Attendee = (props) => {
   useEffect(() => {
     axios.get('/assessments/1')
       .then((res) => {
-        console.log(res.data);
         setOptionsFromDB(res.data);
       })
       .catch((err) => {
@@ -44,7 +43,6 @@ const Attendee = (props) => {
   }
 
   function handleMouseLeave(e) {
-    console.log(e.target.id);
     if ( e.target.id === "option" ) {
       $(e.target).css('border', '1px black solid');
       $(e.target).css('boxShadow', '0px 0px white');

@@ -32,9 +32,6 @@ const requests = {
     };
     axios
       .put(`/api/users/add-user-to-event`, updateObj)
-      .then((response) => {
-        console.log(`Added User ${userId} to Event ${eventId}`);
-      })
       .catch((err) => {
         console.log(err);
       });
@@ -55,9 +52,6 @@ const requests = {
   addEvent(postObj) {
     axios
       .post(`/api/events/create-event`, postObj)
-      .then((response) => {
-        console.log('Added new event!', response);
-      })
       .catch((err) => {
         console.log('err with event posting: ', err);
       });
@@ -76,9 +70,6 @@ const requests = {
   removeAttendee(userId, eventId) {
     axios
       .post(`/api/events/remove-attendee/${eventId}`, {"userId": userId})
-      .then((response) => {
-        console.log('Removed from the event!');
-      })
       .catch((error) => {
         console.log(error)
       });

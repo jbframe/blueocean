@@ -29,7 +29,6 @@ function CreateEvent(props) {
     setEventLocation("");
     setEventDate("");
     setEventURL("");
-    setMaxAttendees(0);
     setQuestion("");
     setAnswer1("");
     setAnswer2("");
@@ -39,6 +38,7 @@ function CreateEvent(props) {
     setToggle2(false);
     setToggle3(false);
     setToggle4(false);
+    setMaxAttendees(0);
     setPhotoURL(null);
   };
 
@@ -72,7 +72,7 @@ function CreateEvent(props) {
     let timeStamp = new Date(eventDate);
     if (!validationCheck()) {
       const submitObj = {
-        hostId: props.userId,
+        hostId: 5,
         meetingUrl: eventURL,
         name: eventName,
         summary: eventDescription,
@@ -110,6 +110,7 @@ function CreateEvent(props) {
       alert(`Please complete the required fields: ${validationCheck()}`);
     }
   };
+  // 2021-04-12 0004:12:98
 
   const handleToggle = (target) => {
     if (target.name === toggle1) {
@@ -133,10 +134,11 @@ function CreateEvent(props) {
   return (
     <Modal
       {...rest}
+      // dialogClassName="modal-90w public-profile-modal-class"
+      className={styles.special_modal}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      style={{background: 'lightblue'}}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -176,23 +178,25 @@ function CreateEvent(props) {
         ></input>
         <br></br>
 
-        <input
-          className={styles.eventDate}
-          type="datetime-local"
-          value={eventDate}
-          onChange={(e) => setEventDate(e.target.value)}
-        ></input>
+        <div id={styles.containerOne}>
+          <input
+            className={styles.eventDate}
+            type="datetime-local"
+            value={eventDate}
+            onChange={(e) => setEventDate(e.target.value)}
+          ></input>
+          <br></br>
 
-        <label>
-          Max Attendees
+          <label className={styles.maxText}>Max Attendees</label>
           <input
             className={styles.maxAttendees}
             type="number"
             value={maxAttendees}
             onChange={(e) => setMaxAttendees(e.target.value)}
           ></input>
-        </label>
+        </div>
         <br></br>
+
         <input
           value={question}
           onChange={(e) => setQuestion(e.target.value)}

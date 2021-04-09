@@ -5,7 +5,7 @@ import { getSession, useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
-import CreateEvent from './createEvent';
+import CreateEvent from "../components/createEvent";
 
 const requests = require("../handlers/requests");
 
@@ -78,6 +78,7 @@ export default function Home() {
 
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
+
   return (
     <Layout
       userId={userId}

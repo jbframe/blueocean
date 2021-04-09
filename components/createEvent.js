@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import requests from "../handlers/requests";
 import UploadWidget from "../components/PhotoUpload.js";
+import styles from '../styles/createEvent.module.css';
 
 function CreateEvent(props) {
   const [eventName, setEventName] = useState("");
@@ -53,17 +54,17 @@ function CreateEvent(props) {
     event.preventDefault();
     clearFields();
     let timeStamp = new Date(eventDate);
-    if (!validationCheck()) {
-      const submitObj = {
-        hostId: 5,
-        meetingUrl: eventURL,
-        name: eventName,
-        summary: eventDescription,
-        location: eventLocation,
-        date: timeStamp,
-        max: maxAttendees,
-        photos: photoURL,
-      };
+      if (!validationCheck()) {
+        const submitObj = {
+          hostId: props.userId,
+          meetingUrl: eventURL,
+          name: eventName,
+          summary: eventDescription,
+          location: eventLocation,
+          date: timeStamp,
+          max: maxAttendees,
+          photos: photoURL,
+        }
       console.log("submitObj:", submitObj);
       requests.addEvent(submitObj);
       props.onHide();
@@ -121,21 +122,24 @@ function CreateEvent(props) {
       questionContent
     );
   };
-
+    const {userId, ...rest} = props
   return (
     <Modal
-      {...props}
+    {...rest}
+      // dialogClassName="modal-90w public-profile-modal-class"
+      className="special_modal"
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header as='span' closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Enter Event Details...
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <input
+          className='eventName'
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
           placeholder="Event Name"

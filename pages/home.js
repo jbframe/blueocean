@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CreateEvent from './createEvent';
+import { useRouter } from 'next/router';
 
 const requests = require("../handlers/requests");
 
@@ -29,6 +30,14 @@ export default function Home() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
 
   // console.log(allEvents)
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/auth/signin')
+    }
+  })
 
   useEffect(() => {
     if (session) {

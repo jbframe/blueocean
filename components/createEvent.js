@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import requests from "../handlers/requests";
 import UploadWidget from "../components/PhotoUpload.js";
-import styles from '../styles/createEvent.module.css';
+import styles from "../styles/createEvent.module.css";
 
 function CreateEvent(props) {
   const [eventName, setEventName] = useState("");
@@ -29,6 +29,15 @@ function CreateEvent(props) {
     setEventLocation("");
     setEventDate("");
     setEventURL("");
+    setQuestion("");
+    setAnswer1("");
+    setAnswer2("");
+    setAnswer3("");
+    setAnswer4("");
+    setToggle1(false);
+    setToggle2(false);
+    setToggle3(false);
+    setToggle4(false);
     setMaxAttendees(0);
     setPhotoURL(null);
   };
@@ -76,22 +85,22 @@ function CreateEvent(props) {
           answers: [
             {
               text: answer1,
-              correct: toggle1
+              correct: toggle1,
             },
             {
               text: answer2,
-              correct: toggle2
+              correct: toggle2,
             },
             {
               text: answer3,
-              correct: toggle3
+              correct: toggle3,
             },
             {
               text: answer4,
-              correct: toggle4
-            }
-          ]
-        }
+              correct: toggle4,
+            },
+          ],
+        },
       };
       requests.addEvent(submitObj);
       props.setMainToggle(true);
@@ -104,7 +113,6 @@ function CreateEvent(props) {
 
   const handleToggle = (target) => {
     if (target.name === toggle1) {
-
     }
   };
 
@@ -121,24 +129,25 @@ function CreateEvent(props) {
       questionContent
     );
   };
-    const {userId, ...rest} = props
+  const { userId, ...rest } = props;
   return (
     <Modal
-    {...rest}
+      {...rest}
       // dialogClassName="modal-90w public-profile-modal-class"
-      className="special_modal"
+      className={styles.special_modal}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      backdrop="static"
     >
-      <Modal.Header as='span' closeButton>
+      <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Enter Event Details...
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <input
-          className='eventName'
+          className={styles.eventName}
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
           placeholder="Event Name"
@@ -146,6 +155,7 @@ function CreateEvent(props) {
         <br></br>
 
         <textarea
+          className={styles.eventDescription}
           value={eventDescription}
           onChange={(e) => setEventDescription(e.target.value)}
           placeholder="Event Description"
@@ -153,6 +163,7 @@ function CreateEvent(props) {
         <br></br>
 
         <input
+          className={styles.eventLocation}
           value={eventLocation}
           onChange={(e) => setEventLocation(e.target.value)}
           placeholder="Event Location"
@@ -160,29 +171,32 @@ function CreateEvent(props) {
         <br></br>
 
         <input
+          className={styles.eventURL}
           value={eventURL}
           onChange={(e) => setEventURL(e.target.value)}
           placeholder="Event URL (if online)"
         ></input>
         <br></br>
 
-        <input
-          type="datetime-local"
-          value={eventDate}
-          onChange={(e) => setEventDate(e.target.value)}
-        ></input>
-        <br></br>
-
-        <label>
-          Max Attendees
+        <div id={styles.containerOne}>
           <input
+            className={styles.eventDate}
+            type="datetime-local"
+            value={eventDate}
+            onChange={(e) => setEventDate(e.target.value)}
+          ></input>
+          <br></br>
+
+          <label className={styles.maxText}>Max Attendees</label>
+          <input
+            className={styles.maxAttendees}
             type="number"
             value={maxAttendees}
             onChange={(e) => setMaxAttendees(e.target.value)}
-          >
-          </input>
-        </label>
+          ></input>
+        </div>
         <br></br>
+
         <input
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
@@ -242,7 +256,6 @@ function CreateEvent(props) {
         ></input>
         <UploadWidget photoURL={photoURL} setPhotoURL={setPhotoURL} />
         <br></br>
-
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onHide}>
@@ -250,7 +263,7 @@ function CreateEvent(props) {
         </Button>
         <Button onClick={handleSubmit}>Submit</Button>
       </Modal.Footer>
-    </Modal >
+    </Modal>
   );
 }
 

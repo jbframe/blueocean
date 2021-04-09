@@ -34,14 +34,7 @@ const SidebarEventCard = ({ image, name, location, date, eventId, userId, host, 
     requests.fetchEventAttendees(eventID, (data) => {
       setEventAttendees(data);
     });
-    console.log('hey!');
   }
-
-  // useEffect(()=> {
-  //   if (host) {
-  //     getAttendees(eventId);
-  //   }
-  // }, [eventId, host])
 
   const dayObj = {
     Sun: 'Sunday',

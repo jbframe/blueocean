@@ -5,17 +5,6 @@ import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 // userOrEvent = 'user' or 'event'
 const UploadWidget = ({photoURL, setPhotoURL}) => {
 
-  // const [photoURL, setPhotoUrL] = useState('');
-
-  // const storePhoto = (photoUrl, id) => {
-  //     axios.post(`localhost:4000/photos/${userOrEvent}/${id}`, photoUrl)
-  //     .then((response) => {
-  //         console.log(response);
-  //     }, (error) => {
-  //         console.log(error);
-  //     })
-  // }
-
   return (
     <>
       <WidgetLoader />

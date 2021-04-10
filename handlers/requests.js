@@ -30,14 +30,9 @@ const requests = {
       user_id: userId,
       event_id: eventId,
     };
-    axios
-      .put(`/api/users/add-user-to-event`, updateObj)
-      .then((response) => {
-        console.log(`Added User ${userId} to Event ${eventId}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.put(`/api/users/add-user-to-event`, updateObj).catch((err) => {
+      console.log(err);
+    });
   },
 
   getUserProfile(email, cb) {
@@ -52,14 +47,9 @@ const requests = {
   },
 
   addEvent(postObj) {
-    axios
-      .post(`/api/events/create-event`, postObj)
-      .then((response) => {
-        console.log("Added new event!", response);
-      })
-      .catch((err) => {
-        console.log("err with event posting: ", err);
-      });
+    axios.post(`/api/events/create-event`, postObj).catch((err) => {
+      console.log("err with event posting: ", err);
+    });
   },
 
   fetchEventAttendees(eventID, cb) {
@@ -75,9 +65,6 @@ const requests = {
   removeAttendee(userId, eventId) {
     axios
       .post(`/api/events/remove-attendee/${eventId}`, { userId: userId })
-      .then((response) => {
-        console.log("Removed from the event!");
-      })
       .catch((error) => {
         console.log(error);
       });

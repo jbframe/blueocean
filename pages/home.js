@@ -5,8 +5,12 @@ import { getSession, useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
+<<<<<<< HEAD
 import CreateEvent from "../components/createEvent";
 import { useRouter } from "next/router";
+=======
+import { useRouter } from 'next/router';
+>>>>>>> 55e4bc1bb11821fa847648e90f387a66240bd069
 
 const requests = require("../handlers/requests");
 
@@ -17,7 +21,10 @@ export default function Home() {
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
 
+<<<<<<< HEAD
   console.log(session);
+=======
+>>>>>>> 55e4bc1bb11821fa847648e90f387a66240bd069
 
   // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
@@ -32,7 +39,6 @@ export default function Home() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [mainToggle, setMainToggle] = useState(false);
 
-  // console.log(allEvents)
 
   const router = useRouter();
 

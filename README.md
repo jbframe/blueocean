@@ -13,27 +13,27 @@ https://www.youtube.com/watch?v=Lj3gdQqhfJI
 ## <a name="getting-started"></a>Getting Started
 Fork and clone this repo and install to a local directory. You will need to [install and run PostgreSQL](https://www.postgresql.org/download/) on your local machine before running this application.
 
-### Run the Postgres schema to install database and tables
+**Run the Postgres schema to install database and tables (WARNING running this again after you start using the app will drop the database and erase all existing data):**
 ```
 
 ```
 
-### From your local directory, install dependencies
+**From your local directory, install dependencies:**
 ```
 npm run install
 ```
 
-### Run a development Next/React build + client server on localhost:3000
+**Run a development Next/React build + client server:***
 ```
 npm run dev
 ```
 
-### Run the Express server on localhost:4000
+**Run the Express server:**
 ```
 npm run server
 ```
 
-### Run a production build + client server on localhost:3000
+**Run a production build + client server:**
 ```
 npm run build
 npm start

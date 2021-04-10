@@ -1,22 +1,30 @@
-DROP DATABASE attendeaze_testing WITH (FORCE);
-CREATE DATABASE attendeaze_testing;
+DROP DATABASE attendeaze WITH (FORCE);
+CREATE DATABASE attendeaze;
 
-\c attendeaze_testing;
+\c attendeaze;
 
 CREATE TABLE accounts
   (
     id                   SERIAL,
-    compound_id          VARCHAR(255) NOT NULL,
+    compound_id          TEXT NOT NULL,
     user_id              INTEGER NOT NULL,
-    provider_type        VARCHAR(255) NOT NULL,
-    provider_id          VARCHAR(255) NOT NULL,
-    provider_account_id  VARCHAR(255) NOT NULL,
+    provider_type        TEXT NOT NULL,
+    provider_id          TEXT NOT NULL,
+    provider_account_id  TEXT NOT NULL,
     refresh_token        TEXT,
     access_token         TEXT,
-    access_token_expires TIMESTAMPTZ,
-    created_at           TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at           TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    access_token_expires TIMESTAMP(3) WITHOUT TIME ZONE,
+    created_at           TIMESTAMP(3) WITHOUT TIME ZONE NOT NULL CURRENT_TIMESTAMP,
+    updated_at           TIMESTAMP(3) WITHOUT TIME ZONE NOT NULL CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
+  );
+
+CREATE TABLE answers
+  (
+    answer_id   BIGINT NOT NULL,
+    answer_text VARCHAR(255),
+    question_id BIGINT,
+    correct     BOOLEAN
   );
 
 CREATE TABLE sessions

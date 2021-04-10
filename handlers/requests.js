@@ -93,6 +93,17 @@ const requests = {
         console.log(err);
       });
   },
+
+  fetchEventAnswers(questionId, cb) {
+    axios
+      .get(`/api/assessments/get-answers/${questionId}`)
+      .then((response) => {
+        cb(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 
 module.exports = requests;

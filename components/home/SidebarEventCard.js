@@ -4,6 +4,7 @@ import s from "../../styles/EventCard.module.css";
 import { Button, Modal } from "react-bootstrap";
 import requests from "../../handlers/requests";
 import AttendeeDisplay from "./AttendeeDisplay";
+import QuestionDisplay from "./QuestionDisplay";
 
 const SidebarEventCard = ({
   image,
@@ -19,6 +20,8 @@ const SidebarEventCard = ({
   const [show, setShow] = useState(false);
   const [eventAttendees, setEventAttendees] = useState([]);
   const [eventQuestions, setEventQuestions] = useState([]);
+  const [eventAnswers, setEventAnswers] = useState([]);
+  const [questionsVisible, setQuestionsVisible] = useState(false);
 
   const handleClose = () => {
     setShow(false);
@@ -26,13 +29,16 @@ const SidebarEventCard = ({
 
   const handleShow = () => {
     setShow(true);
-    console.log("works");
     getAttendees(eventId);
     getQuestions(eventId);
   };
 
-  const handleQuestions = () => {
-    // conditionally render questions after sign up button is clicked
+  const handleQuestions = async () => {
+    if (eventQuestions[0].question.length === 0) {
+      handleSignUp();
+    } else {
+      setQuestionsVisible(true);
+    }
   };
 
   const handleSignUp = () => {
@@ -55,7 +61,16 @@ const SidebarEventCard = ({
 
   const getQuestions = (eventId) => {
     requests.fetchEventQuestions(eventId, (data) => {
-      console.log(data.data);
+      const questions = data.data[0].questions;
+      const id = data.data[0].questions[0].id;
+      setEventQuestions(questions);
+      getAnswers(id);
+    });
+  };
+
+  const getAnswers = (questionId) => {
+    requests.fetchEventAnswers(questionId, (response) => {
+      setEventAnswers(response.data);
     });
   };
 
@@ -148,13 +163,21 @@ const SidebarEventCard = ({
             ) : (
               <React.Fragment></React.Fragment>
             )}
+
+            {questionsVisible ? (
+              <QuestionDisplay
+                question={eventQuestions}
+                answers={eventAnswers}
+                handleSignUp={handleSignUp}
+              />
+            ) : null}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
             {!sideCard ? (
-              <Button variant="primary" onClick={handleSignUp}>
+              <Button variant="primary" onClick={handleQuestions}>
                 Sign Up
               </Button>
             ) : (

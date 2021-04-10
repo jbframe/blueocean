@@ -18,7 +18,7 @@ const eventsRouter = require("./routes/allEvents");
 const signUpRouter = require("./routes/addToEvent");
 const photosRouter = require("./routes/photos");
 const profileRouter = require("./routes/profile");
-const assessmentRouter = require("./routes/assessments")
+const assessmentRouter = require("./routes/assessments");
 const attendeesRouter = require("./routes/attendeesRouter");
 
 // ROUTES

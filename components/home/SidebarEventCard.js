@@ -97,12 +97,6 @@ const SidebarEventCard = ({
   let time = militaryToStandard(dateArray[4]);
   let displayDate = `${day}, ${month} ${calDate}, ${year}`;
 
-<<<<<<< HEAD
-  const handleClick = (eventId) => {
-    console.log(eventId, " was selected!");
-  };
-=======
->>>>>>> 55e4bc1bb11821fa847648e90f387a66240bd069
   return (
     <div className={s.event_card} onClick={handleShow}>
       <img className={s.image} src={image} alt="db-image" />

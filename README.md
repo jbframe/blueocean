@@ -4,7 +4,10 @@ A company events application to create, join, and organize internal events for e
 [Screenshot that links to YouTube Video]
 https://www.youtube.com/watch?v=Lj3gdQqhfJI
 
-## Installation
+## Table of Contents
+* [Getting Started](#getting-started)
+
+## <a name="getting-started"></a>Getting Started
 Fork and clone this repo and install to a local directory. You will need to [install and run PostgreSQL](https://www.postgresql.org/download/) on your local machine before running this application.
 
 ### From your local directory, install dependencies
@@ -28,7 +31,8 @@ npm run build
 npm start
 ```
 
-## Tech Stack
+## Tech/Framework Used
+**Built with:**
 * Next.js
 * Next/auth
 * React

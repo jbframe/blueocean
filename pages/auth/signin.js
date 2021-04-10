@@ -86,7 +86,6 @@ export default function SignIn({ providers, csrfToken }) {
   }
 
   function handleFocus(e) {
-    // console.log(e.target.id);
     $(`#${e.target.id}`).css('outline', 'none');
     $(`#${e.target.id}`).css('border', '1px blue solid');
   }
@@ -96,7 +95,6 @@ export default function SignIn({ providers, csrfToken }) {
   }
 
   function handleMouseOver(e) {
-    // console.log(e.target);
     if ( e.target.id === 'closeLogin' ) {
       $("#closeLogin").css('color', '#1E90FF');
     } else if ( e.target.id === 'forgot' ) {
@@ -107,7 +105,6 @@ export default function SignIn({ providers, csrfToken }) {
   }
 
   function handleMouseOut(e) {
-    // console.log(e.target);
     if ( e.target.id === 'closeLogin' ) {
       $("#closeLogin").css('color', 'black');
     } else if ( e.target.id === 'forgot' ) {

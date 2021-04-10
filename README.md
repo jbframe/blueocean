@@ -15,7 +15,7 @@ Fork and clone this repo and install to a local directory. You will need to [ins
 
 **Run the Postgres schema to install database and tables (WARNING running this again after you start using the app will drop the database and erase all existing data):**
 ```
-
+psql -u [username] < prisma/schema.sql
 ```
 
 **From your local directory, install dependencies:**

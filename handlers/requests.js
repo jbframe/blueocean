@@ -30,13 +30,10 @@ const requests = {
       user_id: userId,
       event_id: eventId,
     };
-    axios
-      .put(`/api/users/add-user-to-event`, updateObj)
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.put(`/api/users/add-user-to-event`, updateObj).catch((err) => {
+      console.log(err);
+    });
   },
-
 
   getUserProfile(email, cb) {
     axios
@@ -50,13 +47,11 @@ const requests = {
   },
 
   addEvent(postObj) {
-    axios
-      .post(`/api/events/create-event`, postObj)
-      .catch((err) => {
-        console.log('err with event posting: ', err);
-      });
+    axios.post(`/api/events/create-event`, postObj).catch((err) => {
+      console.log("err with event posting: ", err);
+    });
   },
-  
+
   fetchEventAttendees(eventID, cb) {
     axios
       .get(`/api/events/get-event-attendees/${eventID}`)
@@ -69,11 +64,33 @@ const requests = {
   },
   removeAttendee(userId, eventId) {
     axios
-      .post(`/api/events/remove-attendee/${eventId}`, {"userId": userId})
+      .post(`/api/events/remove-attendee/${eventId}`, { userId: userId })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
-  }
+  },
+
+  fetchEventQuestions(eventId, cb) {
+    axios
+      .get(`/api/assessments/get-questions/${eventId}`)
+      .then((response) => {
+        cb(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
+  fetchEventAnswers(questionId, cb) {
+    axios
+      .get(`/api/assessments/get-answers/${questionId}`)
+      .then((response) => {
+        cb(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 
 module.exports = requests;

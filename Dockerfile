@@ -29,5 +29,3 @@ RUN npx next telemetry disable
 
 #run client with cmd $ docker run -p 3000:3000 attendeaze yarn start
 #run server with cmd $ docker run -p 4000:4000 attendeaze yarn run server
-
-

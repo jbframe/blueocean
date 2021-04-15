@@ -1,8 +1,8 @@
 # Mr. Dean's AttendEaze
 A company events application to create, join, and organize internal events for employees.
 
-[Screenshot that links to YouTube Video]
-https://www.youtube.com/watch?v=Lj3gdQqhfJI
+## Product Demo
+[![](/screenshots/demo.png)](https://www.youtube.com/watch?v=Lj3gdQqhfJI)
 
 ## Table of Contents
 * [Getting Started](#getting-started)

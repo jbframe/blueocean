@@ -6,6 +6,7 @@ https://www.youtube.com/watch?v=Lj3gdQqhfJI
 
 ## Table of Contents
 * [Getting Started](#getting-started)
+* [Features](#features)
 * [Tech/Framework Used](#tech-stack)
 * [Contributors](#contributors)
 * [Other Documentation](#documentation)
@@ -39,14 +40,19 @@ npm run build
 npm start
 ```
 
-## Features
+## <a name="features"></a>Features
 
 ### Login
 Login and security uses Google and Next/Auth for secure sign-in.
 
 ![](/screenshots/login.gif)
 
-## <a name="tech-stack"></a>Tech/Framework Used
+### Create Event
+Users with admin privileges can create event that posts to the database and is rendered for all users.
+
+![](/screenshots/create.gif)
+
+## <a name="tech-stack"></a>Tech/Frameworks Used
 **Built with:**
 * Next.js
 * Next/auth

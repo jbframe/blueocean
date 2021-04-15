@@ -9,7 +9,6 @@ https://www.youtube.com/watch?v=Lj3gdQqhfJI
 * [Features](#features)
 * [Tech/Framework Used](#tech-stack)
 * [Contributors](#contributors)
-* [Other Documentation](#documentation)
 
 ## <a name="getting-started"></a>Getting Started
 Fork and clone this repo and install to a local directory. You will need to [install and run PostgreSQL](https://www.postgresql.org/download/) on your local machine before running this application.
@@ -24,7 +23,7 @@ psql -u [username] < prisma/schema.sql
 npm run install
 ```
 
-**Run a development Next/React build + client server:***
+**Run a development Next/React build + client server:**
 ```
 npm run dev
 ```
@@ -46,6 +45,11 @@ npm start
 Login and security uses Google and Next/Auth for secure sign-in.
 
 ![](/screenshots/login.gif)
+
+### Search Events
+Dynamic search renders events by name and city.
+
+![](/screenshots/search.gif)
 
 ### Create Event
 Users with admin privileges can create event that posts to the database and is rendered for all users.
@@ -72,8 +76,3 @@ Users with admin privileges can create event that posts to the database and is r
 * [Graham Kirsh](https://github.com/21grahams)
 * [David Goelitz](https://github.com/dgoelitz)
 * [Jim Burch](https://github.com/JimBurch)
-
-## <a name="documentation"></a>Other Useful Documentation
-
-Documentation - link to the other Readmes
-https://vercel.com/guides/nextjs-prisma-postgres

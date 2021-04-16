@@ -1,34 +1,38 @@
-import { getSession, useSession } from "next-auth/client";
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import { getSession, signOut, useSession } from "next-auth/client";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { Image } from "react-bootstrap";
+import s from "../styles/Home.module.css";
 
 export default function Home() {
   const [session, loading] = useSession();
   const router = useRouter();
 
   const handleRedirect = (dir) => {
-    if (dir === 'home') {
-      router.push('/home')
+    if (dir === "home") {
+      router.push("/home");
     }
-    router.push('/auth/signin')
-  }
+    router.push("/auth/signin");
+  };
 
   useEffect(() => {
-    if (!session) handleRedirect('signin')
-    handleRedirect('home')
-  })
+    if (!session) handleRedirect("signin");
+    handleRedirect("home");
+  });
 
   return (
     <div>
-      welcome!
+      <span className={s.logo}>
+        <Image src="attendeaze_logo.png.png" roundedCircle />
+      </span>
     </div>
-  )
+  );
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
   return {
     props: {
-      session: await getSession()
+      session: await getSession(),
     },
-  }
+  };
 }

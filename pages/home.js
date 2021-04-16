@@ -5,8 +5,7 @@ import { getSession, useSession } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
-import CreateEvent from '../components/createEvent';
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 const requests = require("../handlers/requests");
 
@@ -16,8 +15,6 @@ export default function Home() {
   const [userId, setUserId] = useState();
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
-
-  console.log(session)
 
   // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
@@ -32,15 +29,13 @@ export default function Home() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [mainToggle, setMainToggle] = useState(false);
 
-  // console.log(allEvents)
-
   const router = useRouter();
 
   useEffect(() => {
     if (!session) {
-      router.push('/auth/signin')
+      router.push("/auth/signin");
     }
-  })
+  });
 
   useEffect(() => {
     if (session) {
@@ -92,52 +87,52 @@ export default function Home() {
   // to have the nav bar up top
 
   if (session) {
-  return (
-    <Layout
-      userId={userId}
-      setSearch={setSearch}
-      host={host}
-      sidebarToggle={sidebarToggle}
-      setSidebarToggle={setSidebarToggle}
-      mainToggle={mainToggle}
-      setMainToggle={setMainToggle}
-      name={session.user.name}
-    >
-      <div className={styles.container}>
-        <div className={styles.content}>
-          <Head>
-            <title>My Dashboard</title>
-          </Head>
+    return (
+      <Layout
+        userId={userId}
+        setSearch={setSearch}
+        host={host}
+        sidebarToggle={sidebarToggle}
+        setSidebarToggle={setSidebarToggle}
+        mainToggle={mainToggle}
+        setMainToggle={setMainToggle}
+        name={session.user.name}
+      >
+        <div className={styles.container}>
+          <div className={styles.content}>
+            <Head>
+              <title>My Dashboard</title>
+            </Head>
 
-          <div className={styles.main}>
-            <div>
-              {/* <h5>All Events</h5> */}
-              <div className="event-list">
-                <EventsList
-                  events={allEvents}
-                  userId={userId}
-                  host={host}
-                  setSidebarToggle={setSidebarToggle}
-                  mainToggle={mainToggle}
-                  setMainToggle={setMainToggle}
-                />
+            <div className={styles.main}>
+              <div>
+                {/* <h5>All Events</h5> */}
+                <div className="event-list">
+                  <EventsList
+                    events={allEvents}
+                    userId={userId}
+                    host={host}
+                    setSidebarToggle={setSidebarToggle}
+                    mainToggle={mainToggle}
+                    setMainToggle={setMainToggle}
+                  />
+                </div>
               </div>
             </div>
+            <footer className={styles.footer}></footer>
           </div>
-          <footer className={styles.footer}></footer>
         </div>
-      </div>
-    </Layout>
-  );
+      </Layout>
+    );
   } else {
-    return null
+    return null;
   }
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
   return {
     props: {
-      session: await getSession()
+      session: await getSession(),
     },
-  }
+  };
 }

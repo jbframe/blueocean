@@ -111,24 +111,6 @@ function CreateEvent(props) {
   };
   // 2021-04-12 0004:12:98
 
-  const handleToggle = (target) => {
-    if (target.name === toggle1) {
-    }
-  };
-
-  const setQuestionValue = (value, index) => {
-    console.log(
-      "questionContent before anything setting value: ",
-      questionContent
-    );
-    let questionCopy = questionContent;
-    questionCopy[index] = value;
-    setQuestionContent(questionCopy);
-    console.log(
-      "questionContent at the end of setting value: ",
-      questionContent
-    );
-  };
   const { userId, ...rest } = props;
   return (
     <Modal

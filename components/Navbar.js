@@ -53,7 +53,7 @@ const Navbar = ({ setSearch, userId, host, setMainToggle, name }) => {
   return (
     <div className={styles.navbar}>
       <div className={styles.nav_cluster_left}>
-        <Image src="/dean.jpeg" alt="company logo" height={55} width={55} />
+        <Image src="/event.jpeg" alt="company logo" height={55} width={55} />
         <TextField
           className={styles.search}
           label="Search Events"
@@ -75,7 +75,7 @@ const Navbar = ({ setSearch, userId, host, setMainToggle, name }) => {
           userId={userId}
           setMainToggle={setMainToggle}
         />
-        <AccountCircleIcon className={styles.account} onClick={handleClick} />
+        <img src={session.user.image} alt="user profile" height={55} width={55} style={{'border-radius':'50%'}} className={styles.account} onClick={handleClick} />
         <StyledMenu
           className={styles.menu}
           anchorEl={anchorEl}

@@ -124,22 +124,26 @@ export default function SignIn({ providers, csrfToken }) {
   })
 
   return (
-    <Grid style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: '30vh auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
-      <Grid container spacing={2} className={classes.grid}>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <h1 style={{ fontWeight: '20'}}>Enter Login Information</h1>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='text' id='emailLogin' name='emailLogin' placeholder="Email" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <button name='magicLink' onFocus={ handleFocus } onClick={() => signIn('email', { email: emailLogin })} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="magicLink" style={{padding:'10px 0 25px 0px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px white solid', backgroundColor: '#1E90FF', color: 'white'}}>Send Magic Link</button>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <button name='signInWithGoogle' onFocus={ handleFocus } onClick={() => signIn(google.id)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="signInWithGoogle" style={{padding:'10px 0 25px 0px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px white solid', backgroundColor: '#1E90FF', color: 'white'}}>Sign in with {google.name}</button>
-        </Grid>
-      </Grid>
+    <Grid style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: '30vh auto', borderRadius: '10px', border: '1px black solid', padding: '20px 20px 20px 20px'}}>
+      <button name='signInWithGoogle' onFocus={ handleFocus } onClick={() => signIn(google.id)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="signInWithGoogle" style={{padding:'10px 0 25px 0px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px white solid', backgroundColor: '#1E90FF', color: 'white'}}>Sign in with {google.name}</button>
     </Grid>
+    //version with magic link UI (not implemented)
+    // <Grid style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: '30vh auto', borderRadius: '10px', border: '1px black solid', padding: '10px 20px 20px 20px'}}>
+    //   <Grid container spacing={2} className={classes.grid}>
+    //     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+    //       <h1 style={{ fontWeight: '20'}}>Enter Login Information</h1>
+    //     </Grid>
+    //     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+    //       <input onBlur={handleBlur} onFocus={ handleFocus } onChange={handleChange} type='text' id='emailLogin' name='emailLogin' placeholder="Email" style={{padding:'10px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px black solid'}}/>
+    //     </Grid>
+    //     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+    //       <button name='magicLink' onFocus={ handleFocus } onClick={() => signIn('email', { email: emailLogin })} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="magicLink" style={{padding:'10px 0 25px 0px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px white solid', backgroundColor: '#1E90FF', color: 'white'}}>Send Magic Link</button>
+    //     </Grid>
+    //     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+    //       <button name='signInWithGoogle' onFocus={ handleFocus } onClick={() => signIn(google.id)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="signInWithGoogle" style={{padding:'10px 0 25px 0px', width: '80%', height: '30px', margin: 'auto', borderRadius: '10px', border: '1px white solid', backgroundColor: '#1E90FF', color: 'white'}}>Sign in with {google.name}</button>
+    //     </Grid>
+    //   </Grid>
+    // </Grid>
   )
 }
 

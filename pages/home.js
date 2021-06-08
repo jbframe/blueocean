@@ -101,7 +101,8 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.content}>
             <Head>
-              <title>My Dashboard</title>
+              <title>Attend Eaze</title>
+              <link rel="icon" href="/event.jpeg" />
             </Head>
 
             <div className={styles.main}>

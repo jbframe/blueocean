@@ -5,6 +5,8 @@ import { Button, Modal } from "react-bootstrap";
 import requests from "../../handlers/requests";
 import AttendeeDisplay from "./AttendeeDisplay";
 import QuestionDisplay from "./QuestionDisplay";
+import { getCsrfToken, useSession, providers, signIn } from 'next-auth/client';
+
 
 const SidebarEventCard = ({
   image,
@@ -16,13 +18,16 @@ const SidebarEventCard = ({
   host,
   setSidebarToggle,
   sideCard,
+  providers,
+  csrfToken,
 }) => {
   const [show, setShow] = useState(false);
   const [eventAttendees, setEventAttendees] = useState([]);
   const [eventQuestions, setEventQuestions] = useState([]);
   const [eventAnswers, setEventAnswers] = useState([]);
   const [questionsVisible, setQuestionsVisible] = useState(false);
-
+  const [session, loading] = useSession();
+  const { google } = providers;
   const handleClose = () => {
     setShow(false);
   };
@@ -42,9 +47,16 @@ const SidebarEventCard = ({
   };
 
   const handleSignUp = () => {
-    requests.addUserToEvent(userId, eventId);
-    setSidebarToggle(true);
-    handleClose();
+    if (!session) {
+      signIn(google.id);
+      requests.addUserToEvent(userId, eventId);
+      setSidebarToggle(true);
+      handleClose();
+    } else {
+      requests.addUserToEvent(userId, eventId);
+      setSidebarToggle(true);
+      handleClose();
+    }
   };
 
   const handleCancel = () => {
@@ -173,17 +185,15 @@ const SidebarEventCard = ({
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            {!sideCard ?
-              userId ? (
-                  <Button variant="primary" onClick={handleQuestions}>
-                    Sign Up
-                  </Button>
-                ) : (<React.Fragment></React.Fragment>)
-                  : (
-                  <Button variant="primary" onClick={handleCancel}>
-                    Remove Event
-                  </Button>
-                )}
+            {!sideCard ? (
+              <Button variant="primary" onClick={handleQuestions}>
+                Sign Up
+              </Button>
+            ) : (
+              <Button variant="primary" onClick={handleCancel}>
+                Remove Event
+              </Button>
+            )}
           </Modal.Footer>
         </Modal>
       </div>

@@ -13,6 +13,8 @@ const Layout = props => (
       name={props.name}
     />
     <Sidebar
+      providers={props.providers}
+      csrfToken={props.csrfToken}
       userId={props.userId}
       host={props.host}
       sidebarToggle={props.sidebarToggle}

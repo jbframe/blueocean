@@ -46,5 +46,4 @@ const options = {
     signIn: '/auth/sigin'
   }
 };
-
 export default (req, res) => NextAuth(req, res, options);

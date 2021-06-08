@@ -4,9 +4,8 @@ import SidebarEventCard from './SidebarEventCard';
 
 const requests = require("../../handlers/requests");
 
-const ComingUp = ({ userId, host, sidebarToggle, setSidebarToggle }) => {
+const ComingUp = ({ userId, host, sidebarToggle, setSidebarToggle, providers, csrfToken }) => {
   const [upcomingEvents, setUpcomingEvents] = useState(null);
-
   const getUpcomingEvents = () => {
     const options = {
       url: `api/events/get-events-by-attendee/${userId}`,
@@ -35,6 +34,8 @@ const ComingUp = ({ userId, host, sidebarToggle, setSidebarToggle }) => {
     <div>
       {upcomingEvents ? upcomingEvents.map((event, i) => (
         <SidebarEventCard
+          providers={providers}
+          csrfToken={csrfToken}
           key={i}
           image={event.image}
           name={event.event_name}

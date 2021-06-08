@@ -1,4 +1,4 @@
-# Mr. Dean's AttendEaze
+# Vist [attendeaze.me](https://bit.ly/3hryCdH) to see the deployed application #
 A company events application to create, join, and organize internal events for employees.
 
 ## Product Demo
@@ -11,6 +11,8 @@ A company events application to create, join, and organize internal events for e
 * [Contributors](#contributors)
 
 ## <a name="getting-started"></a>Getting Started
+Visit [attendeaze.me](https://bit.ly/3hryCdH) to see the deployed application.
+
 Fork and clone this repo and install to a local directory. You will need to [install and run PostgreSQL](https://www.postgresql.org/download/) on your local machine before running this application.
 
 **Run the Postgres schema to install database and tables (WARNING running this again after you start using the app will drop the database and erase all existing data):**
@@ -71,7 +73,7 @@ Users with admin privileges can create event that posts to the database and is r
 * [Dennis Arnold](https://github.com/DennisJArnold)
 * [Joseph Monreal](https://github.com/josephmonreal00 )
 * [Hayden West](https://github.com/htwest)
-* [Johnny Frame](https://github.com/jbframe)
+* [John Frame](https://github.com/jbframe)
 * [Glenmore Vinoya](https://github.com/kuyavinny)
 * [Graham Kirsh](https://github.com/21grahams)
 * [David Goelitz](https://github.com/dgoelitz)

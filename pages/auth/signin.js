@@ -117,11 +117,26 @@ export default function SignIn({ providers, csrfToken }) {
   const [session] = useSession();
   const router = useRouter();
 
+  const [isMobile, setIsMobile] = useState(false);
+  const handleWindowResize = ()=>{
+    if (!isMobile && window.innerWidth < 700) {
+      setIsMobile(true)
+    }
+    if (isMobile && window.innerWidth > 700) {
+      setIsMobile(false)
+    }
+
+  }
+
   useEffect(() => {
     if(session) {
       router.push('/home')
     }
+    handleWindowResize();
+    window.addEventListener('resize', handleWindowResize);
   })
+
+
 
   return (
     <Grid style={{ maxWidth: '600px', textAlign: 'center', backgroundColor: 'white', width: '50%', margin: '30vh auto', borderRadius: '10px', border: '1px black solid', padding: '20px 20px 20px 20px'}}>

@@ -59,7 +59,7 @@ export default function Navbar ({ setSearch, userId, host, setMainToggle, name, 
           <TextField
             className={styles.search}
             label="Search Events"
-            variant="outlined"
+            variant="standard"
             onChange={handleSearch}
           />
         </div>
@@ -106,7 +106,7 @@ export default function Navbar ({ setSearch, userId, host, setMainToggle, name, 
           <TextField
             className={styles.search}
             label="Search Events"
-            variant="outlined"
+            variant="standard"
             onChange={handleSearch}
           />
         </div>

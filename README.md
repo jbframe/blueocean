@@ -73,7 +73,7 @@ Users with admin privileges can create event that posts to the database and is r
 * [Dennis Arnold](https://github.com/DennisJArnold)
 * [Joseph Monreal](https://github.com/josephmonreal00 )
 * [Hayden West](https://github.com/htwest)
-* [Johnny Frame](https://github.com/jbframe)
+* [John Frame](https://github.com/jbframe)
 * [Glenmore Vinoya](https://github.com/kuyavinny)
 * [Graham Kirsh](https://github.com/21grahams)
 * [David Goelitz](https://github.com/dgoelitz)

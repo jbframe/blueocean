@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { getSession, useSession } from "next-auth/client";
+import { getSession, useSession, getCsrfToken, providers, signIn } from "next-auth/client";
 import Layout from "../components/Layout";
 import EventsList from "../components/home/EventsList";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,12 +9,13 @@ import { useRouter } from "next/router";
 
 const requests = require("../handlers/requests");
 
-export default function Home() {
+export default function Home({ providers, csrfToken }) {
   // User Hooks
   const [userName, setUserName] = useState("");
   const [userId, setUserId] = useState();
   const [host, setHost] = useState(false);
   const [session, loading] = useSession();
+  const { google } = providers;
 
   // Event Hooks
   const [userEvents, setUserEvents] = useState([]);
@@ -43,9 +44,9 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!session) {
-      router.push("/auth/signin");
-    }
+    // if (!session) {
+    //   router.push("/auth/signin");
+    // }
     handleWindowResize();
     window.addEventListener('resize', handleWindowResize);
   });
@@ -64,11 +65,12 @@ export default function Home() {
         });
       }
 
-      requests.fetchAllEvents((data) => {
-        setAllEvents(data);
-        setCompareEvents(data);
-      });
+
     }
+    requests.fetchAllEvents((data) => {
+      setAllEvents(data);
+      setCompareEvents(data);
+    });
   }, [session, mainToggle]);
 
   // Search Function
@@ -102,6 +104,8 @@ export default function Home() {
   if (session) {
     return (
       <Layout
+        providers={providers}
+        csrfToken={csrfToken}
         userId={userId}
         setSearch={setSearch}
         host={host}
@@ -123,6 +127,8 @@ export default function Home() {
                 {/* <h5>All Events</h5> */}
                 <div className="event-list">
                   <EventsList
+                    providers={providers}
+                    csrfToken={csrfToken}
                     events={allEvents}
                     userId={userId}
                     host={host}
@@ -139,14 +145,58 @@ export default function Home() {
       </Layout>
     );
   } else {
-    return null;
+    return (
+      <Layout
+        // userId={userId}
+        setSearch={setSearch}
+        // host={host}
+        providers={providers}
+        csrfToken={csrfToken}
+        sidebarToggle={sidebarToggle}
+        setSidebarToggle={setSidebarToggle}
+        mainToggle={mainToggle}
+        setMainToggle={setMainToggle}
+        // name={session.user.name}
+      >
+        <div className={styles.container}>
+          <div className={styles.content}>
+            <Head>
+              <title>Attend Eaze</title>
+              <link rel="icon" href="/event.jpeg" />
+            </Head>
+
+            <div className={styles.main}>
+              <div>
+                {/* <h5>All Events</h5> */}
+                <div className="event-list">
+                  <EventsList
+                    providers={providers}
+                    csrfToken={csrfToken}
+                    events={allEvents}
+                    userId={userId}
+                    host={host}
+                    setSidebarToggle={setSidebarToggle}
+                    mainToggle={mainToggle}
+                    setMainToggle={setMainToggle}
+                  />
+                </div>
+              </div>
+            </div>
+            <footer className={styles.footer}></footer>
+          </div>
+        </div>
+      </Layout>
+    );
   }
 }
 
 export async function getServerSideProps(context) {
+  const Providers = await providers();
   return {
     props: {
       session: await getSession(),
+      providers: Providers,
+      csrfToken: await getCsrfToken(context),
     },
   };
 }

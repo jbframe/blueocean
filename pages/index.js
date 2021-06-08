@@ -9,15 +9,17 @@ export default function Home() {
   const router = useRouter();
 
   const handleRedirect = (dir) => {
-    if (dir === "home") {
-      router.push("/home");
-    }
-    router.push("/auth/signin");
+    // if (dir === "home") {
+    //   router.push("/home");
+    // }
+    // router.push("/auth/signin");
+    router.push("home");
   };
 
   useEffect(() => {
-    if (!session) handleRedirect("signin");
-    handleRedirect("home");
+    // if (!session) handleRedirect("signin");
+    // handleRedirect("home");
+    router.push("home");
   });
 
   return (

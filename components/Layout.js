@@ -4,6 +4,8 @@ import Sidebar from './Sidebar';
 const Layout = props => (
   <div>
     <Navbar
+      providers={props.providers}
+      csrfToken={props.csrfToken}
       setSearch={props.setSearch}
       userId={props.userId}
       host={props.host}

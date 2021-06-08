@@ -173,15 +173,17 @@ const SidebarEventCard = ({
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            {!sideCard ? (
-              <Button variant="primary" onClick={handleQuestions}>
-                Sign Up
-              </Button>
-            ) : (
-              <Button variant="primary" onClick={handleCancel}>
-                Remove Event
-              </Button>
-            )}
+            {!sideCard ?
+              userId ? (
+                  <Button variant="primary" onClick={handleQuestions}>
+                    Sign Up
+                  </Button>
+                ) : (<React.Fragment></React.Fragment>)
+                  : (
+                  <Button variant="primary" onClick={handleCancel}>
+                    Remove Event
+                  </Button>
+                )}
           </Modal.Footer>
         </Modal>
       </div>

@@ -1,4 +1,4 @@
-# Mr. Dean's AttendEaze
+# Vist [attendeaze.me](https://bit.ly/3hryCdH) to see the deployed application #
 A company events application to create, join, and organize internal events for employees.
 
 ## Product Demo

@@ -29,12 +29,25 @@ export default function Home() {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [mainToggle, setMainToggle] = useState(false);
 
+  // Responsive Hooks
+  const [isMobile, setIsMobile] = useState(false);
+  const handleWindowResize = ()=>{
+    if (!isMobile && window.innerWidth < 700) {
+      setIsMobile(true)
+    }
+    if (isMobile && window.innerWidth > 700) {
+      setIsMobile(false)
+    }
+  }
+
   const router = useRouter();
 
   useEffect(() => {
     if (!session) {
       router.push("/auth/signin");
     }
+    handleWindowResize();
+    window.addEventListener('resize', handleWindowResize);
   });
 
   useEffect(() => {

@@ -33,10 +33,10 @@ export default function Home({ providers, csrfToken }) {
   // Responsive Hooks
   const [isMobile, setIsMobile] = useState(false);
   const handleWindowResize = ()=>{
-    if (!isMobile && window.innerWidth < 700) {
+    if (!isMobile && window.innerWidth < 1000) {
       setIsMobile(true)
     }
-    if (isMobile && window.innerWidth > 700) {
+    if (isMobile && window.innerWidth > 1000) {
       setIsMobile(false)
     }
   }
@@ -101,7 +101,14 @@ export default function Home({ providers, csrfToken }) {
   // Wrap every page component in <Layout> tags (and import up top)
   // to have the nav bar up top
 
-  if (session) {
+  if (isMobile) {
+    return (<div style={{
+      'position': 'absolute',
+      'top': '50%',
+      'left': '50%',
+      'transform': 'translate(-50%, -50%)'
+    }}>Please visit from a desktop computer. The AttendEaze experience is optimized for larger screens.</div>)
+  } else if (session) {
     return (
       <Layout
         providers={providers}

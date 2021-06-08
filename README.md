@@ -11,6 +11,8 @@ A company events application to create, join, and organize internal events for e
 * [Contributors](#contributors)
 
 ## <a name="getting-started"></a>Getting Started
+Visit [attendeaze.me](https://bit.ly/3hryCdH) to see the deployed application.
+
 Fork and clone this repo and install to a local directory. You will need to [install and run PostgreSQL](https://www.postgresql.org/download/) on your local machine before running this application.
 
 **Run the Postgres schema to install database and tables (WARNING running this again after you start using the app will drop the database and erase all existing data):**

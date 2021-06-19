@@ -29,9 +29,9 @@ export default function Home() {
         title="Attend Eaze"
         description="Attend Eaze"
         openGraph={{
-          url: 'http://www.attendeaze.me',
-          title: 'Make John a ☕️',
-          description: 'MAKE John a coffee via the magic of the internet!',
+          url: 'http://attendeaze.me',
+          title: 'Attend Eaze',
+          description: 'Attend Eaze',
           images: [
             {
               url: 'https://lh3.googleusercontent.com/pw/ACtC-3e1HrnjOwCSrY7H7-wSfRMmYszwxNioVkzFbb3-JcyZe3cuoJ-1kcFttgYLSLceFqJ-ff9dPtQhc1CpTv2bwcQkhp-NtiaceRJFa5DiXXWejl05N-XIyVLkdh_1X_O6o4ioHp37bBzzoOv6hJrk3COt6Q=w1079-h564-no?authuser=0',

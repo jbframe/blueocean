@@ -23,11 +23,12 @@ export default function Home() {
   });
 
   return (
-    <div>
-      <span className={s.logo}>
-        <Image src="attendeaze_logo.png.png" roundedCircle />
-      </span>
-    </div>
+    <head>
+      <meta property='og:title' content='Attend Eaze'/>
+    <meta property='og:image' content='https://lh3.googleusercontent.com/pw/ACtC-3e1HrnjOwCSrY7H7-wSfRMmYszwxNioVkzFbb3-JcyZe3cuoJ-1kcFttgYLSLceFqJ-ff9dPtQhc1CpTv2bwcQkhp-NtiaceRJFa5DiXXWejl05N-XIyVLkdh_1X_O6o4ioHp37bBzzoOv6hJrk3COt6Q=w1079-h564-no?authuser=0'/>
+    <meta property='og:description' content='Attend Eaze'/>
+    <meta property='og:url' content='http://attendeaze.me'/>
+    </head>
   );
 }
 
